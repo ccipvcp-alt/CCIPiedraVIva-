@@ -177,7 +177,7 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 <div class="wrap split">
 <div>
 <h2>Registro de miembros</h2>
-<p>Exclusivo para miembros de Centro Cristiano Piedraviva. Para registrarte necesitas el código de la iglesia que te entregó tu líder. Tu registro será revisado por la dirección de la iglesia.</p>
+<p>Exclusivo para miembros de Centro Cristiano Piedraviva. Para registrarte necesitas el código de tu sede que te entregó tu líder. Tu registro será revisado por la dirección de la iglesia.</p>
 </div>
 <form id="fm">
 <label>Nombre y apellido<input name="nombre" required autocomplete="name"></label>
@@ -185,7 +185,7 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 <label>Teléfono / WhatsApp<input name="telefono" type="tel" required autocomplete="tel"></label>
 <label>Sede a la que asistes<select name="sede" required><option value="">Elige tu sede</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label>
 <label>Líder de casa de paz<input name="lider" required placeholder="Nombre de tu líder"></label>
-<label>Código de la iglesia<input name="codigo" type="password" required autocomplete="off"></label>
+<label>Código de tu sede<input name="codigo" type="password" required pattern="[A-Za-z0-9]{4,20}" title="Letras y números, sin espacios" autocapitalize="characters" autocomplete="off"></label>
 <label class="check"><input type="checkbox" required> Acepto que la iglesia guarde mis datos para su registro de miembros.</label>
 <button class="btn" type="submit">Registrarme</button>
 <p class="note" id="fmok" role="status"></p>
@@ -287,8 +287,8 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 <h3>Solicitudes pendientes</h3><ul class="rlist" id="apend"></ul>
 <h3 style="margin-top:24px">Miembros por aprobar</h3><ul class="rlist" id="mpend"></ul>
 <h3 style="margin-top:24px">Aportes (diezmos y ofrendas)</h3><ul class="rlist" id="dtot"></ul><ul class="rlist" id="dlast"></ul>
-<h3 style="margin-top:24px">Código de la iglesia</h3>
-<form id="fcod" style="display:flex;gap:8px;flex-wrap:wrap"><input id="cod" required minlength="4" placeholder="Nuevo código" style="flex:1;min-width:160px"><button class="btn sm" type="submit">Guardar código</button></form><p class="note" id="codok" role="status"></p>
+<h3 style="margin-top:24px">Códigos de registro por sede</h3><p class="note">Cada sede tiene su propio código de letras y números (4 a 20 caracteres, sin espacios). Entrégalo solo a los miembros de esa sede. Una sede sin código no puede registrar miembros.</p>
+<form id="fcod" style="display:grid;gap:10px;max-width:420px"><label>Sede principal<input data-sede="Sede principal" pattern="[A-Za-z0-9]{4,20}" title="Letras y números, de 4 a 20 caracteres, sin espacios" autocapitalize="characters" placeholder="Código de Sede principal"></label><label>La Guaricha<input data-sede="La Guaricha" pattern="[A-Za-z0-9]{4,20}" title="Letras y números, de 4 a 20 caracteres, sin espacios" autocapitalize="characters" placeholder="Código de La Guaricha"></label><label>Valencia<input data-sede="Valencia" pattern="[A-Za-z0-9]{4,20}" title="Letras y números, de 4 a 20 caracteres, sin espacios" autocapitalize="characters" placeholder="Código de Valencia"></label><label>Bocono<input data-sede="Bocono" pattern="[A-Za-z0-9]{4,20}" title="Letras y números, de 4 a 20 caracteres, sin espacios" autocapitalize="characters" placeholder="Código de Bocono"></label><button class="btn sm" type="submit">Guardar códigos</button></form><p class="note" id="codok" role="status"></p>
 <h3 style="margin-top:24px">Totales por tipo</h3><ul class="rlist" id="atipo"></ul>
 <h3 style="margin-top:24px">Totales por sede</h3><ul class="rlist" id="asede"></ul>
 <h3 style="margin-top:24px">Últimos reportes</h3><ul class="rlist" id="alast"></ul>
@@ -538,13 +538,14 @@ $('fm').addEventListener('submit',async e=>{
  e.preventDefault();const f=$('fm'),o=$('fmok');o.textContent='';
  const ci=f.ci.value.replace(/\D/g,'');
  try{
-  await S.setDoc(S.doc(db,'miembros','ci_'+ci),{nombre:f.nombre.value.trim(),ci,telefono:f.telefono.value.trim(),sede:f.sede.value,lider:f.lider.value.trim(),codigo:f.codigo.value.trim(),estado:'pendiente',creado:S.serverTimestamp()});
+  await S.setDoc(S.doc(db,'miembros','ci_'+ci),{nombre:f.nombre.value.trim(),ci,telefono:f.telefono.value.trim(),sede:f.sede.value,lider:f.lider.value.trim(),codigo:f.codigo.value.trim().toUpperCase(),estado:'pendiente',creado:S.serverTimestamp()});
   f.reset();o.textContent='¡Registro recibido! La dirección de la iglesia lo revisará.';
- }catch(x){o.textContent='No se pudo registrar: revisa el código de la iglesia o es posible que esa cédula ya esté registrada.'}
+ }catch(x){o.textContent='No se pudo registrar: revisa que el código sea el de tu sede o es posible que esa cédula ya esté registrada.'}
 });
 $('fcod').addEventListener('submit',async e=>{
- e.preventDefault();
- try{await S.setDoc(S.doc(db,'config','acceso'),{codigo:$('cod').value.trim()});$('fcod').reset();$('codok').textContent='Código guardado.'}catch(x){$('codok').textContent=er(x)}
+ e.preventDefault();const codigos={};
+ $('fcod').querySelectorAll('input[data-sede]').forEach(i=>{if(i.value.trim())codigos[i.dataset.sede]=i.value.trim().toUpperCase()});
+ try{await S.setDoc(S.doc(db,'config','acceso'),{codigos});$('codok').textContent='Códigos guardados.'}catch(x){$('codok').textContent=er(x)}
 });
 async function setMiembro(id,v){try{await S.updateDoc(S.doc(db,'miembros',id),{estado:v});loaders.adm()}catch(x){alert(er(x))}}
 
@@ -591,6 +592,7 @@ loaders.adm=async()=>{
    const r=el('button','Rechazar','btn alt sm');r.type='button';r.onclick=()=>setEstado(d.id,'rechazado');
    li.appendChild(a);li.appendChild(r);P.appendChild(li);
   });
+  try{const cd=await S.getDoc(S.doc(db,'config','acceso'));const cs=(cd.exists()&&cd.data().codigos)||{};$('fcod').querySelectorAll('input[data-sede]').forEach(i=>{i.value=cs[i.dataset.sede]||''})}catch(x){}
   const qd=await S.getDocs(S.collection(db,'donaciones'));const ds=[];qd.forEach(d=>ds.push({id:d.id,...d.data()}));
   ds.sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||''));
   const T=$('dtot');T.textContent='';const tt={};ds.forEach(x=>{const k=x.tipo+' ('+x.moneda+')';tt[k]=(tt[k]||0)+(x.monto||0)});
