@@ -190,6 +190,7 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 <label>Nombre y apellido<input name="nombre" required autocomplete="name"></label>
 <label>Cédula de identidad (C.I.)<input name="ci" required inputmode="numeric" pattern="[0-9.\-]{5,12}" title="Solo números"></label>
 <label>Teléfono / WhatsApp<input name="telefono" type="tel" required autocomplete="tel"></label>
+<label>Correo electrónico (opcional, para el boletín semanal)<input name="email" type="email" maxlength="100" autocomplete="email"></label>
 <label>Sede a la que asistes<select name="sede" required><option value="">Elige tu sede</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label>
 <label>Líder de casa de paz<input name="lider" required placeholder="Nombre de tu líder"></label>
 <label>Código de tu sede<input name="codigo" type="password" required pattern="[A-Za-z0-9]{4,20}" title="Letras y números, sin espacios" autocapitalize="characters" autocomplete="off"></label>
@@ -286,6 +287,11 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 <hr style="margin:28px 0;border:0;border-top:1px solid var(--line)">
 <div class="onlyadm"><h3>Solicitudes pendientes</h3><ul class="rlist" id="apend"></ul>
 <h3 style="margin-top:24px">Pastores de sede</h3><p class="note">Un pastor de sede ve únicamente la información de su propia sede. Solo tú, como administrador, ves las cuatro sedes.</p><ul class="rlist" id="apast"></ul></div>
+<div class="onlyadm"><h3 style="margin-top:24px">Correo de anuncios de la semana</h3><p class="note">Escribe aquí los anuncios. Cada domingo a las 8:00 a. m. se envían por correo, como boletín, a todos los miembros aprobados que dejaron su correo y a los suscritos del pie de página. Los cambios hechos después del domingo salen el domingo siguiente.</p>
+<div style="display:grid;gap:10px;max-width:640px"><label>Asunto del correo<input id="ansub" maxlength="120" placeholder="Anuncios de la semana · CCI Piedra Viva"></label>
+<label>Anuncios<textarea id="anx" rows="9" placeholder="Domingo 9:00 a. m. Servicio general...&#10;Lunes 6:00 p. m. Oración..."></textarea></label>
+<div><button class="btn sm" type="button" id="anSave">Guardar anuncios</button> <span class="note" id="anOk" role="status"></span></div>
+<p class="note" id="anInfo"></p></div></div>
 <h3 style="margin-top:24px">Miembros por aprobar</h3><ul class="rlist" id="mpend"></ul>
 <h3 style="margin-top:24px">Aportes (diezmos y ofrendas)</h3><ul class="rlist" id="dtot"></ul><ul class="rlist" id="dlast"></ul>
 <div class="onlyadm"><h3 style="margin-top:24px">Códigos de registro por sede</h3><p class="note">Cada sede tiene su propio código de letras y números (4 a 20 caracteres, sin espacios). Entrégalo solo a los miembros de esa sede. Una sede sin código no puede registrar miembros.</p>
@@ -377,8 +383,8 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 <span class="mark big" role="img" aria-label="Logo del Centro Cristiano Piedraviva"></span>
 <h3>Centro Cristiano Piedraviva</h3>
 <p>La Guaricha · Bocono · Valencia</p>
-<form onsubmit="event.preventDefault();this.querySelector('button').textContent='Suscrito';" style="padding:0;border:0;background:none">
-<label>Boletín mensual<input type="email" required placeholder="tu@correo.com"></label>
+<form id="fbol" style="padding:0;border:0;background:none">
+<label>Boletín semanal<input name="email" type="email" required maxlength="100" placeholder="tu@correo.com"></label>
 <button class="btn" type="submit">Suscribirme</button>
 </form>
 </div>
@@ -546,10 +552,14 @@ $('fm').addEventListener('submit',async e=>{
  e.preventDefault();const f=$('fm'),o=$('fmok');o.textContent='';
  const ci=f.ci.value.replace(/\D/g,'');
  try{
-  await S.setDoc(S.doc(db,'miembros','ci_'+ci),{cargo:f.cargo.value,nombre:f.nombre.value.trim(),ci,telefono:f.telefono.value.trim(),sede:f.sede.value,lider:f.lider.value.trim(),codigo:f.codigo.value.trim().toUpperCase(),estado:'pendiente',creado:S.serverTimestamp()});
+  await S.setDoc(S.doc(db,'miembros','ci_'+ci),{cargo:f.cargo.value,nombre:f.nombre.value.trim(),ci,telefono:f.telefono.value.trim(),...(f.email.value.trim()?{email:f.email.value.trim().toLowerCase()}:{}),sede:f.sede.value,lider:f.lider.value.trim(),codigo:f.codigo.value.trim().toUpperCase(),estado:'pendiente',creado:S.serverTimestamp()});
   f.reset();o.textContent='¡Registro recibido! La dirección de la iglesia lo revisará.';
  }catch(x){o.textContent='No se pudo registrar ['+(x.code||x.message)+']: revisa que el código sea el de tu sede o es posible que esa cédula ya esté registrada.'}
 });
+$('fbol').addEventListener('submit',async e=>{
+ e.preventDefault();const f=$('fbol'),b=f.querySelector('button'),em=f.email.value.trim().toLowerCase();
+ try{await S.setDoc(S.doc(db,'boletin',em.replace(/\//g,'_')),{email:em,creado:S.serverTimestamp()})}catch(x){if(x.code!=='permission-denied'){b.textContent='Error, intenta de nuevo';return}}
+ b.textContent='¡Suscrito!';f.reset()});
 $('fcod').addEventListener('submit',async e=>{
  e.preventDefault();const codigos={};
  $('fcod').querySelectorAll('input[data-sede]').forEach(i=>{if(i.value.trim())codigos[i.dataset.sede]=i.value.trim().toUpperCase()});
@@ -633,6 +643,8 @@ function verTicket(titulo,sub,rows,nombre,extra){
  $('dlg').showModal()}
 
 let ALLD=[],ALLR=[];
+let ALLM=[];
+$('anSave').onclick=async()=>{try{await S.setDoc(S.doc(db,'anuncios','semana'),{asunto:$('ansub').value.trim(),texto:$('anx').value.trim(),fecha:S.serverTimestamp()});$('anOk').textContent='Guardado. Se enviará el próximo domingo a las 8:00 a. m.'}catch(x){$('anOk').textContent='No se guardó ['+(x.code||x.message)+']'}};
 const money=v=>{if(v===undefined||v===null||v==='')return null;if(typeof v==='number')return v;let t=String(v).trim().replace(/\s*(bs\.?|\$|usd)$/i,'').trim();if(!/^[\d.,]+$/.test(t))return null;
  if(/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(t))t=t.replace(/\./g,'').replace(',','.');else t=t.replace(',','.');const n=parseFloat(t);return(isNaN(n)||n>1e8)?null:n};
 function resumen(sede){
@@ -712,6 +724,10 @@ loaders.adm=async()=>{
    const r=el('button','Rechazar','btn alt sm');r.type='button';r.onclick=()=>setMiembro(d.id,'rechazado');
    li.appendChild(a);li.appendChild(r);M.appendChild(li)});
   if(!M.children.length)M.appendChild(el('li','No hay miembros por aprobar. Miembros aprobados: '+ap));
+  ALLM=[];qm.forEach(d=>{const m=d.data();if(m.estado==='aprobado')ALLM.push(m)});
+  if(adm){try{const ad=await S.getDoc(S.doc(db,'anuncios','semana'));if(ad.exists()){const x=ad.data();if(!$('anx').value)$('anx').value=x.texto||'';if(!$('ansub').value)$('ansub').value=x.asunto||''}
+   const bs=await S.getDocs(S.collection(db,'boletin'));const em=new Set(ALLM.map(m=>m.email).filter(Boolean));bs.forEach(d=>{if(d.data().email)em.add(d.data().email)});
+   $('anInfo').textContent='Destinatarios con correo registrado: '+em.size+'.'}catch(x){}}
   const q3=adm?await S.getDocs(S.query(S.collection(db,'users'),S.where('estado','==','aprobado'))):{forEach(){}};
   const PA=$('apast');PA.textContent='';
   q3.forEach(d=>{const u=d.data();S.setDoc(S.doc(db,'directorio',d.id),{nombre:u.nombre,sede:u.sede,cargo:u.cargo||''});
