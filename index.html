@@ -119,9 +119,20 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 .rlist li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:.95rem}
 #lideres form{max-width:520px}
 .btn.sm{padding:5px 14px;font-size:.85rem;margin-left:8px}
+
+/* Páginas independientes (se abren en otra pestaña) */
+body[data-v] main>section,body[data-v] footer .cols+*{display:none}
+body[data-v=escuela] #escuela,body[data-v=lideres] #lideres,body[data-v=sedes] #nosotros{display:block}
+body[data-v=sedes] #nosotros h2,body[data-v=sedes] #nosotros .three>div:not(#sedes){display:none}
+body[data-v=sedes] #nosotros .three{display:block}
+body[data-v] main{min-height:70vh}
 </style>
 </head>
 <body>
+<script>(function(){try{var v=new URLSearchParams(location.search).get('v');if(['escuela','lideres','sedes'].indexOf(v)<0)return;document.body.setAttribute('data-v',v);document.title=({escuela:'Escuela de formación',lideres:'Líderes',sedes:'Nuestras sedes'})[v]+' · CCI Piedra Viva';
+document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('header a[href^="#"],header .drop a').forEach(function(a){var h=a.getAttribute('href');if(h&&h.charAt(0)==='#'){a.setAttribute('href','./'+h)}});
+document.querySelectorAll('header a[href^="?v="]').forEach(function(a){a.removeAttribute('target')});
+var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}catch(e){}})();</script>
 
 <!-- 1. BARRA DE TRANSMISIÓN / AVISO -->
 <div class="live">Estamos en vivo ahora. <a href="#envivo">Ver transmisión</a></div>
@@ -136,11 +147,11 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 <li><button class="top" aria-haspopup="true">Visión</button>
 <div class="drop vision"><a href="#vision"><b>1. Ganar</b><small>Llevamos el amor de Cristo a cada persona, familia y rincón donde haya una necesidad.</small></a><a href="#vision"><b>2. Afirmar</b><small>Fortalecemos tu fe y tu identidad para que permanezcas firme sobre la Roca.</small></a><a href="#vision"><b>3. Discipular</b><small>Caminamos contigo, de la mano, para formar un carácter como el de Jesús.</small></a><a href="#vision"><b>4. Enviar</b><small>Levantamos líderes y los enviamos a ganar el mundo para Cristo.</small></a></div></li>
 <li><button class="top" aria-haspopup="true">Nuestras sedes</button>
-<div class="drop"><a href="#sedes">Sede principal</a><a href="#sedes">La Guaricha</a><a href="#sedes">Valencia</a><a href="#sedes">Bocono</a></div></li>
+<div class="drop"><a href="?v=sedes" target="_blank" rel="noopener">Sede principal</a><a href="?v=sedes" target="_blank" rel="noopener">La Guaricha</a><a href="?v=sedes" target="_blank" rel="noopener">Valencia</a><a href="?v=sedes" target="_blank" rel="noopener">Bocono</a></div></li>
 <li><button class="top" aria-haspopup="true">Descubre</button>
 <div class="drop">
 <strong>Nosotros</strong><a href="#nosotros">Quiénes somos</a><a href="#nosotros">Visión</a><a href="#nosotros">Líderes</a>
-<strong>Planea tu visita</strong><a href="#sedes">Sede principal</a><a href="#sedes">Centro Cristiano Piedraviva La Guaricha</a><a href="#sedes">Centro Cristiano Piedraviva Valencia</a><a href="#sedes">Centro Cristiano Piedraviva Bocono</a>
+<strong>Planea tu visita</strong><a href="?v=sedes" target="_blank" rel="noopener">Sede principal</a><a href="?v=sedes" target="_blank" rel="noopener">Centro Cristiano Piedraviva La Guaricha</a><a href="?v=sedes" target="_blank" rel="noopener">Centro Cristiano Piedraviva Valencia</a><a href="?v=sedes" target="_blank" rel="noopener">Centro Cristiano Piedraviva Bocono</a>
 <strong>Recursos</strong><a href="#medios">Programa de TV</a><a href="#medios">Familia</a><a href="#medios">Jóvenes</a><a href="#medios">Medios</a>
 <strong>¿Necesitas ayuda?</strong><a href="#contacto">Petición</a><a href="#contacto">Apoyo comunitario</a>
 </div></li>
@@ -150,7 +161,8 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 <strong>Liderazgo</strong><a href="#medios">Universidad</a><a href="#medios">Recursos</a>
 <strong>Para ti</strong><a href="#eventos">Eventos</a><a href="#alianzas">Socios</a><a href="#contacto">Empleo</a><a href="#contacto">Comparte tu testimonio</a>
 </div></li>
-<li><a class="top" href="#lideres">Líderes</a></li>
+<li><a class="top" href="?v=escuela" target="_blank" rel="noopener">Escuela</a></li>
+<li><a class="top" href="?v=lideres" target="_blank" rel="noopener">Líderes</a></li>
 <li><a class="top" href="#envivo">En vivo</a></li>
 <li><a class="top" href="#">EN</a></li>
 <li><a class="btn gold" href="#donar">Donar</a></li>
@@ -166,7 +178,7 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 <div class="wrap">
 <h1>Somos una iglesia sobrenatural</h1>
 <p>Somos una familia en crecimiento. En el Centro Cristiano Piedraviva ganamos, afirmamos y discipulamos, y enviamos líderes a ganar el mundo para Cristo. Hay un lugar para ti en nuestra casa.</p>
-<div class="row"><a class="btn" href="#sedes">Visítanos</a><a class="btn alt" href="#contacto">Contáctanos</a></div>
+<div class="row"><a class="btn" href="?v=sedes" target="_blank" rel="noopener">Visítanos</a><a class="btn alt" href="#contacto">Contáctanos</a></div>
 </div>
 </section>
 
@@ -190,7 +202,7 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 <label>Nombre y apellido<input name="nombre" required autocomplete="name"></label>
 <label>Cédula de identidad (C.I.)<input name="ci" required inputmode="numeric" pattern="[0-9.\-]{5,12}" title="Solo números"></label>
 <label>Teléfono / WhatsApp<input name="telefono" type="tel" required autocomplete="tel"></label>
-<label>Correo electrónico (opcional, para recibir los anuncios semanales)<input name="email" type="email" maxlength="100" autocomplete="email"></label>
+<label>Correo electrónico (recibirás tu bienvenida y los anuncios semanales)<input name="email" type="email" required maxlength="100" autocomplete="email"></label>
 <label>Sede a la que asistes<select name="sede" required><option value="">Elige tu sede</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label>
 <label>Líder de casa de paz<input name="lider" required placeholder="Nombre de tu líder"></label>
 <label>Código de tu sede<input name="codigo" type="password" required pattern="[A-Za-z0-9]{4,20}" title="Letras y números, sin espacios" autocapitalize="characters" autocomplete="off"></label>
@@ -228,6 +240,62 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 </div>
 </section>
 
+<!-- ESCUELA DE FORMACIÓN -->
+<section id="escuela">
+<div class="wrap">
+<h2>Escuela de formación</h2>
+<p>Dios no te trajo a este mundo por error: tienes un propósito. Inscríbete en nuestras escuelas de formación (Miembros, Discípulos, Líderes, Mentores, Diáconos, Ancianos y Ministros) y recibe el material de apoyo de acuerdo al nivel que estás cursando.</p>
+<div id="eauth">
+<div class="tabs" data-all="efl,efs"><button type="button" data-t="efl" class="on">Ya estoy inscrito</button><button type="button" data-t="efs">Inscribirme</button></div>
+<form id="efl">
+<label>Correo electrónico<input id="ele" type="email" required autocomplete="email"></label>
+<label>Contraseña<input id="elp" type="password" required autocomplete="current-password"></label>
+<button class="btn" type="submit">Entrar</button>
+<button class="btn alt" type="button" id="efg">Olvidé mi contraseña</button>
+</form>
+<form id="efs" hidden>
+<label>Nombre y apellido<input id="esn" required autocomplete="name"></label>
+<label>Cédula de identidad (C.I.)<input id="esci" required inputmode="numeric" pattern="[0-9.\-]{5,12}" title="Solo números"></label>
+<label>Teléfono / WhatsApp<input id="est" type="tel" required autocomplete="tel"></label>
+<label>Sede a la que asistes<select id="ess" required><option value="">Elige tu sede</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label>
+<label>Me inscribo como<select id="esT" required><option value="alumno">Alumno</option><option value="maestro">Maestro</option></select></label>
+<label>Escuela / nivel (si eres maestro, el nivel que enseñas)<select id="esv" required><option value="">Elige tu escuela</option><option>Miembros</option><option>Discípulos</option><option>Líderes</option><option>Mentores</option><option>Diáconos</option><option>Ancianos</option><option>Ministros</option></select></label>
+<label>Cédula de tu líder o mentor (quien te discipula, si aplica)<input id="esl" inputmode="numeric" pattern="[0-9.\\-]{5,12}" title="Solo números"></label>
+<label>Correo electrónico (será tu usuario)<input id="ese" type="email" required autocomplete="email"></label>
+<label>Contraseña (mínimo 6 caracteres)<input id="esp" type="password" minlength="6" required autocomplete="new-password"></label>
+<button class="btn" type="submit">Inscribirme</button>
+<p class="note">La dirección de la iglesia aprobará tu inscripción y te asignará tu nivel.</p>
+</form>
+<p class="note" id="emsg" role="status"></p>
+</div>
+<form id="eform" hidden>
+<h3>Completa tu inscripción</h3>
+<label>Nombre y apellido<input id="fn" required autocomplete="name"></label>
+<label>Cédula de identidad (C.I.)<input id="fci" required inputmode="numeric" pattern="[0-9.\-]{5,12}" title="Solo números"></label>
+<label>Teléfono / WhatsApp<input id="ft" type="tel" required autocomplete="tel"></label>
+<label>Sede a la que asistes<select id="fsd" required><option value="">Elige tu sede</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label>
+<label>Me inscribo como<select id="fT" required><option value="alumno">Alumno</option><option value="maestro">Maestro</option></select></label>
+<label>Escuela / nivel (si eres maestro, el nivel que enseñas)<select id="fnv" required><option value="">Elige tu escuela</option><option>Miembros</option><option>Discípulos</option><option>Líderes</option><option>Mentores</option><option>Diáconos</option><option>Ancianos</option><option>Ministros</option></select></label>
+<label>Cédula de tu líder o mentor (quien te discipula, si aplica)<input id="fl2" inputmode="numeric" pattern="[0-9.\\-]{5,12}" title="Solo números"></label>
+<button class="btn" type="submit">Enviar inscripción</button>
+<button class="btn alt" type="button" id="eout0">Salir</button>
+<p class="note" id="efmsg" role="status"></p>
+</form>
+<div id="epend" hidden>
+<h3 id="ept">Tu inscripción está pendiente</h3>
+<p>La dirección de la iglesia revisará tu inscripción. Cuando sea aprobada podrás ver el material de tu escuela.</p>
+<button class="btn alt" type="button" id="eout1">Salir</button>
+</div>
+<div id="edash" hidden>
+<div class="row" style="justify-content:space-between;align-items:center;margin-top:0"><h3 id="ehi" style="margin:0"></h3><button class="btn alt" id="eout2" type="button">Salir</button></div>
+<p id="eniv" style="font-weight:700"></p>
+<h3>Material de apoyo</h3>
+<ul class="rlist" id="emat"></ul>
+<p class="note" id="emok" role="status"></p>
+</div>
+</div>
+</section>
+
 <!-- ACCESO PARA LÍDERES -->
 <section id="lideres" style="background:var(--soft)">
 <div class="wrap">
@@ -258,13 +326,13 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 
 <div id="pend" hidden>
 <h3 id="pt">Tu registro está pendiente</h3>
-<p>Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar y ver los recursos y enviar reportes.</p>
+<p id="pp">Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar y ver los recursos y enviar reportes.</p>
 <button class="btn alt" type="button" id="pout">Salir</button>
 </div>
 
 <div id="dash" hidden>
 <div class="row" style="justify-content:space-between;align-items:center;margin-top:0"><h3 id="hi" style="margin:0"></h3><button class="btn alt" id="out" type="button">Salir</button></div>
-<div class="tabs" data-all="t1,t2,t3,t4,t5"><button type="button" data-t="t1" class="on" data-load="res">Recursos</button><button type="button" data-t="t2">Reportar</button><button type="button" data-t="t3" data-load="mine">Mis reportes</button><button type="button" data-t="t4" data-load="adm" id="tabAdmin" hidden>Panel de pastores</button><button type="button" data-t="t5" data-load="adm" id="tabAn" hidden>Anuncios</button></div>
+<div class="tabs" data-all="t1,t2,t3,t4,t5,t6"><button type="button" data-t="t1" class="on" data-load="res">Recursos</button><button type="button" data-t="t2">Reportar</button><button type="button" data-t="t3" data-load="mine">Mis reportes</button><button type="button" data-t="t4" data-load="adm" id="tabAdmin" hidden>Panel de pastores</button><button type="button" data-t="t5" data-load="adm" id="tabAn" hidden>Anuncios</button><button type="button" data-t="t6" data-load="esc" id="tabEsc" hidden>ESCUELA</button></div>
 
 <div id="t1" class="tab"><div class="grid" id="resl"></div>
 <form id="fr" hidden style="margin-top:20px"><h3>Agregar recurso</h3>
@@ -278,6 +346,16 @@ select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--
 
 <div id="t3" class="tab" hidden><p id="tot"></p><ul class="rlist" id="rl"></ul></div>
 
+<div id="t6" class="tab" hidden>
+<h3>Inscripciones por aprobar (alumnos y maestros)</h3><ul class="rlist" id="epd"></ul>
+<h3 style="margin-top:24px">Aprobados</h3><ul class="rlist" id="eap"></ul>
+<h3 style="margin-top:24px">Registro completo de la escuela</h3>
+<div style="display:grid;gap:8px;max-width:640px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))"><select id="rsd"><option value="">Todas las sedes</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select><select id="rtp"><option value="">Alumnos y maestros</option><option value="alumno">Alumnos</option><option value="maestro">Maestros</option></select><select id="rnv"><option value="">Todos los niveles</option><option>Miembros</option><option>Discípulos</option><option>Líderes</option><option>Mentores</option><option>Diáconos</option><option>Ancianos</option><option>Ministros</option></select><select id="res"><option value="">Todos los estados</option><option value="aprobado">Aprobados</option><option value="pendiente">Pendientes</option><option value="rechazado">Rechazados</option><option value="suspendido">Suspendidos</option></select><input id="rq" placeholder="Buscar por nombre o C.I."></div>
+<p class="note" id="rcount"></p><button class="btn alt sm" type="button" id="rcsv">Descargar lista (Excel/CSV)</button><ul class="rlist" id="ereg"></ul>
+<div class="onlyadm"><h3 style="margin-top:24px">Material de apoyo</h3><p class="note">Sube el material de cada nivel (PDF, Word, PowerPoint o imagen, hasta 8 MB). Un estudiante ve el material de su nivel y de los niveles anteriores.</p>
+<div style="display:grid;gap:10px;max-width:520px"><label>Título<input id="mti" maxlength="80" placeholder="Ej.: Lección 1 · Fundamentos"></label><label>Descripción (opcional)<textarea id="mde" rows="2" maxlength="300"></textarea></label><label>Nivel<select id="mnv"><option>Miembros</option><option>Discípulos</option><option>Líderes</option><option>Mentores</option><option>Diáconos</option><option>Ancianos</option><option>Ministros</option></select></label><label>Archivo<input id="mfi" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.jpg,.jpeg,.png"></label><div><button class="btn sm" type="button" id="mup">Subir material</button> <span class="note" id="mok" role="status"></span></div></div>
+<ul class="rlist" id="madm"></ul></div>
+</div>
 <div id="t5" class="tab" hidden>
 <div class="onlyadm"><h3>Anuncios de la semana (correo)</h3><p class="note">Escribe aquí los anuncios. Cada domingo a las 8:00 a. m. se envían por correo a todos los miembros aprobados que dejaron su correo y a los suscritos del pie de página. Los cambios hechos después del domingo salen el domingo siguiente.</p>
 <div style="display:grid;gap:10px;max-width:640px"><label>Título del correo (asunto)<input id="ansub" maxlength="120" placeholder="Anuncios de la *semana* · CCI Piedra Viva"></label><p class="note" style="margin:-4px 0 0">Tip: pon una palabra entre asteriscos, como *semana*, para destacarla en plateado.</p>
@@ -465,7 +543,11 @@ async function enter(u){
   const d=await S.getDoc(S.doc(db,'users',u.uid));
   me=d.exists()?Object.assign({uid:u.uid},d.data()):null;
  }catch(e){me=null}
- if(!me){$('pt').textContent='No encontramos tu perfil';view('pend');return}
+ if(!me){let eE=false;try{eE=(await S.getDoc(S.doc(db,'estudiantes',u.uid))).exists()}catch(e){}
+  $('pt').textContent=eE?'Esta cuenta es de la Escuela de formación':'No encontramos tu perfil';
+  $('pp').textContent=eE?'Entra a la sección Escuela de formación para ver tu material. Para acceso de líderes, regístrate con otro correo.':'Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar y ver los recursos y enviar reportes.';
+  view('pend');return}
+ $('pp').textContent='Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar y ver los recursos y enviar reportes.';
  if(me.rol!=='admin'&&me.estado!=='aprobado'){
   $('pt').textContent=me.estado==='rechazado'?'Tu solicitud no fue aprobada':'Tu registro está pendiente';
   view('pend');return;
@@ -473,12 +555,12 @@ async function enter(u){
  $('hi').textContent='Bienvenido, '+me.nombre;
  const adm=me.rol==='admin';
  const ps=me.rol==='pastor_sede';
- $('tabAdmin').hidden=!(adm||ps);$('tabAn').hidden=!adm;$('fr').hidden=!adm;
+ $('tabAdmin').hidden=!(adm||ps);$('tabAn').hidden=!adm;$('tabEsc').hidden=!(adm||ps);$('fr').hidden=!adm;
  document.querySelectorAll('.onlyadm').forEach(e=>e.hidden=!adm);
  if(ps){$('rsede').value=me.sede;$('rsede').disabled=true;$('psnote').textContent='Pastor de sede: ves únicamente la información de '+me.sede+'.';$('psnote').hidden=false}else{$('rsede').disabled=false;$('psnote').hidden=true}
  view('dash');loaders.res();
 }
-A.onAuthStateChanged(auth,u=>{if(!busy)enter(u)});
+A.onAuthStateChanged(auth,u=>{if(!busy){enter(u);escEnter(u)}});
 
 $('fl').addEventListener('submit',async e=>{
  e.preventDefault();msg('');
@@ -496,6 +578,116 @@ $('fs').addEventListener('submit',async e=>{
   busy=false;$('fs').reset();await enter(c.user);
  }catch(x){busy=false;msg(er(x))}
 });
+
+/* ===== ESCUELA DE FORMACIÓN ===== */
+const NIV=['Miembros', 'Discípulos', 'Líderes', 'Mentores', 'Diáconos', 'Ancianos', 'Ministros'],nvn=n=>NIV.indexOf(n)+1,CH=700000;
+let ESTU=null;
+function escView(v){['eauth','eform','epend','edash'].forEach(i=>{$(i).hidden=i!==v})}
+const emsg=t=>{$('emsg').textContent=t||''};
+async function escEnter(u){
+ if(!u){ESTU=null;escView('eauth');return}
+ try{const d=await S.getDoc(S.doc(db,'estudiantes',u.uid));ESTU=d.exists()?Object.assign({uid:u.uid},d.data()):null}catch(e){ESTU=null}
+ if(!ESTU){escView('eform');return}
+ if(ESTU.estado!=='aprobado'){$('ept').textContent=ESTU.estado==='rechazado'?'Tu inscripción no fue aprobada':ESTU.estado==='suspendido'?'Tu acceso a la escuela está suspendido por inasistencias. Comunícate con tu pastor para reactivarlo.':'Tu inscripción está pendiente';escView('epend');return}
+ $('ehi').textContent='Bienvenido, '+ESTU.nombre;$('eniv').textContent=ESTU.tipo==='maestro'?'Maestro · Escuela de '+ESTU.nivel+' (ves el material de todos los niveles)':'Tu nivel actual: Escuela de '+ESTU.nivel;
+ escView('edash');escMat()}
+async function escMat(){
+ const L=$('emat');L.textContent='';$('emok').textContent='';
+ try{const q=await S.getDocs(S.query(S.collection(db,'escuela_material'),...(ESTU.tipo==='maestro'?[]:[S.where('nivelNum','<=',nvn(ESTU.nivel))])));const ms=[];
+  q.forEach(d=>{ms.push(Object.assign({id:d.id},d.data()))});
+  ms.sort((a,b)=>(a.nivelNum-b.nivelNum)||String(a.titulo).localeCompare(String(b.titulo)));
+  ms.forEach(m=>{const li=el('li',m.titulo+' · '+m.nivel+(m.descripcion?' · '+m.descripcion:'')+' · '+Math.max(1,Math.round((m.tamano||0)/1024))+' KB');
+   const b=el('button','Descargar','btn sm');b.type='button';b.onclick=async()=>{b.disabled=true;$('emok').textContent='Preparando el archivo…';try{await descargarMat(m);$('emok').textContent=''}catch(x){$('emok').textContent='No se pudo descargar ['+(x.code||x.message)+']'}b.disabled=false};
+   li.appendChild(b);L.appendChild(li)});
+  if(!L.children.length)L.appendChild(el('li','Aún no hay material para tu nivel. Pronto lo publicaremos.'))
+ }catch(x){L.appendChild(el('li','No se pudo cargar el material ['+(x.code||x.message)+']'))}}
+async function descargarMat(m){
+ const ps=await Promise.all([...Array(m.partes).keys()].map(i=>S.getDoc(S.doc(db,'escuela_material',m.id,'partes',String(i)))));
+ const bin=atob(ps.map(p=>p.data().datos).join(''));const arr=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+ const url=URL.createObjectURL(new Blob([arr],{type:m.tipo||'application/octet-stream'}));
+ const a=document.createElement('a');a.href=url;a.download=m.archivo||'material';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
+$('efl').addEventListener('submit',async e=>{e.preventDefault();emsg('');
+ try{await A.signInWithEmailAndPassword(auth,$('ele').value.trim(),$('elp').value);$('elp').value=''}catch(x){emsg(er(x))}});
+$('efg').addEventListener('click',async()=>{const m=$('ele').value.trim();if(!m){emsg('Escribe tu correo arriba y vuelve a tocar el botón.');return}
+ try{await A.sendPasswordResetEmail(auth,m);emsg('Te enviamos un enlace para crear una contraseña nueva. Revisa tu correo.')}catch(x){emsg(er(x))}});
+$('efs').addEventListener('submit',async e=>{e.preventDefault();emsg('');busy=true;
+ try{const c=await A.createUserWithEmailAndPassword(auth,$('ese').value.trim(),$('esp').value);
+  await S.setDoc(S.doc(db,'estudiantes',c.user.uid),{nombre:$('esn').value.trim(),ci:$('esci').value.replace(/\D/g,''),telefono:$('est').value.trim(),sede:$('ess').value,tipo:$('esT').value,nivel:$('esv').value,lider:$('esl').value.replace(/\D/g,''),email:$('ese').value.trim().toLowerCase(),estado:'pendiente',creado:S.serverTimestamp()});
+  busy=false;$('efs').reset();await escEnter(c.user);await enter(c.user)}catch(x){busy=false;emsg(er(x))}});
+$('eform').addEventListener('submit',async e=>{e.preventDefault();$('efmsg').textContent='';const u=auth.currentUser;if(!u)return;
+ try{await S.setDoc(S.doc(db,'estudiantes',u.uid),{nombre:$('fn').value.trim(),ci:$('fci').value.replace(/\D/g,''),telefono:$('ft').value.trim(),sede:$('fsd').value,tipo:$('fT').value,nivel:$('fnv').value,lider:$('fl2').value.replace(/\D/g,''),email:(u.email||'').toLowerCase(),estado:'pendiente',creado:S.serverTimestamp()});await escEnter(u)}catch(x){$('efmsg').textContent=er(x)}});
+['eout0','eout1','eout2'].forEach(i=>$(i).addEventListener('click',()=>A.signOut(auth)));
+
+/* Administración de la escuela */
+function reqEst(x,todos){const ci=x.ci,mi=todos.filter(y=>y.estado==='aprobado'&&y.tipo!=='maestro'&&y.lider&&y.lider===ci);
+ const c=n=>mi.filter(y=>nvn(y.nivel)===n).length,cl=mi.filter(y=>nvn(y.nivel)>=3).length;
+ return {disc:mi.filter(y=>nvn(y.nivel)>=2).length,lid:cl,men:c(4),dia:c(5),anc:c(6)}}
+function cumple(nv,x,todos){const r=reqEst(x,todos),n=nvn(nv);
+ if(x.tipo==='maestro')return[true,'Maestro'];
+ if(n<=2)return[true,'Voluntario'];
+ if(n===3)return[r.disc>=1,'Requiere 1 Discípulo registrado ('+r.disc+')'];
+ if(n===4)return[r.lid>=3,'Requiere 3 líderes de casa de paz ('+r.lid+')'];
+ if(n===5)return[r.men>=2||r.lid>=7,'Requiere 2 mentores o 7 líderes ('+r.men+' mentores, '+r.lid+' líderes)'];
+ if(n===6)return[r.dia>=2||r.lid>=20,'Requiere 2 diáconos o 20 líderes ('+r.dia+' diáconos, '+r.lid+' líderes)'];
+ return[r.anc>=2||r.lid>=30,'Requiere 2 ancianos o 30 líderes ('+r.anc+' ancianos, '+r.lid+' líderes)']}
+
+async function setEst(id,datos){try{await S.updateDoc(S.doc(db,'estudiantes',id),datos);loaders.esc()}catch(x){alert(er(x))}}
+let ESTALL=[];
+loaders.esc=async()=>{
+ const adm=me&&me.rol==='admin';const fs=adm?[]:[S.where('sede','==',me.sede)];
+ try{const q=await S.getDocs(S.query(S.collection(db,'estudiantes'),...fs));ESTALL=[];q.forEach(d=>ESTALL.push(Object.assign({id:d.id},d.data())))}
+ catch(x){$('epd').textContent='';$('epd').appendChild(el('li','No se pudo cargar ['+(x.code||x.message)+']'));return}
+ pintaEsc();if(adm)madmin()};
+const fEs=t=>{try{return t.toDate().toLocaleDateString('es-VE')}catch(e){return ''}};
+function pintaEsc(){
+ const P=$('epd'),V=$('eap');P.textContent='';V.textContent='';
+ const TODOS=ESTALL;
+ const sel=(v)=>{const s=document.createElement('select');NIV.forEach(n=>{const o=document.createElement('option');o.textContent=n;if(n===v)o.selected=true;s.appendChild(o)});s.style.cssText='margin:0 8px;width:auto';return s};
+ const rol=x=>x.tipo==='maestro'?'MAESTRO':'Alumno';
+ ESTALL.forEach(x=>{
+  if(x.estado==='pendiente'){const li=el('li',rol(x)+' · '+x.nombre+' · C.I. '+x.ci+' · '+x.telefono+' · '+x.sede+' · Solicita: '+x.nivel+(x.lider?' · Líder C.I. '+x.lider:'')+' · '+cumple(x.nivel,x,TODOS)[1]+' · Nivel a asignar:');const s=sel(x.nivel);li.appendChild(s);
+   const a=el('button','Aprobar','btn sm');a.type='button';a.onclick=()=>{const c=cumple(s.value,x,TODOS);if(!c[0]&&!confirm('No cumple el requisito de este nivel: '+c[1]+'. ¿Aprobar de todas formas?'))return;setEst(x.id,{estado:'aprobado',nivel:s.value})};
+   const r=el('button','Rechazar','btn alt sm');r.type='button';r.onclick=()=>setEst(x.id,{estado:'rechazado'});li.appendChild(a);li.appendChild(r);P.appendChild(li)}
+  else if(x.estado==='aprobado'||x.estado==='suspendido'){const FL=x.faltas||[],inj=FL.filter(y=>!y.j).length,jus=FL.length-inj,susp=x.estado==='suspendido';
+   const li=el('li',(susp?'⛔ SUSPENDIDO · ':'')+rol(x)+' · '+x.nombre+' · '+x.sede+' · Inasistencias: '+inj+' injustificadas, '+jus+' justificadas'+(!susp&&inj>=3?' · ⚠ Llegó a 3: amerita suspensión':'')+' · Nivel:');
+   if(x.tipo!=='maestro'||true){const fb=el('button','Registrar inasistencia','btn alt sm');fb.type='button';fb.onclick=()=>{const j=confirm('¿La inasistencia es JUSTIFICADA?\n\nAceptar = justificada\nCancelar = injustificada');setEst(x.id,{faltas:FL.concat([{f:new Date().toLocaleDateString('es-VE'),j:j}])})};li.appendChild(fb);
+   if(FL.length){const qb=el('button','Quitar última','btn alt sm');qb.type='button';qb.onclick=()=>{if(confirm('¿Quitar la última inasistencia registrada?'))setEst(x.id,{faltas:FL.slice(0,-1)})};li.appendChild(qb)}
+   const sb=el('button',susp?'Reactivar':'Suspender','btn sm');sb.type='button';sb.onclick=()=>{if(confirm(susp?'¿Reactivar a '+x.nombre+'?':'¿Suspender a '+x.nombre+'? No podrá ver el material hasta que lo reactives.'))setEst(x.id,{estado:susp?'aprobado':'suspendido'})};li.appendChild(sb)}const s=sel(x.nivel);li.appendChild(s);
+   const g=el('button','Cambiar nivel','btn sm');g.type='button';g.onclick=()=>{const c=cumple(s.value,x,TODOS);if(!c[0]&&!confirm('No cumple el requisito de este nivel: '+c[1]+'. ¿Cambiar de todas formas?'))return;setEst(x.id,{nivel:s.value})};li.appendChild(g);
+   if(x.tipo!=='maestro'&&nvn(x.nivel)<7){const sg=cumple(NIV[nvn(x.nivel)],x,TODOS);li.appendChild(el('span',' · Siguiente nivel ('+NIV[nvn(x.nivel)]+'): '+(sg[0]?'cumple el requisito ✔':sg[1])))}
+   V.appendChild(li)}});
+ if(!P.children.length)P.appendChild(el('li','No hay inscripciones por aprobar.'));
+ if(!V.children.length)V.appendChild(el('li','Aún no hay aprobados.'));
+ pintaReg()}
+function filtroReg(){const g=i=>$(i).value,q=g('rq').trim().toLowerCase();
+ return ESTALL.filter(x=>(!g('rsd')||x.sede===g('rsd'))&&(!g('rtp')||(x.tipo||'alumno')===g('rtp'))&&(!g('rnv')||x.nivel===g('rnv'))&&(!g('res')||x.estado===g('res'))&&(!q||String(x.nombre).toLowerCase().includes(q)||String(x.ci).includes(q)))
+ .sort((a,b)=>String(a.sede).localeCompare(String(b.sede))||String(a.nombre).localeCompare(String(b.nombre)))}
+function pintaReg(){const L=$('ereg');L.textContent='';const r=filtroReg();$('rcount').textContent=r.length+' registro(s)';
+ r.forEach(x=>{const li=document.createElement('li'),d=document.createElement('details'),sm=document.createElement('summary');
+  sm.textContent=(x.tipo==='maestro'?'MAESTRO':'Alumno')+' · '+x.nombre+' · '+x.sede+' · '+x.nivel+' · '+x.estado;d.appendChild(sm);
+  [['Cédula',x.ci],['Teléfono',x.telefono],['Correo',x.email],['Sede de registro',x.sede],['Rol',x.tipo==='maestro'?'Maestro':'Alumno'],['Nivel',x.nivel],['Estado',x.estado],['C.I. de su líder',x.lider||'—'],['Inasistencias',(x.faltas||[]).length?(x.faltas||[]).map(y=>y.f+(y.j?' (justificada)':' (injustificada)')).join(', '):'Ninguna'],['Fecha de inscripción',fEs(x.creado)]].forEach(p=>d.appendChild(el('div',p[0]+': '+(p[1]||'—'))));
+  li.appendChild(d);L.appendChild(li)});
+ if(!r.length)L.appendChild(el('li','No hay registros con ese filtro.'))}
+['rsd','rtp','rnv','res'].forEach(i=>$(i).addEventListener('change',pintaReg));$('rq').addEventListener('input',pintaReg);
+$('rcsv').onclick=()=>{const c=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+ const rows=[['Nombre','Cédula','Teléfono','Correo','Sede','Rol','Nivel','Estado','Inasistencias injustificadas','Inasistencias justificadas','C.I. líder','Fecha']].concat(filtroReg().map(x=>[x.nombre,x.ci,x.telefono,x.email,x.sede,x.tipo==='maestro'?'Maestro':'Alumno',x.nivel,x.estado,(x.faltas||[]).filter(y=>!y.j).length,(x.faltas||[]).filter(y=>y.j).length,x.lider||'',fEs(x.creado)]));
+ const b=new Blob(['﻿'+rows.map(r=>r.map(c).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='escuela-registro.csv';document.body.appendChild(a);a.click();a.remove()};
+async function madmin(){const U=$('madm');U.textContent='';
+ try{const q=await S.getDocs(S.collection(db,'escuela_material'));const ms=[];q.forEach(d=>ms.push(Object.assign({id:d.id},d.data())));ms.sort((a,b)=>(a.nivelNum-b.nivelNum)||String(a.titulo).localeCompare(String(b.titulo)));
+  ms.forEach(m=>{const li=el('li',m.nivel+' · '+m.titulo+' · '+m.archivo+' · '+Math.max(1,Math.round((m.tamano||0)/1024))+' KB');
+   const d=el('button','Eliminar','btn alt sm');d.type='button';d.style.marginLeft='10px';d.onclick=async()=>{if(!confirm('¿Eliminar este material?'))return;try{for(let i=0;i<m.partes;i++)await S.deleteDoc(S.doc(db,'escuela_material',m.id,'partes',String(i)));await S.deleteDoc(S.doc(db,'escuela_material',m.id));madmin()}catch(x){$('mok').textContent='No se eliminó ['+(x.code||x.message)+']'}};li.appendChild(d);U.appendChild(li)});
+  if(!U.children.length)U.appendChild(el('li','Aún no has subido material.'))
+ }catch(x){U.appendChild(el('li','No se pudo cargar ['+(x.code||x.message)+']'))}}
+const fileB64=f=>new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>ok(String(r.result).split(',')[1]||'');r.readAsDataURL(f)});
+$('mup').onclick=async()=>{const f=$('mfi').files[0],t=$('mti').value.trim(),o=$('mok');
+ if(!t||!f){o.textContent='Escribe el título y elige el archivo.';return}
+ if(f.size>8*1024*1024){o.textContent='El archivo supera los 8 MB.';return}
+ $('mup').disabled=true;
+ try{o.textContent='Subiendo…';const b=await fileB64(f),n=Math.ceil(b.length/CH),ref=S.doc(S.collection(db,'escuela_material'));
+  for(let i=0;i<n;i++){await S.setDoc(S.doc(db,'escuela_material',ref.id,'partes',String(i)),{n:i,datos:b.slice(i*CH,(i+1)*CH)});o.textContent='Subiendo… '+Math.round((i+1)/n*100)+'%'}
+  await S.setDoc(ref,{titulo:t,descripcion:$('mde').value.trim(),nivel:$('mnv').value,nivelNum:nvn($('mnv').value),archivo:f.name,tipo:f.type||'application/octet-stream',tamano:f.size,partes:n,creado:S.serverTimestamp()});
+  $('mti').value='';$('mde').value='';$('mfi').value='';o.textContent='Material subido.';madmin()}catch(x){o.textContent='No se subió ['+(x.code||x.message)+']'}
+ $('mup').disabled=false};
 const out=()=>A.signOut(auth);
 $('out').addEventListener('click',out);$('pout').addEventListener('click',out);
 
