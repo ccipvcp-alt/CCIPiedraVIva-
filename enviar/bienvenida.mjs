@@ -57,7 +57,7 @@ export function plantilla(nombre) {
   <div style="font-size:21px;font-weight:900;letter-spacing:1px;color:#111111;padding-bottom:8px">ESCUELAS DE FORMACIÓN</div>
   <div style="font-size:16px;line-height:1.6;color:#444444;padding-bottom:18px">Por esto es importante que te unas a nuestras escuelas de formación:</div>
   ${ESCUELAS.map(e => `<span style="display:inline-block;background:#111111;color:#ffffff;font-weight:bold;font-size:14px;letter-spacing:2px;padding:12px 18px;border-radius:999px;margin:4px">${e}</span>`).join('')}
-  <div style="padding-top:22px">${boton('https://wa.me/584149442672?text=' + encodeURIComponent('Paz de Dios, quiero unirme a las escuelas de formación.'), 'QUIERO INSCRIBIRME', PLATA, '#111111')}</div>
+  <div style="padding-top:22px">${boton('https://ccipvcp-alt.github.io/CCIPiedraVIva-/?v=escuela&r=1', 'QUIERO INSCRIBIRME', PLATA, '#111111')}</div>
 </td></tr>
 <tr><td style="padding:28px 30px 8px;text-align:center;color:#222222;font-size:17px;line-height:1.7">
   <p style="margin:0"><b>Te esperamos este domingo</b><br>9:00 a. m. y 11:00 a. m. · Presencial y en vivo</p>
