@@ -1,5 +1,6 @@
 import admin from 'firebase-admin';
 import nodemailer from 'nodemailer';
+import { IMG } from './imagenes.mjs';
 
 admin.initializeApp({ credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)) });
 const db = admin.firestore();
@@ -42,8 +43,8 @@ const dir = p => new URL(p, import.meta.url).pathname;
 
 // Adjuntos incrustados (cid): logo, íconos e imágenes subidas desde el panel
 const attachments = [
-  { filename: 'logo.png', path: dir('./logo-blanco.png'), cid: 'logo@cci' },
-  ...['ig', 'yt', 'tt', 'wa'].map(n => ({ filename: n + '.png', path: dir(`./${n}.png`), cid: `${n}@cci` }))
+  { filename: 'logo.png', content: Buffer.from(IMG.logo, 'base64'), contentType: 'image/png', cid: 'logo@cci' },
+  ...['ig', 'yt', 'tt', 'wa'].map(n => ({ filename: n + '.png', content: Buffer.from(IMG[n], 'base64'), contentType: 'image/png', cid: `${n}@cci` }))
 ];
 const imgs = (Array.isArray(a.imagenes) ? a.imagenes : []).slice(0, 3);
 imgs.forEach((u, i) => {
