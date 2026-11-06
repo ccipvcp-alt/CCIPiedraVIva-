@@ -1,0 +1,17 @@
+name: Tasa oficial BCV
+on:
+  schedule:
+    - cron: '20 */3 * * *'   # cada 3 horas lee la tasa publicada por el BCV
+  workflow_dispatch:         # permite ejecutarlo a mano desde la pestaña Actions
+jobs:
+  tasa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --prefix enviar
+      - run: node enviar/tasa.mjs
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
