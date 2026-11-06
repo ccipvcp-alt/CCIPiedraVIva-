@@ -10,8 +10,9 @@ const primerNombre = n => { const p = String(n || '').trim().split(/\s+/)[0] || 
 const fecha = f => { try { return new Date(f).toLocaleDateString('es-VE'); } catch { return ''; } };
 
 export function plantilla(x, costo) {
-  const saldo = costo == null ? null : Math.max(0, Math.round((costo - x.monto) * 100) / 100);
-  const estado = saldo === null ? 'Pago registrado' : saldo === 0 ? '¡PAGO TOTAL COMPLETO!' : `Abono · Falta ${usd(saldo)}`;
+  const dif = costo == null ? null : Math.round((costo - x.monto) * 100) / 100;
+  const saldo = dif === null ? null : Math.max(0, dif);
+  const estado = dif === null ? 'Pago registrado' : dif < 0 ? `Pago superior al costo (${usd(-dif)} de más). Un pastor revisará tu pago.` : dif === 0 ? '¡PAGO TOTAL COMPLETO!' : `Abono · Falta ${usd(dif)}`;
   const n = esc(primerNombre(x.nombre));
   const link = `https://ccipvcp-alt.github.io/CCIPiedraVIva-/?v=evento&e=${encodeURIComponent(x.k)}&f=1&c=${encodeURIComponent(x.codigo)}&ci=${encodeURIComponent(x.ci)}`;
   const ok = (x.pagos || []).filter(g => g.e !== 'pend'), pend = (x.pagos || []).filter(g => g.e === 'pend');
@@ -39,6 +40,7 @@ export function plantilla(x, costo) {
 <tr><td style="padding:12px 30px 28px;text-align:center"><div style="font-size:16px;font-weight:bold;color:${saldo === 0 ? '#1b8a3a' : '#0a2a86'};padding-bottom:14px">${esc(estado)}</div>
   ${saldo === 0 ? '' : `<a href="${link}" style="display:inline-block;background:#1450c4;color:#ffffff;text-decoration:none;font-weight:bold;font-size:15px;letter-spacing:1px;padding:15px 30px;border-radius:999px">AGREGAR UN PAGO</a>
   <div style="font-size:13px;color:#555;padding-top:12px;line-height:1.5">Este botón abre el formulario con tu código y tu cédula ya escritos.</div>`}
+  <div style="margin-top:18px;background:#fff7e6;border:1px solid #f5c542;border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.5;color:#7a4b00;text-align:left"><b>⚠️ Aviso de seguridad:</b> este correo es personal y <b>no debe compartirse</b>. Contiene tu código de inscripción y un enlace que permite agregar pagos a tu registro. No lo reenvíes ni lo muestres a nadie.</div>
 </td></tr>
 <tr><td style="background:#0a2a86;color:#dbe6ff;text-align:center;padding:22px 24px;font-size:12px;line-height:1.7"><b style="color:#fff">Centro Cristiano Piedraviva</b><br>¿Dudas? Escríbenos a <a href="mailto:CCIPIDRAVIVA@gmail.com" style="color:#fff">CCIPIDRAVIVA@gmail.com</a></td></tr>
 </table></div>`;
