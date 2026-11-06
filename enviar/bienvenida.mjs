@@ -70,7 +70,7 @@ export function plantilla(nombre) {
 
 <tr><td style="background:#111111;text-align:center;padding:30px 20px 10px"><img src="cid:logo@cci" alt="CCI Piedra Viva" width="70" style="display:inline-block;width:70px;height:auto"></td></tr>
 <tr><td style="background:#111111;text-align:center;padding:14px 20px 8px">
-  ${icono('ig', 'https://www.instagram.com/ccipiedraviva')}${icono('yt', 'https://youtube.com/@ccipiedravivaoficial')}${icono('tt', 'https://www.tiktok.com/@cci.piedraviva.oficial')}${icono('wa', 'https://wa.me/584149442672')}
+  ${icono('ig', 'https://www.instagram.com/ccipiedraviva')}${icono('yt', 'https://youtube.com/@ccipiedravivaoficial')}${icono('tt', 'https://www.tiktok.com/@cci.piedraviva.oficial')}
 </td></tr>
 <tr><td style="background:#111111;color:#c9c9c9;text-align:center;padding:14px 26px 30px;font-size:12px;line-height:1.7">
   <b style="color:#fff">Centro Cristiano Piedraviva</b><br>Sede principal: Calle Padre María de Triana<br>La Guaricha · Valencia · Boconó<br><br>
