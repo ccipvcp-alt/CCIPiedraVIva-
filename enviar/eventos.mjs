@@ -13,9 +13,10 @@ export function plantilla(x, costo) {
   const saldo = costo == null ? null : Math.max(0, Math.round((costo - x.monto) * 100) / 100);
   const estado = saldo === null ? 'Pago registrado' : saldo === 0 ? '¡PAGO TOTAL COMPLETO!' : `Abono · Falta ${usd(saldo)}`;
   const n = esc(primerNombre(x.nombre));
+  const link = `https://ccipvcp-alt.github.io/CCIPiedraVIva-/?v=evento&e=${encodeURIComponent(x.k)}&f=1&c=${encodeURIComponent(x.codigo)}&ci=${encodeURIComponent(x.ci)}`;
   const ok = (x.pagos || []).filter(g => g.e !== 'pend'), pend = (x.pagos || []).filter(g => g.e === 'pend');
   const pendTotal = pend.reduce((a, g) => a + (+g.m || 0), 0);
-  const filas = (x.pagos || []).map(g => `<tr><td style="padding:6px 0;border-bottom:1px solid #e5e5e5;color:#333">${esc(fecha(g.f))} · ${esc(g.mt || 'Pago Móvil')}${g.r ? ' · ref. ' + esc(g.r) : ''}${g.e === 'pend' ? ' <b style="color:#b45309">· PENDIENTE de confirmar</b>' : ''}</td><td style="padding:6px 0;border-bottom:1px solid #e5e5e5;text-align:right;font-weight:bold;color:${g.e === 'pend' ? '#b45309' : '#111'}">${usd(g.m)}</td></tr>`).join('');
+  const filas = (x.pagos || []).map(g => `<tr><td style="padding:6px 0;border-bottom:1px solid #e5e5e5;color:#333">${esc(fecha(g.f))} · ${esc(g.mt || 'Pago Móvil')}${g.mb ? ' · Bs. ' + esc(Number(g.mb).toLocaleString('es-VE', { maximumFractionDigits: 2 })) + (g.t ? ' (tasa BCV ' + esc(g.t) + ')' : '') : ''}${g.r ? ' · ref. ' + esc(g.r) : ''}${g.e === 'pend' ? ' <b style="color:#b45309">· PENDIENTE de confirmar</b>' : ''}</td><td style="padding:6px 0;border-bottom:1px solid #e5e5e5;text-align:right;font-weight:bold;color:${g.e === 'pend' ? '#b45309' : '#111'}">${usd(g.m)}</td></tr>`).join('');
   return `<div style="background:#e9e9ec;padding:16px 8px;font-family:Arial,Helvetica,sans-serif">
 <table role="presentation" align="center" width="100%" style="max-width:600px;margin:0 auto;background:#ffffff" cellpadding="0" cellspacing="0">
 <tr><td style="background:#0a2a86;text-align:center;padding:30px 24px 34px">
@@ -35,8 +36,9 @@ export function plantilla(x, costo) {
   ${pendTotal ? `<tr><td style="padding:2px 0;color:#b45309">Efectivo por confirmar (lo habilita un pastor al recibirlo)</td><td style="padding:2px 0;text-align:right;color:#b45309">${usd(pendTotal)}</td></tr>` : ''}
   ${costo == null ? '' : `<tr><td style="padding:2px 0;color:#555">Costo del evento</td><td style="padding:2px 0;text-align:right;color:#555">${usd(costo)}</td></tr>`}
 </table></td></tr>
-<tr><td style="padding:12px 30px 28px;text-align:center"><span style="display:inline-block;background:${saldo === 0 ? '#1b8a3a' : '#1450c4'};color:#fff;font-weight:bold;font-size:15px;letter-spacing:1px;padding:13px 26px;border-radius:999px">${esc(estado)}</span>
-  ${saldo ? `<div style="font-size:14px;color:#555;padding-top:14px;line-height:1.5">Para agregar un pago, vuelve a la página de inscripción, elige la misma actividad, escribe tu cédula y este <b>código de inscripción</b>: tu nuevo pago se suma a tu registro.</div>` : ''}
+<tr><td style="padding:12px 30px 28px;text-align:center"><div style="font-size:16px;font-weight:bold;color:${saldo === 0 ? '#1b8a3a' : '#0a2a86'};padding-bottom:14px">${esc(estado)}</div>
+  ${saldo === 0 ? '' : `<a href="${link}" style="display:inline-block;background:#1450c4;color:#ffffff;text-decoration:none;font-weight:bold;font-size:15px;letter-spacing:1px;padding:15px 30px;border-radius:999px">AGREGAR UN PAGO</a>
+  <div style="font-size:13px;color:#555;padding-top:12px;line-height:1.5">Este botón abre el formulario con tu código y tu cédula ya escritos.</div>`}
 </td></tr>
 <tr><td style="background:#0a2a86;color:#dbe6ff;text-align:center;padding:22px 24px;font-size:12px;line-height:1.7"><b style="color:#fff">Centro Cristiano Piedraviva</b><br>¿Dudas? Escríbenos a <a href="mailto:CCIPIDRAVIVA@gmail.com" style="color:#fff">CCIPIDRAVIVA@gmail.com</a></td></tr>
 </table></div>`;
@@ -44,7 +46,7 @@ export function plantilla(x, costo) {
 
 if (process.env.PREVIEW) {
   const fs = await import('fs');
-  fs.writeFileSync(process.env.PREVIEW, plantilla({ nombre: 'maria lopez', rol: 'Participante', evento: 'Encuentro de Liberación · Abril 2027', codigo: 'PV-LG-47218-X7K2', monto: 25, pagos: [{ m: 25, f: new Date().toISOString(), r: '123456', mt: 'Pago Móvil', e: 'ok' }, { m: 10, f: new Date().toISOString(), r: '', mt: 'Efectivo', e: 'pend' }] }, 50));
+  fs.writeFileSync(process.env.PREVIEW, plantilla({ nombre: 'maria lopez', rol: 'Participante', evento: 'Encuentro de Liberación · Abril 2027', codigo: 'PV-LG-47218-X7K2', k: 0, ci: '12345678', monto: 25, pagos: [{ m: 25, f: new Date().toISOString(), r: '123456', mt: 'Pago Móvil', e: 'ok' }, { m: 10, f: new Date().toISOString(), r: '', mt: 'Efectivo', e: 'pend' }] }, 50));
   process.exit(0);
 }
 
