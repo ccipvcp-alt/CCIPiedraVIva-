@@ -1048,7 +1048,7 @@ const bs=n=>'Bs. '+(Math.round((+n||0)*100)/100).toLocaleString('es-VE',{minimum
 async function evTasa(){
  try{const d=await S.getDoc(S.doc(db,'eventos_config','tasa'));if(d.exists()&&+d.data().valor>0)TASAMAN=+d.data().valor}catch(e){}
  if(TASAMAN){TASA={v:TASAMAN,f:'fijada por la iglesia'};return TASA}
- try{const d=await S.getDoc(S.doc(db,'eventos_config','tasa_bcv'));if(d.exists()&&+d.data().valor>0){TASA={v:+d.data().valor,f:'BCV'+(d.data().fecha?' · valor '+d.data().fecha:'')};return TASA}}catch(e){}
+ try{const d=await S.getDoc(S.doc(db,'eventos_config','tasa_bcv'));if(d.exists()&&+d.data().valor>0){TASA={v:+d.data().valor,f:(d.data().fuente||'BCV')+(d.data().fecha?' · valor '+d.data().fecha:'')};return TASA}}catch(e){}
  TASA=null;return null}
 async function evMuestraTasa(){const t=$('evtasa');if(!t)return;const r=TASA||await evTasa();
  const mo=parseFloat($('evm').value||'0');
