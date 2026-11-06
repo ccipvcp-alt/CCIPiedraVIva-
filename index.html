@@ -171,8 +171,24 @@ nav a.top{white-space:nowrap}
 body[data-v=iglekids] #iglekids{display:block}
 #ikreg{display:none}
 body[data-v=ikreg] #ikreg{display:block}
-#evreg{display:none}
-body[data-v=evento] #evreg{display:block}
+#evreg,#evland{display:none}
+body[data-v=evento][data-f] #evreg{display:block}
+body[data-v=evento]:not([data-f]) #evland{display:block}
+#evland{background:#fff;padding:0 0 60px}
+.evbar{position:relative;background:#0b0b0d;color:#fff;text-align:center;padding:24px 76px;min-height:84px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.evlogo{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:56px;height:56px;background:center/contain no-repeat}
+.evfl{position:relative;max-width:1000px;margin:26px auto 0;border-radius:6px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.35);animation:evin 1.1s cubic-bezier(.2,.8,.2,1) both,evfloat 7s ease-in-out 1.2s infinite}
+.evfl img{display:block;width:100%;height:auto}
+.evfl::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(-120%);animation:evshine 4.5s ease-in-out 1.4s infinite;pointer-events:none}
+@keyframes evin{0%{opacity:0;transform:scale(.9) translateY(34px)}100%{opacity:1;transform:none}}
+@keyframes evfloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.012)}}
+@keyframes evshine{0%{transform:translateX(-120%)}55%,100%{transform:translateX(120%)}}
+.evgo{display:block;max-width:1000px;margin:26px auto 0;background:#0b0b0d;color:#fff!important;text-align:center;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:20px 16px;border-radius:999px;text-decoration:none;animation:evin 1s .5s both,evpulse 2.6s ease-in-out 1.8s infinite;transition:transform .3s}
+.evgo:hover{transform:scale(1.02)}
+@keyframes evpulse{0%,100%{box-shadow:0 0 0 0 rgba(26,115,240,.5)}50%{box-shadow:0 0 0 14px rgba(26,115,240,0)}}
+.evinfo{max-width:1000px;margin:20px auto 0;color:#555;text-align:center}
+.evland-in{padding:0 16px}
+@media (prefers-reduced-motion:reduce){.evfl,.evgo{animation:none}.evfl::after{display:none}}
 #evreg .evpay{background:var(--soft);border-radius:12px;padding:14px 16px;margin:0 0 16px;max-width:560px}
 #evreg form{display:grid;gap:12px;max-width:640px;box-sizing:border-box}
 #evreg input,#evreg select,#evreg textarea{width:100%;box-sizing:border-box;min-width:0}
@@ -263,7 +279,7 @@ footer .cols>*{will-change:opacity,transform}
 </style>
 </head>
 <body>
-<script>(function(){try{var v=new URLSearchParams(location.search).get('v');if(['escuela','lideres','sedes','iglekids','ikreg','evento','miembros','contacto','clinica'].indexOf(v)<0)return;document.body.setAttribute('data-v',v);document.title=({escuela:'Escuela de formación',lideres:'Líderes',sedes:'Nuestras sedes',iglekids:'IGLEKIDS',ikreg:'Inscripción IGLEKIDS',evento:'Inscripción a evento',miembros:'Registro de miembros',contacto:'¿Cómo podemos ayudarte?',clinica:'Clínica del Alma'})[v]+' · CCI Piedra Viva';
+<script>(function(){try{var v=new URLSearchParams(location.search).get('v');if(['escuela','lideres','sedes','iglekids','ikreg','evento','miembros','contacto','clinica'].indexOf(v)<0)return;document.body.setAttribute('data-v',v);if(v==='evento'&&new URLSearchParams(location.search).get('f'))document.body.setAttribute('data-f','1');document.title=({escuela:'Escuela de formación',lideres:'Líderes',sedes:'Nuestras sedes',iglekids:'IGLEKIDS',ikreg:'Inscripción IGLEKIDS',evento:'Inscripción a evento',miembros:'Registro de miembros',contacto:'¿Cómo podemos ayudarte?',clinica:'Clínica del Alma'})[v]+' · CCI Piedra Viva';
 document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('header a[href^="#"],header .drop a').forEach(function(a){if(a.hasAttribute('data-lang'))return;var h=a.getAttribute('href');if(h&&h.charAt(0)==='#'){a.setAttribute('href','./'+h)}});
 document.querySelectorAll('header a[href^="?v="]').forEach(function(a){a.removeAttribute('target')});
 var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}catch(e){}})();</script>
@@ -496,7 +512,7 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 </div>
 <div id="t8" class="tab" hidden>
 <div class="onlyadm"><h3>Costo de cada evento</h3><p class="note">Escribe cuánto cuesta cada actividad (en dólares). Si el servidor paga distinto, ponlo en su casilla; si la dejas vacía, paga igual que el participante.</p>
-<div style="display:grid;gap:8px;max-width:640px"><div style="display:grid;grid-template-columns:1fr 100px 100px;gap:8px;align-items:center"><span>Encuentro de Liberación · Abril 2027</span><input type="number" min="0" step="0.01" id="cc0" placeholder="Particip. $"><input type="number" min="0" step="0.01" id="cs0" placeholder="Servidor $"></div><div style="display:grid;grid-template-columns:1fr 100px 100px;gap:8px;align-items:center"><span>Congreso de Sacerdotes · Octubre 2027</span><input type="number" min="0" step="0.01" id="cc1" placeholder="Particip. $"><input type="number" min="0" step="0.01" id="cs1" placeholder="Servidor $"></div><div style="display:grid;grid-template-columns:1fr 100px 100px;gap:8px;align-items:center"><span>Congreso de Mujeres · Julio 2027</span><input type="number" min="0" step="0.01" id="cc2" placeholder="Particip. $"><input type="number" min="0" step="0.01" id="cs2" placeholder="Servidor $"></div><div style="display:grid;grid-template-columns:1fr 100px 100px;gap:8px;align-items:center"><span>Congreso Juvenil · Septiembre 2027</span><input type="number" min="0" step="0.01" id="cc3" placeholder="Particip. $"><input type="number" min="0" step="0.01" id="cs3" placeholder="Servidor $"></div><div><button class="btn sm" type="button" id="ccsave">Guardar costos</button> <span class="note" id="ccok" role="status"></span></div></div>
+<div style="display:grid;gap:8px;max-width:640px"><div style="display:grid;grid-template-columns:1fr 100px 100px;gap:8px;align-items:center"><span>Encuentro de Liberación · Abril 2027</span><input type="number" min="0" step="0.01" id="cc0" placeholder="Particip. $"><input type="number" min="0" step="0.01" id="cs0" placeholder="Servidor $"></div><div style="display:grid;grid-template-columns:1fr 100px 100px;gap:8px;align-items:center"><span>Congreso de Sacerdotes · Octubre 2027</span><input type="number" min="0" step="0.01" id="cc1" placeholder="Particip. $"><input type="number" min="0" step="0.01" id="cs1" placeholder="Servidor $"></div><div style="display:grid;grid-template-columns:1fr 100px 100px;gap:8px;align-items:center"><span>Congreso de Mujeres · Julio 2027</span><input type="number" min="0" step="0.01" id="cc2" placeholder="Particip. $"><input type="number" min="0" step="0.01" id="cs2" placeholder="Servidor $"></div><div style="display:grid;grid-template-columns:1fr 100px 100px;gap:8px;align-items:center"><span>Congreso Juvenil · Septiembre 2027</span><input type="number" min="0" step="0.01" id="cc3" placeholder="Particip. $"><input type="number" min="0" step="0.01" id="cs3" placeholder="Servidor $"></div><div style="display:grid;grid-template-columns:1fr 100px;gap:8px;align-items:center;margin-top:6px"><span>Tasa del día manual (Bs por $1). Déjala vacía para usar la tasa oficial del BCV, que se actualiza sola.</span><input type="number" min="0" step="0.0001" id="tasaman" placeholder="Bs/$"></div><div><button class="btn sm" type="button" id="ccsave">Guardar costos</button> <span class="note" id="ccok" role="status"></span></div></div>
 </div>
 <h3 style="margin-top:26px">Inscritos a eventos</h3><p class="note">Cada persona aparece una sola vez por evento: sus abonos se van sumando. Tú ves lo abonado, lo que falta y el código de confirmación.</p>
 <div style="display:grid;gap:8px;max-width:640px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))"><select id="vev"><option value="">Todos los eventos</option><option value="0">Encuentro de Liberación · Abril 2027</option><option value="1">Congreso de Sacerdotes · Octubre 2027</option><option value="2">Congreso de Mujeres · Julio 2027</option><option value="3">Congreso Juvenil · Septiembre 2027</option></select><select id="vrl"><option value="">Participantes y servidores</option><option>Participante</option><option>Servidor</option></select><select id="vsd"><option value="">Todas las sedes</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select><select id="vpg"><option value="">Todos los pagos</option><option value="total">Pago total</option><option value="saldo">Con saldo pendiente</option><option value="efe">Con efectivo por confirmar</option></select></div>
@@ -597,8 +613,19 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 </div>
 </section>
 
+<section id="evland">
+<div class="evbar"><a class="evlogo" href="./" aria-label="CCI Piedra Viva"></a><span id="evtit"></span></div>
+<div class="evland-in">
+<div class="evfl"><img id="evimg" alt=""></div>
+<a class="evgo" id="evgo" href="?v=evento&f=1">INSCRIBIRME AHORA</a>
+<p class="evinfo" id="evsub"></p>
+</div>
+</section>
+
 <section id="evreg">
+<div class="evbar"><a class="evlogo" href="./" aria-label="CCI Piedra Viva"></a><span id="evtit2"></span></div>
 <div class="wrap" style="max-width:700px">
+<p style="margin:0 0 6px"><a id="evback" href="?v=evento">← Ver el flyer del evento</a></p>
 <h2>Inscripción al evento</h2>
 <p>Llena tus datos y el monto que pagas hoy. Recibirás por correo tu <b>código de inscripción</b>, que usaremos para verificar tu pago.</p>
 <div class="evpay"><strong>Datos para tu Pago Móvil</strong><br>Banco: BDT (0175)<br>RIF: J-403897441<br>Teléfono: 0424-3002224</div>
@@ -613,10 +640,13 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <label>Sede a la que asistes<select id="evs" required><option value="">Elige tu sede</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label>
 <p id="evcosto" class="note" style="font-weight:700;margin:0"></p>
 <div class="evg"><label>Forma de pago<select id="evmt" required><option value="Pago Móvil">Pago Móvil / transferencia</option><option value="Efectivo">Efectivo (lo confirma un pastor al recibirlo)</option></select></label>
-<label>Monto que pagas hoy (en dólares $)<input id="evm" type="number" min="1" max="100000" step="0.01" required inputmode="decimal"></label></div>
+<label>Pagas en<select id="evmo"><option value="USD">Dólares ($)</option><option value="Bs">Bolívares (Bs)</option></select></label></div>
+<label>Monto que pagas hoy<input id="evm" type="number" min="0.01" max="100000000" step="0.01" required inputmode="decimal"></label>
+<p id="evtasa" class="note" style="font-weight:700;margin:0"></p>
 <label id="evrfl">Referencia del pago (opcional)<input id="evrf" maxlength="40" inputmode="numeric"></label>
-<label>Código de inscripción <small>(solo si ya te inscribiste antes; te llegó por correo)</small><input id="evc" maxlength="24" autocomplete="off" autocapitalize="characters" placeholder="Ej.: PV-LG-47218-X7K2"></label>
-<p class="note" style="margin:0">Si ya te inscribiste, escribe tu <b>código de inscripción</b>: así tu nuevo pago se <b>suma</b> a tu registro. Sin el código no se puede agregar un pago a una cédula ya inscrita. Un pago en efectivo queda <b>pendiente</b> hasta que un pastor confirme que lo recibió.</p>
+<label id="evcl" hidden>Código de inscripción <small>(el que te llegó por correo)</small><input id="evc" maxlength="24" autocomplete="off" autocapitalize="characters" placeholder="Ej.: PV-LG-47218-X7K2"></label>
+<p class="note" id="evcn" style="margin:0" hidden>Si ya te inscribiste, escribe tu <b>código de inscripción</b>: así tu nuevo pago se <b>suma</b> a tu registro. Sin el código no se puede agregar un pago a una cédula ya inscrita.</p>
+<p class="note" style="margin:0">Un pago en efectivo queda <b>pendiente</b> hasta que un pastor confirme que lo recibió.</p>
 <label>Observaciones (opcional)<textarea id="evo" rows="2" maxlength="300"></textarea></label>
 <button class="btn" type="submit">Enviar inscripción</button>
 <p id="evmsg" role="status" style="font-weight:700"></p>
@@ -1013,23 +1043,40 @@ const EVN=["Encuentro de Liberación · Abril 2027", "Congreso de Sacerdotes · 
 const SIG={'Sede principal':'SP','La Guaricha':'LG','Valencia':'VA','Bocono':'BO'};
 const evCodigo=(sede,ci,tel)=>{const al='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',r=new Uint32Array(4);crypto.getRandomValues(r);return 'PV-'+(SIG[sede]||'XX')+'-'+String(ci).slice(-3)+String(tel).replace(/\D/g,'').slice(-2)+'-'+[...r].map(n=>al[n%al.length]).join('')};
 const usd=n=>'$'+(Math.round((+n||0)*100)/100).toLocaleString('es-VE',{minimumFractionDigits:0,maximumFractionDigits:2});
-async function evCosto(){const t=$('evcosto');if(!t)return;t.textContent='';try{const d=await S.getDoc(S.doc(db,'eventos_config',$('evn').value));if(!d.exists()||d.data().costo==null)return;const c=d.data(),cs=(c.costoServidor==null||c.costoServidor==='')?c.costo:c.costoServidor,r=$('evr').value==='Servidor'?cs:c.costo;t.textContent='Costo para '+($('evr').value==='Servidor'?'servidores':'participantes')+': '+usd(r)+'. Puedes pagar en partes (abonos).'}catch(e){}}
+let TASA=null,TASAMAN=null;
+const bs=n=>'Bs. '+(Math.round((+n||0)*100)/100).toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2});
+async function evTasa(){
+ try{const d=await S.getDoc(S.doc(db,'eventos_config','tasa'));if(d.exists()&&+d.data().valor>0)TASAMAN=+d.data().valor}catch(e){}
+ if(TASAMAN){TASA={v:TASAMAN,f:'fijada por la iglesia'};return TASA}
+ try{const d=await S.getDoc(S.doc(db,'eventos_config','tasa_bcv'));if(d.exists()&&+d.data().valor>0){TASA={v:+d.data().valor,f:'BCV'+(d.data().fecha?' · valor '+d.data().fecha:'')};return TASA}}catch(e){}
+ TASA=null;return null}
+async function evMuestraTasa(){const t=$('evtasa');if(!t)return;const r=TASA||await evTasa();
+ const mo=parseFloat($('evm').value||'0');
+ if(!r){t.textContent=$('evmo').value==='Bs'?'⚠️ No pudimos obtener la tasa del dólar ahora. Paga en dólares ($) o intenta más tarde.':'';return}
+ let x='Tasa oficial ('+r.f+'): '+bs(r.v)+' por $1.';if(mo>0)x+=$('evmo').value==='Bs'?' Equivale a $'+(Math.round(mo/r.v*100)/100)+'.':' Equivale a '+bs(mo*r.v)+'.';t.textContent=x}
+$('evmo').addEventListener('change',evMuestraTasa);$('evm').addEventListener('input',evMuestraTasa);if(document.body.getAttribute('data-v')==='evento')evTasa().then(()=>{evMuestraTasa();evCosto()});
+async function evCosto(){const t=$('evcosto');if(!t)return;t.textContent='';try{const d=await S.getDoc(S.doc(db,'eventos_config',$('evn').value));if(!d.exists()||d.data().costo==null)return;const c=d.data(),cs=(c.costoServidor==null||c.costoServidor==='')?c.costo:c.costoServidor,r=$('evr').value==='Servidor'?cs:c.costo;t.textContent='Costo para '+($('evr').value==='Servidor'?'servidores':'participantes')+': '+usd(r)+(TASA?' (≈ '+bs(r*TASA.v)+')':'')+'. Puedes pagar en partes (abonos).'}catch(e){}}
 $('evn').addEventListener('change',evCosto);$('evr').addEventListener('change',evCosto);evCosto();
+function evModoCodigo(on,sinCampos){$('evcl').hidden=!on;$('evcn').hidden=!on;if(sinCampos)['evnm','evt','eved','eve','evs','evr'].forEach(i=>{const e=$(i),l=e.closest('label');if(l)l.hidden=true;e.required=false})}
 $('evmt').addEventListener('change',()=>{$('evrfl').hidden=$('evmt').value==='Efectivo'});
 $('evf').addEventListener('submit',async e=>{e.preventDefault();const m=$('evmsg');m.textContent='Enviando…';
  try{const k=+$('evn').value,ci=$('evci').value.replace(/\D/g,''),id=k+'_'+ci,ref=S.doc(db,'inscritos_evento',id),mo=Math.round(parseFloat($('evm').value||'0')*100)/100;
   if(!(mo>0)){m.textContent='Escribe el monto que pagas.';return}
-  const ed=parseInt($('eved').value,10);if(!(ed>=18)){m.textContent='⚠️ Solo recibimos inscripciones con pago de personas mayores de 18 años. Si eres menor de edad, tu padre, madre o representante mayor de edad debe inscribirte.';return}
+  const ed=parseInt($('eved').value,10);if(!$('evc').value.trim()&&!(ed>=18)){m.textContent='⚠️ Solo recibimos inscripciones con pago de personas mayores de 18 años. Si eres menor de edad, tu padre, madre o representante mayor de edad debe inscribirte.';return}
   const efe=$('evmt').value==='Efectivo',cod=$('evc').value.trim().toUpperCase();
-  const pg={m:mo,f:new Date().toISOString(),r:efe?'':$('evrf').value.trim(),mt:efe?'Efectivo':'Pago Móvil',e:efe?'pend':'ok'};
+  const enBs=$('evmo').value==='Bs',tr=TASA||await evTasa();
+  if(enBs&&!tr){m.textContent='⚠️ No pudimos obtener la tasa del dólar. Paga en dólares ($) o intenta más tarde.';return}
+  const usdMo=enBs?Math.round(mo/tr.v*100)/100:mo;if(!(usdMo>0)){m.textContent='El monto es muy pequeño.';return}
+  const pg={m:usdMo,f:new Date().toISOString(),r:efe?'':$('evrf').value.trim(),mt:efe?'Efectivo':'Pago Móvil',e:efe?'pend':'ok'};
+  if(tr){pg.t=Math.round(tr.v*10000)/10000;pg.mb=enBs?mo:Math.round(mo*tr.v*100)/100}
   let nuevo=false,codigo='';
   if(cod){pg.c=cod;
-   try{await S.updateDoc(ref,efe?{pagos:S.arrayUnion(pg)}:{monto:S.increment(mo),pagos:S.arrayUnion(pg)})}
+   try{await S.updateDoc(ref,efe?{pagos:S.arrayUnion(pg)}:{monto:S.increment(usdMo),pagos:S.arrayUnion(pg)})}
    catch(x1){m.textContent=(x1.code==='permission-denied'||x1.code==='not-found')?'⚠️ Ese código no coincide con esa cédula y esa actividad. Revisa el código que te llegó por correo.':'No se pudo enviar ['+(x1.code||x1.message)+']. Intenta de nuevo.';return}}
   else{codigo=evCodigo($('evs').value,ci,$('evt').value);
-   try{await S.setDoc(ref,{evento:EVN[k],k:k,rol:$('evr').value,nombre:$('evnm').value.trim(),edad:ed,ci:ci,telefono:$('evt').value.trim(),email:$('eve').value.trim().toLowerCase(),sede:$('evs').value,codigo:codigo,monto:efe?0:mo,pagos:[pg],sigEnv:'',obs:$('evo').value.trim(),creado:S.serverTimestamp()});nuevo=true}
-   catch(x2){m.textContent=x2.code==='permission-denied'?'⚠️ Si ya te inscribiste en este evento con esta cédula, escribe tu código de inscripción (te llegó por correo) para sumar tu pago. Si es tu primera inscripción, revisa tus datos.':'No se pudo enviar ['+(x2.code||x2.message)+']. Intenta de nuevo.';return}}
-  $('evf').reset();$('evn').value=String(k);$('evrfl').hidden=false;evCosto();
+   try{await S.setDoc(ref,{evento:EVN[k],k:k,rol:$('evr').value,nombre:$('evnm').value.trim(),edad:ed,ci:ci,telefono:$('evt').value.trim(),email:$('eve').value.trim().toLowerCase(),sede:$('evs').value,codigo:codigo,monto:efe?0:usdMo,pagos:[pg],sigEnv:'',obs:$('evo').value.trim(),creado:S.serverTimestamp()});nuevo=true}
+   catch(x2){if(x2.code==='permission-denied')evModoCodigo(true,false);m.textContent=x2.code==='permission-denied'?'⚠️ Si ya te inscribiste en este evento con esta cédula, escribe tu código de inscripción (te llegó por correo) para sumar tu pago. Si es tu primera inscripción, revisa tus datos.':'No se pudo enviar ['+(x2.code||x2.message)+']. Intenta de nuevo.';return}}
+  $('evf').reset();$('evn').value=String(k);$('evrfl').hidden=false;evCosto();evMuestraTasa();
   m.textContent=(nuevo?('🎉 ¡Inscripción registrada! Tu código es '+codigo+'. Guárdalo: lo necesitarás para agregar más pagos y para verificar tu pago. También te llegará por correo (puede tardar unos minutos; revisa spam). '):'✅ Registramos tu nuevo pago. ')+(efe?'Tu pago en efectivo queda PENDIENTE hasta que un pastor confirme que lo recibió.':'Te llegará un correo con tu saldo.')}
  catch(x){m.textContent='No se pudo enviar ['+(x.code||x.message)+']. Revisa tus datos e intenta de nuevo.'}});
 let EVD=[],EVC={};
@@ -1044,18 +1091,18 @@ function evPinta(){const U=$('vreg');U.textContent='';const l=evFiltro();
  $('vcount').textContent=l.length+' inscritos · '+P+' participantes · '+V+' servidores · '+ok+' con pago total · Recibido: '+usd(rec)+(por?' · Por cobrar: '+usd(por):'')+(pe?' · Efectivo por confirmar: '+usd(pe):'');
  l.forEach(x=>{const li=document.createElement('li'),d=document.createElement('details'),sm=document.createElement('summary');sm.textContent=x.nombre+' · '+x.rol+' · '+usd(x.monto)+(evCostoDe(x)!=null?' de '+usd(evCostoDe(x)):'')+' · '+evEstado(x)+(evPend(x)?' · ⏳ efectivo por confirmar '+usd(evPend(x)):'')+' · '+x.codigo;d.appendChild(sm);
   [['Evento',x.evento],['Código',x.codigo],['Cédula',x.ci],['Edad',x.edad],['Teléfono',x.telefono],['Correo',x.email],['Sede',x.sede],['Total abonado',usd(x.monto)],['Estado',evEstado(x)],['Observaciones',x.obs],['Inscrito',fEs(x.creado)]].forEach(p=>d.appendChild(el('div',p[0]+': '+(p[1]||'—'))));
-  d.appendChild(el('div','Pagos:'));(x.pagos||[]).forEach((g,i)=>{const row=el('div','• '+usd(g.m)+' · '+(g.f?new Date(g.f).toLocaleDateString('es-VE'):'')+' · '+(g.mt||'Pago Móvil')+(g.r?' · ref. '+g.r:'')+(g.e==='pend'?' · ⏳ PENDIENTE':' · ✔ recibido'));
+  d.appendChild(el('div','Pagos:'));(x.pagos||[]).forEach((g,i)=>{const row=el('div','• '+usd(g.m)+' · '+(g.f?new Date(g.f).toLocaleDateString('es-VE'):'')+' · '+(g.mt||'Pago Móvil')+(g.mb?' · '+bs(g.mb)+(g.t?' (tasa '+g.t+')':''):'')+(g.r?' · ref. '+g.r:'')+(g.e==='pend'?' · ⏳ PENDIENTE':' · ✔ recibido'));
    if(g.e==='pend'){const bc=el('button','Confirmar efectivo recibido','btn sm');bc.type='button';bc.style.marginLeft='8px';bc.onclick=()=>evPago(x,i,true);row.appendChild(bc);const br=el('button','Rechazar','btn alt sm');br.type='button';br.style.marginLeft='6px';br.onclick=()=>evPago(x,i,false);row.appendChild(br)}d.appendChild(row)});
   const ba=el('button','Agregar pago','btn sm');ba.type='button';ba.onclick=async()=>{const v=parseFloat(prompt('Monto del pago en $ (ej.: 25):')||'');if(!(v>0))return;const rf=prompt('Referencia (opcional):')||'';try{await S.updateDoc(S.doc(db,'inscritos_evento',x.id),{monto:S.increment(Math.round(v*100)/100),pagos:S.arrayUnion({m:Math.round(v*100)/100,f:new Date().toISOString(),r:rf,mt:'Efectivo',e:'ok'})});loaders.ev()}catch(er2){alert(er(er2))}};d.appendChild(ba);
   const b=el('button','Eliminar','btn alt sm');b.type='button';b.onclick=async()=>{if(!confirm('¿Eliminar esta inscripción?'))return;try{await S.deleteDoc(S.doc(db,'inscritos_evento',x.id));loaders.ev()}catch(er2){alert(er(er2))}};d.appendChild(b);li.appendChild(d);U.appendChild(li)});
  if(!l.length)U.appendChild(el('li','No hay inscritos con ese filtro.'))}
 loaders.ev=async()=>{try{
- const qc=await S.getDocs(S.collection(db,'eventos_config'));EVC={};qc.forEach(d=>{EVC[+d.id]=d.data();const c=d.data();if($('cc'+d.id)){$('cc'+d.id).value=c.costo==null?'':c.costo;$('cs'+d.id).value=c.costoServidor==null?'':c.costoServidor}});
+ const qc=await S.getDocs(S.collection(db,'eventos_config'));EVC={};qc.forEach(d=>{if(d.id==='tasa'){TASAMAN=+d.data().valor||null;if($('tasaman'))$('tasaman').value=d.data().valor||'';return}EVC[+d.id]=d.data();const c=d.data();if($('cc'+d.id)){$('cc'+d.id).value=c.costo==null?'':c.costo;$('cs'+d.id).value=c.costoServidor==null?'':c.costoServidor}});
  const fsd=(me&&me.rol==='admin')?[]:[S.where('sede','==',me.sede)];const q=await S.getDocs(S.query(S.collection(db,'inscritos_evento'),...fsd));EVD=[];q.forEach(d=>EVD.push(Object.assign({id:d.id},d.data())));EVD.sort((a,b)=>((b.creado&&b.creado.seconds)||0)-((a.creado&&a.creado.seconds)||0));evPinta()}catch(x){$('vcount').textContent='No se pudo cargar ['+(x.code||x.message)+']'}};
-$('ccsave').onclick=async()=>{const o=$('ccok');o.textContent='Guardando…';try{for(let k=0;k<EVN.length;k++){const c=$('cc'+k).value,sv=$('cs'+k).value;await S.setDoc(S.doc(db,'eventos_config',String(k)),{costo:c===''?null:+c,costoServidor:sv===''?null:+sv,evento:EVN[k]})}o.textContent='Guardado ✔';loaders.ev()}catch(x){o.textContent='No se guardó ['+(x.code||x.message)+']'}};
+$('ccsave').onclick=async()=>{const o=$('ccok');o.textContent='Guardando…';try{for(let k=0;k<EVN.length;k++){const c=$('cc'+k).value,sv=$('cs'+k).value;await S.setDoc(S.doc(db,'eventos_config',String(k)),{costo:c===''?null:+c,costoServidor:sv===''?null:+sv,evento:EVN[k]})}const tv=$('tasaman').value;await S.setDoc(S.doc(db,'eventos_config','tasa'),{valor:tv===''?null:+tv});TASA=null;o.textContent='Guardado ✔';loaders.ev()}catch(x){o.textContent='No se guardó ['+(x.code||x.message)+']'}};
 ['vev','vrl','vsd','vpg'].forEach(i=>$(i).onchange=evPinta);$('vq').oninput=evPinta;
 $('vcsv').onclick=()=>{const c=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
- const rows=[['Evento','Código','Rol','Nombre','Cédula','Edad','Teléfono','Correo','Sede','Costo','Total abonado','Saldo','Estado','Efectivo por confirmar','Nº de pagos','Detalle de pagos','Observaciones','Inscrito']].concat(evFiltro().map(x=>[x.evento,x.codigo,x.rol,x.nombre,x.ci,x.edad||'',x.telefono,x.email,x.sede,evCostoDe(x)==null?'':evCostoDe(x),x.monto,evSaldo(x)==null?'':evSaldo(x),evEstado(x),evPend(x)||'',(x.pagos||[]).length,(x.pagos||[]).map(g=>g.m+' ('+(g.mt||'Pago Móvil')+(g.e==='pend'?' PENDIENTE':'')+' '+(g.f?new Date(g.f).toLocaleDateString('es-VE'):'')+(g.r?' ref '+g.r:'')+')').join(' | '),x.obs||'',fEs(x.creado)]));
+ const rows=[['Evento','Código','Rol','Nombre','Cédula','Edad','Teléfono','Correo','Sede','Costo','Total abonado','Saldo','Estado','Efectivo por confirmar','Nº de pagos','Detalle de pagos','Observaciones','Inscrito']].concat(evFiltro().map(x=>[x.evento,x.codigo,x.rol,x.nombre,x.ci,x.edad||'',x.telefono,x.email,x.sede,evCostoDe(x)==null?'':evCostoDe(x),x.monto,evSaldo(x)==null?'':evSaldo(x),evEstado(x),evPend(x)||'',(x.pagos||[]).length,(x.pagos||[]).map(g=>g.m+' ('+(g.mt||'Pago Móvil')+(g.mb?' Bs '+g.mb+' tasa '+g.t:'')+(g.e==='pend'?' PENDIENTE':'')+' '+(g.f?new Date(g.f).toLocaleDateString('es-VE'):'')+(g.r?' ref '+g.r:'')+')').join(' | '),x.obs||'',fEs(x.creado)]));
  const b=new Blob(['﻿'+rows.map(r=>r.map(c).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='inscritos-eventos.csv';document.body.appendChild(a);a.click();a.remove()};
 /* admin IGLEKIDS */
 $('ikf').addEventListener('submit',async e=>{e.preventDefault();const m=$('ikfm');m.textContent='Enviando…';
@@ -1420,5 +1467,13 @@ c.appendChild(k);c.appendChild(document.createTextNode(' '+(codigo?'Mostrar cód
 k.addEventListener('change',function(){i.type=k.checked?'text':'password'});
 var f=i.form;if(f)f.addEventListener('reset',function(){k.checked=false;i.type='password'});
 lb.parentNode.insertBefore(c,lb.nextSibling)})})()</script>
+<script>(function(){try{var q=new URLSearchParams(location.search);if(q.get('v')!=='evento')return;var k=+q.get('e')||0,c=document.querySelectorAll('#eventos a.card')[k];if(!c)return;
+var im=c.querySelector('img'),h=c.querySelector('h3'),sp=c.querySelector('span'),t=h?h.textContent:'Evento';
+document.getElementById('evimg').src=im.src;document.getElementById('evimg').alt=im.alt||t;document.getElementById('evtit').textContent=t;document.getElementById('evtit2').textContent=t;var fm=document.querySelector('footer .mark.big');if(fm){var bg=getComputedStyle(fm).backgroundImage;document.querySelectorAll('.evlogo').forEach(function(e){e.style.backgroundImage=bg})}document.getElementById('evsub').textContent=sp?sp.textContent:'';
+document.getElementById('evgo').href='?v=evento&e='+k+'&f=1';document.getElementById('evback').href='?v=evento&e='+k;document.title=t+' · CCI Piedra Viva'}catch(x){}})()</script>
+<script>(function(){try{var q=new URLSearchParams(location.search),c=q.get('c'),d=document;if(q.get('v')!=='evento'||!c)return;
+var g=function(i){return d.getElementById(i)};g('evc').value=c.toUpperCase();if(q.get('ci'))g('evci').value=q.get('ci').replace(/\D/g,'');g('evcl').hidden=false;g('evcn').hidden=false;
+['evnm','evt','eved','eve','evs','evr'].forEach(function(i){var e=g(i),l=e.closest('label');if(l)l.hidden=true;e.required=false});
+var n=d.createElement('p');n.className='note';n.style.cssText='font-weight:700;margin:0';n.textContent='Estás agregando un pago a tu inscripción. Tu código ya está puesto.';var f=g('evf');f.insertBefore(n,f.firstChild)}catch(x){}})()</script>
 </body>
 </html>
