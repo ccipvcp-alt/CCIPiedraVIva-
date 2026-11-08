@@ -616,6 +616,8 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <div class="row" style="justify-content:space-between;align-items:center;margin-top:0"><h3 id="dphi" style="margin:0"></h3><button class="btn alt" id="dpout" type="button">Salir</button></div>
 <label id="dpadmsel" hidden style="max-width:360px;margin-top:12px">Ver departamento<select id="dpsel"></select></label>
 <h3 id="dpname" style="margin-top:20px"></h3>
+<div class="dpcw" id="dpnw"><strong>Notificaciones</strong><ul class="dpl" id="dpnl"></ul></div>
+<div class="dpcw" id="dprw"><strong>Material de apoyo y recursos</strong><ul class="dpl" id="dprl"></ul></div>
 <h4>Calendario de guardias</h4>
 <p class="note">Servicios: domingos de 9:00 a 11:00 a. m. y lunes de 6:00 a 8:00 p. m. Cada persona sirve por turnos; tus demás días estás libre para congregarte como miembro.</p>
 <div class="dpr" style="display:flex;gap:10px;flex-wrap:wrap;align-items:end"><label style="max-width:190px">Mes<input type="month" id="dpmes"></label>
@@ -629,6 +631,45 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <div class="dpr"><button class="btn sm" id="dpgen" type="button">Generar rol del mes</button><button class="btn alt sm" id="dppub" type="button">Publicar</button></div>
 <p class="note" id="dpcmsg"></p></div>
 <ul class="dpl" id="dpday"></ul>
+<div id="ikp" hidden>
+<h4>IGLEKIDS · Panel de maestros</h4>
+<div class="tabs" data-all="ikpN,ikpA,ikpB,ikn"><button type="button" data-t="ikpN" class="on">Niños</button><button type="button" data-t="ikpA">Asistencia</button><button type="button" data-t="ikpB">Bitácora</button><button type="button" data-t="ikn">Avisar a padres</button></div>
+<div id="ikpN" class="dpcw">
+<p class="note" id="ikpst" style="margin:0;font-weight:600"></p>
+<div class="dpb" id="ikpchips"></div>
+<div class="dpr"><label style="flex:1;min-width:180px">Buscar<input id="ikpq" placeholder="Nombre del niño o representante"></label><label>Edad desde<input type="number" id="ikpd" min="0" max="18"></label><label>hasta<input type="number" id="ikph" min="0" max="18"></label><label>Sede<select id="ikps"><option value="">Todas</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label></div>
+<ul class="dpl" id="ikpl"></ul>
+</div>
+<div id="ikpA" class="dpcw" hidden>
+<div class="dpr"><label>Fecha<input type="date" id="ikpf"></label><label style="flex:1;min-width:160px">Buscar<input id="ikpaq" placeholder="Nombre"></label><label>Edad desde<input type="number" id="ikpad" min="0" max="18"></label><label>hasta<input type="number" id="ikpah" min="0" max="18"></label></div>
+<p class="note" id="ikpas" style="margin:0;font-weight:600"></p>
+<ul class="dpl" id="ikpal"></ul>
+</div>
+<div id="ikpB" class="dpcw" hidden>
+<p class="note" style="margin:0">Registro interno de los maestros (no se envía a los padres): conducta, salud, logros y notas especiales.</p>
+<div class="dpr"><label style="flex:1;min-width:160px">Buscar niño<input id="ikpbq" placeholder="Nombre"></label><label style="flex:1;min-width:200px">Niño<select id="ikpbn"></select></label></div>
+<div class="dpr"><label>Tipo<select id="ikpbt"><option value="conducta">Conducta</option><option value="salud">Salud</option><option value="logro">Logro</option><option value="nota">Nota especial</option></select></label><label>Fecha<input type="date" id="ikpbf"></label></div>
+<label>Detalle<textarea id="ikpbx" rows="3" maxlength="800" placeholder="Describe lo que observaste"></textarea></label>
+<div><button class="btn sm" id="ikpbs" type="button">Guardar en la bitácora</button> <span class="note" id="ikpbm" role="status"></span></div>
+<strong>Registros recientes</strong>
+<div class="dpr"><label style="flex:1;min-width:160px">Filtrar por nombre<input id="ikpbfq"></label><label>Tipo<select id="ikpbft"><option value="">Todos</option><option value="conducta">Conducta</option><option value="salud">Salud</option><option value="logro">Logro</option><option value="nota">Nota especial</option></select></label></div>
+<ul class="dpl" id="ikpbl"></ul>
+</div>
+<div class="dpcw" id="ikn" hidden>
+<h4 style="margin:0">Observaciones a los representantes (IGLEKIDS)</h4>
+<p class="note" style="margin:0">Elige al niño, escribe una nota corta y el mensaje se redacta con tono amable. Puedes editarlo antes de enviarlo. Se envía por WhatsApp (se abre con el mensaje listo) o por correo si el representante dejó uno.</p>
+<label>Buscar niño<input id="iknq" placeholder="Escribe parte del nombre"></label>
+<label>Niño<select id="iknn"></select></label>
+<p class="note" id="iknrep" style="margin:0"></p>
+<label>Tipo<select id="iknt"><option value="conducta">Conducta</option><option value="salud">Salud (fiebre, malestar)</option><option value="logro">Logro o felicitación</option><option value="recordatorio">Recordatorio</option><option value="otro">Otro aviso</option></select></label>
+<label>Nota de la maestra<textarea id="iknx" rows="3" maxlength="600" placeholder="Ej.: se levantó varias veces e interrumpió la actividad"></textarea></label>
+<label>Mensaje que recibirá el representante (editable)<textarea id="iknm" rows="7" maxlength="1500"></textarea></label>
+<div class="dpr"><button class="btn sm" id="iknwa" type="button">Enviar por WhatsApp</button><button class="btn alt sm" id="iknco" type="button">Enviar por correo</button></div>
+<p class="note" id="iknmsg" role="status"></p>
+<strong>Últimas observaciones enviadas</strong>
+<ul class="dpl" id="iknl"></ul>
+</div>
+</div>
 <h4>Avisos del departamento</h4>
 <form id="dpaf" style="max-width:640px"><label>Nuevo aviso<textarea id="dpat" rows="3" maxlength="1500" required placeholder="Escribe un aviso para tu equipo"></textarea></label><button class="btn" type="submit">Publicar aviso</button></form>
 <ul class="dpl" id="dpavl"></ul>
@@ -698,6 +739,28 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 </div>
 <div id="t9" class="tab" hidden>
 <div class="onlyadm">
+<h3>Notificaciones a departamentos</h3>
+<p class="note">Elige «General» para avisar a todos los departamentos, o un departamento en concreto. Aparece en su espacio y, si lo marcas, también les llega por correo.</p>
+<form id="dnf" style="display:grid;gap:10px;max-width:560px">
+<label>Para<select id="dnd" required></select></label>
+<label>Título<input id="dnt" required maxlength="100" placeholder="Ej.: Reunión general de servidores"></label>
+<label>Mensaje<textarea id="dnm" rows="3" required maxlength="1200"></textarea></label>
+<div class="row" style="margin:0"><label>Fecha (opcional)<input type="date" id="dnfe"></label><label>Hora (opcional)<input type="time" id="dnh"></label><label style="flex:1;min-width:160px">Lugar (opcional)<input id="dnl" maxlength="100"></label></div>
+<label style="grid-auto-flow:column;justify-content:start;align-items:center;gap:8px;font-weight:500"><input type="checkbox" id="dnc" checked> Enviar también por correo</label>
+<div><button class="btn sm" type="submit">Enviar notificación</button> <span class="note" id="dnok" role="status"></span></div>
+</form>
+<ul class="dpl" id="dnl2"></ul>
+<h3>Material de apoyo y recursos</h3>
+<p class="note">Comparte enlaces (YouTube, Drive…) o un archivo pequeño (PDF o imagen, hasta 700 KB) con un departamento o con todos.</p>
+<form id="drf" style="display:grid;gap:10px;max-width:560px">
+<label>Para<select id="drd" required></select></label>
+<label>Título<input id="drt" required maxlength="100"></label>
+<label>Descripción (opcional)<input id="drs" maxlength="200"></label>
+<label>Enlace (opcional)<input id="dre" type="url" maxlength="400" placeholder="https://"></label>
+<label>Archivo (opcional)<input id="drfi" type="file" accept="application/pdf,image/*"></label>
+<div><button class="btn sm" type="submit">Publicar recurso</button> <span class="note" id="drok" role="status"></span></div>
+</form>
+<ul class="dpl" id="drl2"></ul>
 <h3>Departamentos</h3>
 <p class="note">Crea los departamentos de la iglesia. Cada persona se registra en la página «Acceso de departamentos» y tú la apruebas aquí.</p>
 <form id="dpnf" class="row" style="margin-top:8px;align-items:end"><label style="flex:1;min-width:220px">Nuevo departamento<input id="dpnn" required maxlength="60" placeholder="Ej.: Intercesión"></label><button class="btn" type="submit">Crear departamento</button><button class="btn alt" type="button" id="dpbase">Cargar los departamentos base</button></form>
@@ -716,6 +779,7 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <p class="note" id="vcount" style="font-weight:700"></p><button class="btn alt sm" type="button" id="vcsv">Descargar hoja de cálculo (Excel)</button><ul class="rlist" id="vreg"></ul>
 </div>
 <div id="t7" class="tab" hidden>
+<div class="dpcw" id="ikadmsup"></div>
 <h3>IGLEKIDS: fotos, flyers y videos</h3><p class="note">Lo que publiques aparece en la sección IGLEKIDS de la página. Fotos y flyers: se ajustan solos. Videos: hasta 10 MB, o pega un enlace de YouTube.</p>
 <div style="display:grid;gap:10px;max-width:520px"><label>Tipo<select id="ikt"><option value="foto">Foto</option><option value="flyer">Flyer</option><option value="video">Video (archivo)</option><option value="youtube">Video de YouTube (enlace)</option></select></label><label>Título (opcional)<input id="ikti" maxlength="60"></label><label id="ikfl">Archivo<input id="ikfi" type="file" accept="image/*,video/mp4,video/webm,video/quicktime"></label><label id="ikyl" hidden>Enlace de YouTube<input id="ikyu" placeholder="https://youtube.com/watch?v=..."></label><label id="ikpl" hidden>Imagen de portada del video (opcional)<input id="ikpo" type="file" accept="image/*"></label><div><button class="btn sm" type="button" id="ikup">Publicar</button> <span class="note" id="ikok" role="status"></span></div></div>
 <ul class="rlist" id="ikadm"></ul>
@@ -784,6 +848,7 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <label>Nombre del padre, madre o representante<input id="kr" required maxlength="80" autocomplete="name"></label>
 <label>Cédula del representante<input id="kc" required inputmode="numeric" pattern="[0-9.\-]{5,12}" title="Solo números"></label>
 <label>Teléfono / WhatsApp<input id="kt" type="tel" required maxlength="30" autocomplete="tel"></label>
+<label>Correo electrónico (opcional, para recibir avisos de IGLEKIDS)<input id="kem" type="email" maxlength="100" autocomplete="email"></label>
 <label>Sede a la que asisten<select id="ks" required><option value="">Elige la sede</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label>
 <label>Alergias o algo que debamos saber (opcional)<textarea id="ko" rows="2" maxlength="300"></textarea></label>
 <button class="btn ikdon" type="submit">🎈 ENVIAR INSCRIPCIÓN</button>
@@ -1136,7 +1201,7 @@ $('fs').addEventListener('submit',async e=>{
 });
 
 /* ===== DEPARTAMENTOS ===== */
-const DP_BASE=['IBLT','Protocolo','Seguridad','Audiovisual','Logística','Gastronomía'];
+const DP_BASE=['IBLT','Protocolo','Seguridad','Audiovisual','Logística','Gastronomía','IGLEKIDS'];
 let DPU=null,DPL=[],DPADM=false,DPMEMS=[],TURNO=null;
 const dpMsg=t=>{$('dpmsg').textContent=t||''};
 const dpView=v=>{['dpauth','dppend','dpdash'].forEach(i=>{$(i).hidden=i!==v})};
@@ -1183,7 +1248,7 @@ async function dpPanel(){
   L.forEach(x=>{const li=document.createElement('li');li.textContent=x.nombre+(x.rol==='coordinador'?' · Coordinador':'')+(x.telefono?' · '+x.telefono:'');mm.appendChild(li)});
  }catch(e){}
  if(!$('dpmes').value){const n=new Date();$('dpmes').value=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')}
- await dpTurnoLoad();dpDraw();
+ await dpTurnoLoad();dpDraw();iknCargar();dpAvisosCargar();
 }
 $('dpsel').addEventListener('change',dpPanel);
 $('dpaf').addEventListener('submit',async e=>{e.preventDefault();const id=dpCur(),t=$('dpat').value.trim();if(!id||!t)return;
@@ -1331,6 +1396,221 @@ $('dpics').addEventListener('click',()=>{
  o.push('END:VCALENDAR');dpBaja(new Blob([o.join('\r\n')],{type:'text/calendar'}),'guardias-'+dpSlug(dep)+'-'+mes+'.ics');
 });
 
+/* ===== IGLEKIDS: OBSERVACIONES A REPRESENTANTES ===== */
+let IKN=[];
+const dpEsIk=()=>/iglekids/i.test(dpNom(dpCur())||'');
+const ikTel=t=>{let d=String(t||'').replace(/\D/g,'');if(d.startsWith('00'))d=d.slice(2);if(d.startsWith('0'))d='58'+d.slice(1);else if(d.length===10&&d[0]==='4')d='58'+d;return d};
+const ikPrim=n=>{const q=String(n||'').trim().split(/\s+/)[0]||'';return q?q.charAt(0).toUpperCase()+q.slice(1).toLowerCase():''};
+function ikTexto(tipo,k,nota,quien,wa){
+ const n=k?k.nino:'su hijo(a)',cab='Paz de Dios'+(k&&k.representante?', '+ikPrim(k.representante):', estimada familia')+'. Le escribimos con mucho cariño desde IGLEKIDS de CCI Piedra Viva.\n\n';
+ const pie='\n\nGracias por permitirnos acompañar a '+n+' en su crecimiento. Quedamos atentos a lo que desee comentarnos.\n\nBendiciones,\n'+(quien||'Equipo IGLEKIDS')+'\nIGLEKIDS · CCI Piedra Viva';
+ const nt=nota?' '+nota.trim().replace(/^./,c=>c.toUpperCase()).replace(/([^.!?])$/,'$1.'):'';
+ if(tipo==='salud')return cab+(wa?'Queremos informarle que '+n+' presentó un malestar durante la actividad y necesitamos que se comunique con nosotros o pase a verle lo antes posible. Está bajo el cuidado de nuestro equipo.':'Queremos informarle que '+n+' presentó un malestar durante la actividad.'+nt+' Está bajo el cuidado de nuestro equipo. Le pedimos que se comunique con nosotros o pase a verle lo antes posible.')+pie;
+ if(tipo==='logro')return cab+'Con alegría queremos compartirle algo bonito: '+n+' tuvo un excelente desempeño en IGLEKIDS.'+nt+' ¡Felicitaciones a toda la familia!'+pie;
+ if(tipo==='recordatorio')return cab+'Le recordamos con cariño lo siguiente:'+nt+pie;
+ if(tipo==='otro')return cab+(nota?nota:'Queremos comentarle un aviso sobre '+n+'.')+pie;
+ return cab+'Queremos comentarle que hoy '+n+' tuvo algunos momentos de dificultad con su comportamiento durante la clase.'+nt+' Creemos que, trabajando juntos, podemos ayudarle a seguir creciendo. Con gusto conversamos con usted cuando guste.'+pie;
+}
+async function iknCargar(){
+ const box=$('ikp');box.hidden=!(dpEsIk()&&(DPU||DPADM));if(box.hidden)return;
+ await ikDatos();
+ iknLista();iknRedactar();iknHist();ikpNinos();ikpAsis();ikpBit();
+}
+function iknLista(){const f=($('iknq').value||'').trim().toLowerCase(),sel=$('iknn'),v=sel.value;sel.textContent='';IKN.filter(k=>!f||(k.nino||'').toLowerCase().includes(f)||(k.representante||'').toLowerCase().includes(f)).forEach(k=>{const o=document.createElement('option');o.value=k.id;o.textContent=k.nino+' · Rep.: '+k.representante;sel.appendChild(o)});if(v&&[...sel.options].some(o=>o.value===v))sel.value=v;iknInfo()}
+const iknK=()=>IKN.find(k=>k.id===$('iknn').value);
+function iknInfo(){const k=iknK();$('iknrep').textContent=k?('Representante: '+k.representante+' · '+(k.telefono||'sin teléfono')+(k.correo?' · '+k.correo:' · sin correo')):'';$('iknco').disabled=!(k&&k.correo)}
+function iknRedactar(){const k=iknK();$('iknmsg').textContent=$('iknt').value==='salud'?'Nota: por privacidad, por WhatsApp saldrá un mensaje general sin el detalle; el correo sí lleva el detalle.':'';if(!k){$('iknm').value='';return}$('iknm').value=ikTexto($('iknt').value,k,$('iknx').value.trim(),DPU?DPU.nombre:'',false)}
+async function iknGuardar(canal){
+ const k=iknK(),m=$('iknm').value.trim(),o=$('iknmsg');o.textContent='';
+ if(!k){o.textContent='Elige un niño.';return false}
+ if(!m){o.textContent='El mensaje está vacío.';return false}
+ const tipo=$('iknt').value,wa=ikTexto(tipo,k,$('iknx').value.trim(),DPU?DPU.nombre:'',true);
+ const d={ninoId:k.id,nino:k.nino,representante:k.representante,telefono:k.telefono||'',correo:k.correo||'',tipo,nota:$('iknx').value.trim(),mensaje:m,canal,autor:DPU?DPU.nombre:'Administración',autorUid:auth.currentUser.uid,creado:S.serverTimestamp()};
+ if(canal==='correo')d.correoEstado='pendiente';
+ try{await S.addDoc(S.collection(db,'ik_notas'),d);return {wa:tipo==='salud'&&m===ikTexto('salud',k,$('iknx').value.trim(),DPU?DPU.nombre:'',false)?wa:m}}catch(e){o.textContent=er(e);return false}
+}
+$('iknq').addEventListener('input',()=>{iknLista();iknRedactar()});
+$('iknn').addEventListener('change',()=>{iknInfo();iknRedactar()});
+$('iknt').addEventListener('change',iknRedactar);$('iknx').addEventListener('input',iknRedactar);
+$('iknwa').addEventListener('click',async()=>{
+ const k=iknK(),tel=k?ikTel(k.telefono):'';
+ if(k&&(tel.length<11||tel.length>15)){$('iknmsg').textContent='El teléfono registrado no parece válido ('+(k.telefono||'vacío')+'). Corrígelo con el representante.';return}
+ const r=await iknGuardar('whatsapp');if(!r)return;
+ window.open('https://wa.me/'+tel+'?text='+encodeURIComponent(r.wa),'_blank','noopener');
+ $('iknmsg').textContent='Se abrió WhatsApp con el mensaje listo. Pulsa enviar allí.';$('iknx').value='';iknRedactar();iknHist();
+});
+$('iknco').addEventListener('click',async()=>{
+ const r=await iknGuardar('correo');if(!r)return;
+ $('iknmsg').textContent='Listo: el correo saldrá en unos minutos.';$('iknx').value='';iknRedactar();iknHist();
+});
+async function iknHist(){
+ const U=$('iknl');U.textContent='';
+ try{const q=await S.getDocs(S.collection(db,'ik_notas'));const L=[];q.forEach(d=>L.push(Object.assign({id:d.id},d.data())));
+  L.sort((a,b)=>((b.creado&&b.creado.seconds)||0)-((a.creado&&a.creado.seconds)||0));
+  if(!L.length){const li=document.createElement('li');li.textContent='Todavía no hay observaciones.';U.appendChild(li);return}
+  const TP={conducta:'Conducta',salud:'Salud',logro:'Logro',recordatorio:'Recordatorio',otro:'Aviso'};
+  L.slice(0,25).forEach(x=>{const li=document.createElement('li'),t=document.createElement('div'),m=document.createElement('small');
+   t.textContent=x.nino+' · '+(TP[x.tipo]||x.tipo)+(x.nota?' · '+x.nota:'');
+   m.textContent=(x.autor||'')+(x.creado&&x.creado.seconds?' · '+new Date(x.creado.seconds*1000).toLocaleString('es'):'')+' · '+(x.canal==='correo'?'Correo: '+(x.correoEstado==='enviado'?'enviado':x.correoEstado==='error'?'no se pudo enviar':'pendiente'):'WhatsApp');
+   li.append(t,m);U.appendChild(li)});
+ }catch(e){}
+}
+
+/* ===== IGLEKIDS: PANEL DE MAESTROS ===== */
+let ASIS={},BIT=[];
+const hoyStr=()=>{const h=new Date();return h.getFullYear()+'-'+p2(h.getMonth()+1)+'-'+p2(h.getDate())};
+const ikEdad=n=>{if(!n)return null;const [y,m,d]=String(n).split('-').map(Number);if(!y)return null;const h=new Date();let a=h.getFullYear()-y;if(h.getMonth()+1<m||(h.getMonth()+1===m&&h.getDate()<d))a--;return a>=0?a:null};
+const ikEdTxt=n=>{const a=ikEdad(n);return a==null?'edad sin dato':a+(a===1?' año':' años')};
+function ikFilt(q,d,h,sd){q=(q||'').trim().toLowerCase();return IKN.filter(k=>{const a=ikEdad(k.nacimiento);if(q&&!((k.nino||'').toLowerCase().includes(q)||(k.representante||'').toLowerCase().includes(q)))return false;if(d!==''&&d!=null&&(a==null||a<+d))return false;if(h!==''&&h!=null&&(a==null||a>+h))return false;if(sd&&k.sede!==sd)return false;return true})}
+async function ikDatos(){
+ IKN=[];ASIS={};BIT=[];
+ try{const q=await S.getDocs(S.collection(db,'iglekids_registro'));q.forEach(d=>IKN.push(Object.assign({id:d.id},d.data())));IKN.sort((a,b)=>(a.nino||'').localeCompare(b.nino||'','es'))}catch(e){$('iknmsg').textContent='No se pudo cargar la lista de niños. ¿Publicaste las reglas nuevas de Firestore?'}
+ try{const q=await S.getDocs(S.collection(db,'ik_asist'));q.forEach(d=>ASIS[d.id]=d.data().marcas||{})}catch(e){}
+ try{const q=await S.getDocs(S.collection(db,'ik_bitacora'));q.forEach(d=>BIT.push(Object.assign({id:d.id},d.data())));BIT.sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')||(((b.creado&&b.creado.seconds)||0)-((a.creado&&a.creado.seconds)||0)))}catch(e){}
+}
+const RANGOS=[['Todos','',''],['0 a 3',0,3],['4 a 6',4,6],['7 a 9',7,9],['10 a 12',10,12],['13 o más',13,'']];
+const ikCnt=(d,h)=>ikFilt('',d,h,'').length;
+function ikpNinos(){
+ const L=ikFilt($('ikpq').value,$('ikpd').value,$('ikph').value,$('ikps').value),ed=IKN.map(k=>ikEdad(k.nacimiento)).filter(a=>a!=null);
+ $('ikpst').textContent='Inscritos: '+IKN.length+' · Mostrando: '+L.length+(ed.length?' · Edad promedio: '+(Math.round(ed.reduce((a,b)=>a+b,0)/ed.length*10)/10)+' años':'');
+ const C=$('ikpchips');C.textContent='';
+ RANGOS.forEach(r=>{const b=document.createElement('button');b.type='button';b.className='btn alt sm';b.textContent=r[0]+(r[0]==='Todos'?'':' ('+ikCnt(r[1],r[2])+')');b.onclick=()=>{$('ikpd').value=r[1];$('ikph').value=r[2];ikpNinos()};C.appendChild(b)});
+ const sess=Object.keys(ASIS).filter(f=>Object.keys(ASIS[f]).length),U=$('ikpl');U.textContent='';
+ if(!L.length){const li=document.createElement('li');li.textContent='No hay niños con esos filtros.';U.appendChild(li);return}
+ L.forEach(k=>{
+  const li=document.createElement('li'),t=document.createElement('div'),m=document.createElement('small'),b=document.createElement('div');b.className='dpb';
+  const st=document.createElement('strong');st.textContent=k.nino;t.append(st,document.createTextNode(' · '+ikEdTxt(k.nacimiento)+' · '+(k.sede||'')));
+  const pres=sess.filter(f=>ASIS[f][k.id]==='p').length;
+  m.textContent='Rep.: '+k.representante+' · '+(k.telefono||'sin teléfono')+(k.correo?' · '+k.correo:'')+(k.obs?' · Obs.: '+k.obs:'')+(sess.length?' · Asistió a '+pres+' de '+sess.length+' servicios':'');
+  const mk=(txt,fn)=>{const x=document.createElement('button');x.type='button';x.className='btn alt sm';x.textContent=txt;x.onclick=fn;b.appendChild(x)};
+  mk('Anotar en bitácora',()=>{$('ikpbq').value='';ikpBit();$('ikpbn').value=k.id;document.querySelector('[data-t=ikpB]').click();$('ikpbx').focus()});
+  mk('Avisar a los padres',()=>{$('iknq').value='';iknLista();$('iknn').value=k.id;iknInfo();iknRedactar();document.querySelector('[data-t=ikn]').click()});
+  li.append(t,m,b);U.appendChild(li)});
+}
+['ikpq','ikpd','ikph'].forEach(i=>$(i).addEventListener('input',ikpNinos));$('ikps').addEventListener('change',ikpNinos);
+function ikpAsis(){
+ if(!$('ikpf').value)$('ikpf').value=hoyStr();
+ const f=$('ikpf').value,M=ASIS[f]||{},L=ikFilt($('ikpaq').value,$('ikpad').value,$('ikpah').value,''),U=$('ikpal');U.textContent='';
+ const c={p:0,a:0,j:0};IKN.forEach(k=>{if(c[M[k.id]]!=null)c[M[k.id]]++});
+ $('ikpas').textContent='Presentes: '+c.p+' · Ausentes: '+c.a+' · Justificados: '+c.j+' · Sin marcar: '+(IKN.length-c.p-c.a-c.j);
+ if(!L.length){const li=document.createElement('li');li.textContent='No hay niños con esos filtros.';U.appendChild(li);return}
+ L.forEach(k=>{
+  const li=document.createElement('li'),t=document.createElement('div'),b=document.createElement('div');b.className='dpb';
+  const st=document.createElement('strong');st.textContent=k.nino;t.append(st,document.createTextNode(' · '+ikEdTxt(k.nacimiento)));
+  [['p','Presente'],['a','Ausente'],['j','Justificado']].forEach(([v,tx])=>{const x=document.createElement('button');x.type='button';x.className='btn sm'+(M[k.id]===v?'':' alt');x.textContent=tx;
+   x.onclick=async()=>{const nv=M[k.id]===v?null:v;try{await S.setDoc(S.doc(db,'ik_asist',f),{fecha:f,marcas:{[k.id]:nv==null?S.deleteField():nv},autor:DPU?DPU.nombre:'Administración',actualizado:S.serverTimestamp()},{merge:true});ASIS[f]=Object.assign({},M);if(nv==null)delete ASIS[f][k.id];else ASIS[f][k.id]=nv;ikpAsis();ikpNinos()}catch(e){alert(er(e))}};b.appendChild(x)});
+  li.append(t,b);U.appendChild(li)});
+}
+['ikpf','ikpaq','ikpad','ikpah'].forEach(i=>$(i).addEventListener('input',ikpAsis));
+const IKTP={conducta:'Conducta',salud:'Salud',logro:'Logro',nota:'Nota especial'};
+function ikpBit(){
+ if(!$('ikpbf').value)$('ikpbf').value=hoyStr();
+ const f=($('ikpbq').value||'').trim().toLowerCase(),sel=$('ikpbn'),v=sel.value;sel.textContent='';
+ IKN.filter(k=>!f||(k.nino||'').toLowerCase().includes(f)).forEach(k=>{const o=document.createElement('option');o.value=k.id;o.textContent=k.nino+' ('+ikEdTxt(k.nacimiento)+')';sel.appendChild(o)});
+ if(v&&[...sel.options].some(o=>o.value===v))sel.value=v;
+ const q=($('ikpbfq').value||'').trim().toLowerCase(),tp=$('ikpbft').value,U=$('ikpbl');U.textContent='';
+ const L=BIT.filter(x=>(!q||(x.nino||'').toLowerCase().includes(q))&&(!tp||x.tipo===tp)).slice(0,40);
+ if(!L.length){const li=document.createElement('li');li.textContent='Todavía no hay registros.';U.appendChild(li);return}
+ L.forEach(x=>{
+  const li=document.createElement('li'),t=document.createElement('div'),tx=document.createElement('div'),m=document.createElement('small');
+  const st=document.createElement('strong');st.textContent=x.nino;t.append(st,document.createTextNode(' · '+(IKTP[x.tipo]||x.tipo)+' · '+(x.fecha?dpFTxt(x.fecha):'')));
+  tx.className='dpav';tx.textContent=x.texto;m.textContent='Registrado por '+(x.autor||'');li.append(t,tx,m);
+  if(x.comentarioAdmin){const c=document.createElement('div');c.className='dpav';c.style.cssText='border-left:3px solid var(--brand);padding-left:10px';c.textContent='Comentario del pastor: '+x.comentarioAdmin;li.appendChild(c)}
+  if(DPADM){const b=document.createElement('button');b.type='button';b.className='btn alt sm';b.textContent=x.comentarioAdmin?'Editar comentario':'Comentar al maestro';b.onclick=()=>ikComentar(x,()=>{ikpBit()});li.appendChild(b)}
+  U.appendChild(li)});
+}
+async function ikComentar(x,fn){const c=prompt('Comentario para los maestros sobre este registro:',x.comentarioAdmin||'');if(c==null)return;try{await S.updateDoc(S.doc(db,'ik_bitacora',x.id),{comentarioAdmin:c.trim(),comentarioEn:S.serverTimestamp()});x.comentarioAdmin=c.trim();fn()}catch(e){alert(er(e))}}
+['ikpbq','ikpbfq'].forEach(i=>$(i).addEventListener('input',ikpBit));$('ikpbft').addEventListener('change',ikpBit);
+$('ikpbs').addEventListener('click',async()=>{
+ const k=IKN.find(z=>z.id===$('ikpbn').value),tx=$('ikpbx').value.trim(),o=$('ikpbm');o.textContent='';
+ if(!k){o.textContent='Elige un niño.';return}if(!tx){o.textContent='Escribe el detalle.';return}
+ const d={ninoId:k.id,nino:k.nino,tipo:$('ikpbt').value,fecha:$('ikpbf').value||hoyStr(),texto:tx,autor:DPU?DPU.nombre:'Administración',autorUid:auth.currentUser.uid,creado:S.serverTimestamp()};
+ try{const r=await S.addDoc(S.collection(db,'ik_bitacora'),d);BIT.unshift(Object.assign({id:r.id},d,{creado:{seconds:Date.now()/1000}}));$('ikpbx').value='';o.textContent='Guardado.';ikpBit()}catch(e){o.textContent=er(e)}
+});
+
+/* ===== NOTIFICACIONES Y RECURSOS PARA DEPARTAMENTOS ===== */
+const h12=t=>{if(!t)return '';const [h,m]=t.split(':').map(Number);return ((h%12)||12)+':'+p2(m)+' '+(h<12?'a. m.':'p. m.')};
+async function dpGet2(col,id){const L=[];for(const dest of ['general',id]){try{const q=await S.getDocs(S.query(S.collection(db,col),S.where('destino','==',dest)));q.forEach(d=>L.push(Object.assign({id:d.id},d.data())))}catch(e){}}L.sort((a,b)=>((b.creado&&b.creado.seconds)||0)-((a.creado&&a.creado.seconds)||0));return L}
+function dpBajaB64(r){const bin=atob(r.datos),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);dpBaja(new Blob([u],{type:r.mime||'application/octet-stream'}),r.archivo||'recurso')}
+async function dpAvisosCargar(){
+ const id=dpCur(),NL=$('dpnl'),RL=$('dprl');NL.textContent='';RL.textContent='';if(!id)return;
+ const N=await dpGet2('deptos_notif',id),R=await dpGet2('deptos_recursos',id);
+ let seen=0;const key='dpseen_'+(auth.currentUser?auth.currentUser.uid:'x');try{seen=+localStorage.getItem(key)||0}catch(e){}
+ if(!N.length){const li=document.createElement('li');li.textContent='No hay notificaciones.';NL.appendChild(li)}
+ N.slice(0,10).forEach(x=>{
+  const li=document.createElement('li'),t=document.createElement('div'),m=document.createElement('small'),sec=(x.creado&&x.creado.seconds)||0;
+  const st=document.createElement('strong');st.textContent=x.titulo;t.appendChild(st);
+  if(sec>seen&&!DPADM){const b=document.createElement('span');b.className='dpbad wa';b.style.marginLeft='8px';b.textContent='Nuevo';t.appendChild(b)}
+  li.appendChild(t);
+  const cu=[x.fecha?dpFTxt(x.fecha):'',x.hora?h12(x.hora):'',x.lugar?'Lugar: '+x.lugar:''].filter(Boolean).join(' · ');
+  if(cu){const c=document.createElement('div');c.style.fontWeight='600';c.textContent=cu;li.appendChild(c)}
+  const p=document.createElement('div');p.className='dpav';p.textContent=x.mensaje;li.appendChild(p);
+  m.textContent='Para: '+(x.destino==='general'?'todos los departamentos':(x.destinoNombre||''))+' · '+(x.autor||'')+(sec?' · '+new Date(sec*1000).toLocaleString('es'):'');li.appendChild(m);NL.appendChild(li)});
+ try{if(N.length&&!DPADM)localStorage.setItem(key,String(Math.max(...N.map(x=>(x.creado&&x.creado.seconds)||0))))}catch(e){}
+ if(!R.length){const li=document.createElement('li');li.textContent='Todavía no hay material.';RL.appendChild(li)}
+ R.forEach(x=>{
+  const li=document.createElement('li'),t=document.createElement('div'),b=document.createElement('div');b.className='dpb';
+  const st=document.createElement('strong');st.textContent=x.titulo;t.appendChild(st);li.appendChild(t);
+  if(x.descripcion){const d=document.createElement('div');d.textContent=x.descripcion;li.appendChild(d)}
+  if(x.url){const a=document.createElement('a');a.className='btn alt sm';a.href=x.url;a.target='_blank';a.rel='noopener';a.textContent='Abrir enlace';b.appendChild(a)}
+  if(x.datos){const k=document.createElement('button');k.type='button';k.className='btn alt sm';k.textContent='Descargar archivo';k.onclick=()=>dpBajaB64(x);b.appendChild(k)}
+  const m=document.createElement('small');m.textContent=x.destino==='general'?'Para todos los departamentos':'Para '+(x.destinoNombre||'');b.appendChild(m);li.appendChild(b);RL.appendChild(li)});
+}
+async function dpAdminAvisos(){
+ for(const i of ['dnd','drd']){const sel=$(i),v=sel.value;sel.textContent='';const g=document.createElement('option');g.value='general';g.textContent='General (todos los departamentos)';sel.appendChild(g);DPL.filter(d=>d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre;sel.appendChild(o)});if(v)sel.value=v}
+ const nm=id=>id==='general'?'General':dpNom(id);
+ const N=$('dnl2'),R=$('drl2');N.textContent='';R.textContent='';
+ try{const q=await S.getDocs(S.collection(db,'deptos_notif'));const L=[];q.forEach(d=>L.push(Object.assign({id:d.id},d.data())));L.sort((a,b)=>((b.creado&&b.creado.seconds)||0)-((a.creado&&a.creado.seconds)||0));
+  if(!L.length){const li=document.createElement('li');li.textContent='Aún no has enviado notificaciones.';N.appendChild(li)}
+  L.slice(0,15).forEach(x=>{const li=document.createElement('li'),t=document.createElement('div'),b=document.createElement('div');b.className='dpb';
+   t.textContent=x.titulo+' · Para: '+nm(x.destino)+(x.fecha?' · '+dpFTxt(x.fecha):'')+(x.hora?' '+h12(x.hora):'')+' · Correo: '+(x.correoEstado==='enviado'?'enviado ('+(x.enviados||0)+')':x.correoEstado==='pendiente'?'pendiente':x.correoEstado==='no'?'no solicitado':x.correoEstado==='sin_destinatarios'?'sin destinatarios':'con error');
+   const k=document.createElement('button');k.type='button';k.className='btn alt sm';k.textContent='Eliminar';k.onclick=async()=>{if(!confirm('¿Eliminar esta notificación?'))return;try{await S.deleteDoc(S.doc(db,'deptos_notif',x.id));dpAdminAvisos()}catch(e){alert(er(e))}};b.appendChild(k);li.append(t,b);N.appendChild(li)});
+ }catch(e){}
+ try{const q=await S.getDocs(S.collection(db,'deptos_recursos'));const L=[];q.forEach(d=>L.push(Object.assign({id:d.id},d.data())));L.sort((a,b)=>((b.creado&&b.creado.seconds)||0)-((a.creado&&a.creado.seconds)||0));
+  if(!L.length){const li=document.createElement('li');li.textContent='Aún no has publicado recursos.';R.appendChild(li)}
+  L.forEach(x=>{const li=document.createElement('li'),t=document.createElement('div'),b=document.createElement('div');b.className='dpb';
+   t.textContent=x.titulo+' · Para: '+nm(x.destino)+(x.url?' · enlace':'')+(x.datos?' · archivo':'');
+   const k=document.createElement('button');k.type='button';k.className='btn alt sm';k.textContent='Eliminar';k.onclick=async()=>{if(!confirm('¿Eliminar este recurso?'))return;try{await S.deleteDoc(S.doc(db,'deptos_recursos',x.id));dpAdminAvisos()}catch(e){alert(er(e))}};b.appendChild(k);li.append(t,b);R.appendChild(li)});
+ }catch(e){}
+}
+$('dnf').addEventListener('submit',async e=>{e.preventDefault();const o=$('dnok');o.textContent='';const dest=$('dnd').value;
+ try{await S.addDoc(S.collection(db,'deptos_notif'),{destino:dest,destinoNombre:dest==='general'?'General':dpNom(dest),titulo:$('dnt').value.trim(),mensaje:$('dnm').value.trim(),fecha:$('dnfe').value||'',hora:$('dnh').value||'',lugar:$('dnl').value.trim(),autor:(me&&me.nombre)||'Administración',creado:S.serverTimestamp(),correoEstado:$('dnc').checked?'pendiente':'no'});
+  $('dnf').reset();$('dnc').checked=true;o.textContent='Notificación enviada.';dpAdminAvisos()}catch(x){o.textContent=er(x)}});
+$('drf').addEventListener('submit',async e=>{e.preventDefault();const o=$('drok');o.textContent='';const dest=$('drd').value,f=$('drfi').files[0],u=$('dre').value.trim();
+ if(!f&&!u){o.textContent='Pon un enlace o elige un archivo.';return}
+ if(f&&f.size>700000){o.textContent='El archivo pesa más de 700 KB. Súbelo a Drive o YouTube y pega el enlace.';return}
+ try{const d={destino:dest,destinoNombre:dest==='general'?'General':dpNom(dest),titulo:$('drt').value.trim(),descripcion:$('drs').value.trim(),creado:S.serverTimestamp()};
+  if(u)d.url=u;if(f){d.datos=await fileB64(f);d.mime=f.type||'application/octet-stream';d.archivo=f.name}
+  await S.addDoc(S.collection(db,'deptos_recursos'),d);$('drf').reset();o.textContent='Recurso publicado.';dpAdminAvisos()}catch(x){o.textContent=er(x)}});
+
+/* supervisión de IGLEKIDS (panel de pastores) */
+async function ikSup(){
+ const B=$('ikadmsup');if(!B)return;B.textContent='';await dpDeps();
+ const ik=DPL.find(d=>/iglekids/i.test(d.nombre||''));
+ const h=document.createElement('strong');h.textContent='Supervisión de IGLEKIDS';B.appendChild(h);
+ if(!ik){const p=document.createElement('p');p.className='note';p.textContent='Primero crea el departamento IGLEKIDS en la pestaña DEPARTAMENTOS («Cargar los departamentos base»).';B.appendChild(p);return}
+ await ikDatos();
+ let T=[];try{const q=await S.getDocs(S.query(S.collection(db,'deptos_usuarios'),S.where('deptoId','==',ik.id)));q.forEach(d=>T.push(d.data()))}catch(e){}
+ const ed=IKN.map(k=>ikEdad(k.nacimiento)).filter(a=>a!=null);
+ const add=(txt,bold)=>{const p=document.createElement('p');p.style.margin='0';if(bold)p.style.fontWeight='600';p.textContent=txt;B.appendChild(p)};
+ add('Niños inscritos: '+IKN.length+(ed.length?' · Edad promedio: '+(Math.round(ed.reduce((a,b)=>a+b,0)/ed.length*10)/10)+' años':'')+' · '+RANGOS.slice(1).map(r=>r[0]+': '+ikCnt(r[1],r[2])).join(' · '),true);
+ add('Maestros: '+(T.filter(x=>x.estado==='aprobado').map(x=>x.nombre).join(', ')||'ninguno aprobado todavía')+(T.some(x=>x.estado==='pendiente')?' · Pendientes de aprobar: '+T.filter(x=>x.estado==='pendiente').length:''));
+ const fs=Object.keys(ASIS).filter(f=>Object.keys(ASIS[f]).length).sort().reverse().slice(0,5);
+ const s1=document.createElement('strong');s1.textContent='Asistencia reciente';B.appendChild(s1);
+ if(!fs.length)add('Aún no hay asistencias registradas.');
+ fs.forEach(f=>{const m=ASIS[f],c={p:0,a:0,j:0};Object.values(m).forEach(v=>{if(c[v]!=null)c[v]++});add(dpFTxt(f)+': presentes '+c.p+' · ausentes '+c.a+' · justificados '+c.j)});
+ const s2=document.createElement('strong');s2.textContent='Bitácora reciente de los maestros';B.appendChild(s2);
+ const ul=document.createElement('ul');ul.className='dpl';B.appendChild(ul);
+ if(!BIT.length){const li=document.createElement('li');li.textContent='Aún no hay registros.';ul.appendChild(li)}
+ BIT.slice(0,10).forEach(x=>{const li=document.createElement('li'),t=document.createElement('div'),tx=document.createElement('div'),m=document.createElement('small');
+  t.innerHTML='';const st=document.createElement('strong');st.textContent=x.nino;t.append(st,document.createTextNode(' · '+(IKTP[x.tipo]||x.tipo)+' · '+(x.fecha?dpFTxt(x.fecha):'')));
+  tx.className='dpav';tx.textContent=x.texto;m.textContent='Registrado por '+(x.autor||'');li.append(t,tx,m);
+  if(x.comentarioAdmin){const c=document.createElement('div');c.className='dpav';c.style.cssText='border-left:3px solid var(--brand);padding-left:10px';c.textContent='Tu comentario: '+x.comentarioAdmin;li.appendChild(c)}
+  const b=document.createElement('button');b.type='button';b.className='btn alt sm';b.textContent=x.comentarioAdmin?'Editar comentario':'Comentar al maestro';b.onclick=()=>ikComentar(x,ikSup);li.appendChild(b);ul.appendChild(li)});
+ const a=document.createElement('a');a.className='btn alt sm';a.href='?v=departamentos';a.target='_blank';a.rel='noopener';a.textContent='Abrir el espacio completo de maestros';a.style.marginLeft='0';B.appendChild(a);
+ add('Para enviar un aviso o material a los maestros: pestaña DEPARTAMENTOS, destino IGLEKIDS.');
+}
+
 /* administración de departamentos (panel de pastores) */
 async function dpAdminUsers(){
  const U=$('dpaul');U.textContent='';
@@ -1366,7 +1646,7 @@ loaders.dp=async()=>{
   mk(d.activo===false?'Activar':'Desactivar',()=>S.updateDoc(S.doc(db,'departamentos',d.id),{activo:d.activo===false}));
   mk('Eliminar',async()=>{if(cnt[d.id]){alert('Este departamento tiene integrantes. Muévelos a otro departamento o desactívalo.');throw new Error('Cancelado.')}if(!confirm('¿Eliminar el departamento «'+d.nombre+'»? Esta acción no se puede deshacer.'))throw new Error('Cancelado.');await S.deleteDoc(S.doc(db,'departamentos',d.id))});
   li.append(t,b);U.appendChild(li)});
- await dpAdminUsers();
+ await dpAdminUsers();await dpAdminAvisos();
 };
 $('dpnf').addEventListener('submit',async e=>{e.preventDefault();const n=$('dpnn').value.trim();if(!n)return;await dpDeps();
  if(DPL.some(d=>(d.nombre||'').toLowerCase()===n.toLowerCase())){alert('Ese departamento ya existe.');return}
@@ -1654,7 +1934,7 @@ function evCsv(l){const c=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
 $('vcsv').onclick=()=>{const l=evFiltro();try{evXlsx(l)}catch(e){evCsv(l);alert('No se pudo crear el archivo .xlsx; se descargó una versión CSV.')}};
 /* admin IGLEKIDS */
 $('ikf').addEventListener('submit',async e=>{e.preventDefault();const m=$('ikfm');m.textContent='Enviando…';
- try{await S.addDoc(S.collection(db,'iglekids_registro'),{nino:$('kn').value.trim(),nacimiento:$('kf').value,representante:$('kr').value.trim(),ci:$('kc').value.replace(/\D/g,''),telefono:$('kt').value.trim(),sede:$('ks').value,obs:$('ko').value.trim(),creado:S.serverTimestamp()});
+ try{await S.addDoc(S.collection(db,'iglekids_registro'),{nino:$('kn').value.trim(),nacimiento:$('kf').value,representante:$('kr').value.trim(),ci:$('kc').value.replace(/\D/g,''),telefono:$('kt').value.trim(),sede:$('ks').value,obs:$('ko').value.trim(),creado:S.serverTimestamp(),...($('kem').value.trim()?{correo:$('kem').value.trim()}:{})});
   $('ikf').reset();m.textContent='🎉 ¡Listo! Recibimos la inscripción. Pronto nos comunicaremos contigo.'}catch(x){m.textContent='No se pudo enviar ['+(x.code||x.message)+']. Intenta de nuevo.'}});
 async function ikIns(){const U=$('ikins');U.textContent='';
  try{const q=await S.getDocs(S.collection(db,'iglekids_registro'));const l=[];q.forEach(d=>l.push(Object.assign({id:d.id},d.data())));l.sort((a,b)=>((b.creado&&b.creado.seconds)||0)-((a.creado&&a.creado.seconds)||0));
@@ -1667,7 +1947,7 @@ const ikTipo=()=>{const t=$('ikt').value;$('ikfl').hidden=t==='youtube';$('ikyl'
 loaders.ik=async()=>{ikIns();await ikLoad();const U=$('ikadm');U.textContent='';
  IKS.forEach(x=>{const li=el('li',x.tipo.toUpperCase()+' · '+(x.titulo||'(sin título)'));const d=el('button','Eliminar','btn alt sm');d.type='button';d.style.marginLeft='10px';
   d.onclick=async()=>{if(!confirm('¿Eliminar este elemento?'))return;try{if(x.tipo==='video')for(let i=0;i<x.partes;i++)await S.deleteDoc(S.doc(db,'iglekids',x.id,'partes',String(i)));await S.deleteDoc(S.doc(db,'iglekids',x.id));loaders.ik()}catch(e){$('ikok').textContent='No se eliminó ['+(e.code||e.message)+']'}};li.appendChild(d);U.appendChild(li)});
- if(!IKS.length)U.appendChild(el('li','Aún no has publicado nada.'))};
+ if(!IKS.length)U.appendChild(el('li','Aún no has publicado nada.'));ikSup()};
 $('ikup').onclick=async()=>{const t=$('ikt').value,o=$('ikok'),ti=$('ikti').value.trim(),f=$('ikfi').files[0];$('ikup').disabled=true;
  try{const ref=S.doc(S.collection(db,'iglekids'));
   if(t==='youtube'){const y=ikYt($('ikyu').value);if(!y)throw{message:'Enlace de YouTube no válido'};await S.setDoc(ref,{tipo:'youtube',titulo:ti,yt:y,creado:S.serverTimestamp()})}
