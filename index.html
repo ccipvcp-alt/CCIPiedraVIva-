@@ -142,6 +142,29 @@ body[data-v] main{min-height:70vh}
 #apostoles .ap1 a.apl:hover img,#apostoles .ap1 a.apl:focus-visible img{transform:scale(1.025)}
 #apostoles .k{margin:0 0 6px;font-size:.8rem;letter-spacing:.24em;text-transform:uppercase;opacity:.7}
 #apostoles h2{margin:0 0 18px}
+#deptos{display:none;background:var(--soft)}
+body[data-v=departamentos] #deptos{display:block}
+.dpl{list-style:none;margin:12px 0;padding:0;display:grid;gap:10px}
+.dpl li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:8px}
+.dpl .dpb{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.dpl .dpb select{font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.dpl small{color:var(--muted)}
+.dpbad{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.78rem;font-weight:700;background:var(--line);color:var(--ink)}
+.dpbad.ok{background:#d9f2e0;color:#14532d}.dpbad.no{background:#fde2e2;color:#7f1d1d}.dpbad.wa{background:#fff1c9;color:#6b4e00}
+.dpav{white-space:pre-wrap}
+.dpgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:520px;margin:10px 0}
+.dpgrid b{text-align:center;font-size:.75rem;color:var(--muted)}
+.dpgrid div{aspect-ratio:1/1;border-radius:10px;display:grid;place-items:center;align-content:center;font-size:.92rem;color:var(--muted);line-height:1.1}
+.dpgrid div small{font-size:.65rem;opacity:.8}
+.dpgrid div.sv{background:var(--surface);border:1px solid var(--line);color:var(--ink);cursor:pointer;font-weight:700}
+.dpgrid div.mi{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.dpgrid div.nd{text-decoration:line-through;opacity:.5}
+.dpchip{display:inline-flex;gap:6px;align-items:center;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:2px 6px 2px 10px;font-size:.85rem;margin:2px 4px 2px 0}
+.dpchip button{border:0;background:transparent;color:inherit;cursor:pointer;font:inherit;padding:0 4px}
+.dpchip.me{background:var(--brand);color:var(--brand-ink)}
+.dpcw{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;display:grid;gap:10px}
+.dpcw .dpr{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+.dpcw label input[type=number]{width:90px}
 #apostoles .btn{margin-top:20px}
 #apg{display:none;position:relative;min-height:100vh;overflow:hidden;color:#fff;background:#0a1f66}
 body[data-v=apostoles] #apg{display:block}
@@ -375,7 +398,7 @@ body.ytopen{overflow:hidden}
 </style>
 </head>
 <body>
-<script>(function(){try{var v=new URLSearchParams(location.search).get('v');if(['escuela','lideres','sedes','iglekids','ikreg','evento','miembros','contacto','clinica','testimonio','apostoles'].indexOf(v)<0)return;document.body.setAttribute('data-v',v);if(v==='evento'&&new URLSearchParams(location.search).get('f'))document.body.setAttribute('data-f','1');document.title=({escuela:'Escuela de formación',lideres:'Líderes',sedes:'Nuestras sedes',iglekids:'IGLEKIDS',ikreg:'Inscripción IGLEKIDS',evento:'Inscripción a evento',miembros:'Registro de miembros',contacto:'¿Cómo podemos ayudarte?',clinica:'Clínica del Alma',testimonio:'Testimonio',apostoles:'Nuestros apóstoles'})[v]+' · CCI Piedra Viva';
+<script>(function(){try{var v=new URLSearchParams(location.search).get('v');if(['escuela','lideres','sedes','iglekids','ikreg','evento','miembros','contacto','clinica','testimonio','apostoles','departamentos'].indexOf(v)<0)return;document.body.setAttribute('data-v',v);if(v==='evento'&&new URLSearchParams(location.search).get('f'))document.body.setAttribute('data-f','1');document.title=({escuela:'Escuela de formación',lideres:'Líderes',sedes:'Nuestras sedes',iglekids:'IGLEKIDS',ikreg:'Inscripción IGLEKIDS',evento:'Inscripción a evento',miembros:'Registro de miembros',contacto:'¿Cómo podemos ayudarte?',clinica:'Clínica del Alma',testimonio:'Testimonio',apostoles:'Nuestros apóstoles',departamentos:'Departamentos'})[v]+' · CCI Piedra Viva';
 document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('header a[href^="#"],header .drop a').forEach(function(a){if(a.hasAttribute('data-lang'))return;var h=a.getAttribute('href');if(h&&h.charAt(0)==='#'){a.setAttribute('href','./'+h)}});
 document.querySelectorAll('header a[href^="?v="]').forEach(function(a){a.removeAttribute('target')});
 var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}catch(e){}})();</script>
@@ -401,7 +424,7 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <strong>Planea tu visita</strong><a href="?v=sedes" target="_blank" rel="noopener">Sede principal</a><a href="?v=sedes" target="_blank" rel="noopener">Centro Cristiano Piedraviva La Guaricha</a><a href="?v=sedes" target="_blank" rel="noopener">Centro Cristiano Piedraviva Valencia</a><a href="?v=sedes" target="_blank" rel="noopener">Centro Cristiano Piedraviva Bocono</a>
 <strong>Recursos</strong><a href="#medios">Programa de TV</a><a href="#medios">Familia</a><a href="#medios">Jóvenes</a><a href="#medios">Medios</a>
 <strong>¿Necesitas ayuda?</strong><a href="?v=contacto" target="_blank" rel="noopener">Petición de oración</a><a href="?v=contacto" target="_blank" rel="noopener">Apoyo y consejería</a>
-<strong>Acceso y registros</strong><a href="?v=miembros" target="_blank" rel="noopener">Registro de miembros</a><a href="?v=escuela" target="_blank" rel="noopener">Registro de formación (Escuela)</a><a href="?v=lideres" target="_blank" rel="noopener">Acceso de líderes</a>
+<strong>Acceso y registros</strong><a href="?v=miembros" target="_blank" rel="noopener">Registro de miembros</a><a href="?v=escuela" target="_blank" rel="noopener">Registro de formación (Escuela)</a><a href="?v=departamentos" target="_blank" rel="noopener">Acceso de departamentos</a><a href="?v=lideres" target="_blank" rel="noopener">Acceso de líderes</a>
 </div></li>
 <li><button class="top" aria-haspopup="true">Conéctate</button>
 <div class="drop">
@@ -561,6 +584,59 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 </section>
 
 <!-- ACCESO PARA LÍDERES -->
+<section id="deptos">
+<div class="wrap">
+<h2>Departamentos de la iglesia</h2>
+<p>Espacio de trabajo para los equipos de servicio: IBLT, Protocolo, Seguridad, Audiovisual, Logística, Gastronomía y los que se vayan creando. Cada equipo tiene su propio acceso.</p>
+<div id="dpauth">
+<div class="tabs" data-all="dpfl,dpfs"><button type="button" data-t="dpfl" class="on">Iniciar sesión</button><button type="button" data-t="dpfs">Registrarme</button></div>
+<form id="dpfl">
+<label>Correo electrónico<input id="dple" type="email" required autocomplete="email"></label>
+<label>Contraseña<input id="dplp" type="password" required autocomplete="current-password"></label>
+<button class="btn" type="submit">Entrar</button>
+<button class="btn alt" type="button" id="dpfg">Olvidé mi contraseña</button>
+</form>
+<form id="dpfs" hidden>
+<label>Nombre completo<input id="dpsn" required autocomplete="name"></label>
+<label>Departamento<select id="dpsd" required><option value="">Elige tu departamento</option></select></label>
+<label>Teléfono<input id="dpst" type="tel" required autocomplete="tel"></label>
+<label>Correo electrónico (será tu usuario)<input id="dpse" type="email" required autocomplete="email"></label>
+<label>Contraseña (mínimo 6 caracteres)<input id="dpsp" type="password" minlength="6" required autocomplete="new-password"></label>
+<button class="btn" type="submit">Crear cuenta</button>
+<p class="note">Un pastor debe aprobar tu registro antes de que puedas entrar.</p>
+</form>
+<p class="note" id="dpmsg" role="status"></p>
+</div>
+<div id="dppend" hidden>
+<h3 id="dppt">Tu registro está pendiente</h3>
+<p id="dppp">Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar al espacio de tu departamento.</p>
+<button class="btn alt" type="button" id="dppo">Salir</button>
+</div>
+<div id="dpdash" hidden>
+<div class="row" style="justify-content:space-between;align-items:center;margin-top:0"><h3 id="dphi" style="margin:0"></h3><button class="btn alt" id="dpout" type="button">Salir</button></div>
+<label id="dpadmsel" hidden style="max-width:360px;margin-top:12px">Ver departamento<select id="dpsel"></select></label>
+<h3 id="dpname" style="margin-top:20px"></h3>
+<h4>Calendario de guardias</h4>
+<p class="note">Servicios: domingos de 9:00 a 11:00 a. m. y lunes de 6:00 a 8:00 p. m. Cada persona sirve por turnos; tus demás días estás libre para congregarte como miembro.</p>
+<div class="dpr" style="display:flex;gap:10px;flex-wrap:wrap;align-items:end"><label style="max-width:190px">Mes<input type="month" id="dpmes"></label>
+<button class="btn alt sm" id="dppm" type="button" hidden>Mi calendario (PDF)</button><button class="btn alt sm" id="dppt2" type="button">Calendario del equipo (PDF)</button><button class="btn alt sm" id="dpics" type="button" hidden>Agregar a mi calendario</button></div>
+<p id="dpsum" style="font-weight:600;margin:10px 0 0"></p>
+<div class="dpgrid" id="dpgrid"></div>
+<p class="note" id="dphint"></p>
+<div class="dpcw" id="dpcoord" hidden><strong>Coordinación del rol</strong>
+<div class="dpr"><label>Personas domingo<input type="number" id="dpcd" min="1" max="30" value="2"></label><label>Personas lunes<input type="number" id="dpcl" min="1" max="30" value="2"></label>
+<label style="grid-auto-flow:column;align-items:center;gap:8px;font-weight:500"><input type="checkbox" id="dprest" checked> Descanso entre servicios seguidos</label></div>
+<div class="dpr"><button class="btn sm" id="dpgen" type="button">Generar rol del mes</button><button class="btn alt sm" id="dppub" type="button">Publicar</button></div>
+<p class="note" id="dpcmsg"></p></div>
+<ul class="dpl" id="dpday"></ul>
+<h4>Avisos del departamento</h4>
+<form id="dpaf" style="max-width:640px"><label>Nuevo aviso<textarea id="dpat" rows="3" maxlength="1500" required placeholder="Escribe un aviso para tu equipo"></textarea></label><button class="btn" type="submit">Publicar aviso</button></form>
+<ul class="dpl" id="dpavl"></ul>
+<h4>Integrantes</h4>
+<ul class="dpl" id="dpmem"></ul>
+</div>
+</div>
+</section>
 <section id="lideres" style="background:var(--soft)">
 <div class="wrap">
 <h2>Acceso para líderes</h2>
@@ -596,7 +672,7 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 
 <div id="dash" hidden>
 <div class="row" style="justify-content:space-between;align-items:center;margin-top:0"><h3 id="hi" style="margin:0"></h3><button class="btn alt" id="out" type="button">Salir</button></div>
-<div class="tabs" data-all="t1,t2,t3,t4,t5,t6,t7,t8"><button type="button" data-t="t1" class="on" data-load="res">Recursos</button><button type="button" data-t="t2">Reportar</button><button type="button" data-t="t3" data-load="mine">Mis reportes</button><button type="button" data-t="t4" data-load="adm" id="tabAdmin" hidden>Panel de pastores</button><button type="button" data-t="t5" data-load="adm" id="tabAn" hidden>Anuncios</button><button type="button" data-t="t6" data-load="esc" id="tabEsc" hidden>ESCUELA</button><button type="button" data-t="t7" data-load="ik" id="tabIk" hidden>IGLEKIDS</button><button type="button" data-t="t8" data-load="ev" id="tabEv" hidden>EVENTOS</button></div>
+<div class="tabs" data-all="t1,t2,t3,t4,t5,t6,t7,t8,t9"><button type="button" data-t="t1" class="on" data-load="res">Recursos</button><button type="button" data-t="t2">Reportar</button><button type="button" data-t="t3" data-load="mine">Mis reportes</button><button type="button" data-t="t4" data-load="adm" id="tabAdmin" hidden>Panel de pastores</button><button type="button" data-t="t5" data-load="adm" id="tabAn" hidden>Anuncios</button><button type="button" data-t="t6" data-load="esc" id="tabEsc" hidden>ESCUELA</button><button type="button" data-t="t7" data-load="ik" id="tabIk" hidden>IGLEKIDS</button><button type="button" data-t="t8" data-load="ev" id="tabEv" hidden>EVENTOS</button><button type="button" data-t="t9" data-load="dp" id="tabDp" hidden>DEPARTAMENTOS</button></div>
 
 <div id="t1" class="tab"><div class="grid" id="resl"></div>
 <form id="fr" hidden style="margin-top:20px"><h3>Agregar recurso</h3>
@@ -619,6 +695,16 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <div class="onlyadm"><h3 style="margin-top:24px">Material de apoyo</h3><p class="note">Sube el material de cada nivel (PDF, Word, PowerPoint o imagen, hasta 8 MB). Un estudiante ve el material de su nivel y de los niveles anteriores.</p>
 <div style="display:grid;gap:10px;max-width:520px"><label>Título<input id="mti" maxlength="80" placeholder="Ej.: Lección 1 · Fundamentos"></label><label>Descripción (opcional)<textarea id="mde" rows="2" maxlength="300"></textarea></label><label>Nivel<select id="mnv"><option>Miembros</option><option>Discípulos</option><option>Líderes</option><option>Mentores</option><option>Diáconos</option><option>Ancianos</option><option>Ministros</option></select></label><label>Archivo<input id="mfi" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.jpg,.jpeg,.png"></label><div><button class="btn sm" type="button" id="mup">Subir material</button> <span class="note" id="mok" role="status"></span></div></div>
 <ul class="rlist" id="madm"></ul></div>
+</div>
+<div id="t9" class="tab" hidden>
+<div class="onlyadm">
+<h3>Departamentos</h3>
+<p class="note">Crea los departamentos de la iglesia. Cada persona se registra en la página «Acceso de departamentos» y tú la apruebas aquí.</p>
+<form id="dpnf" class="row" style="margin-top:8px;align-items:end"><label style="flex:1;min-width:220px">Nuevo departamento<input id="dpnn" required maxlength="60" placeholder="Ej.: Intercesión"></label><button class="btn" type="submit">Crear departamento</button><button class="btn alt" type="button" id="dpbase">Cargar los departamentos base</button></form>
+<ul class="dpl" id="dpadl"></ul>
+<h3>Personas registradas</h3>
+<ul class="dpl" id="dpaul"></ul>
+</div>
 </div>
 <div id="t8" class="tab" hidden>
 <div class="onlyadm"><h3>Costo de cada evento</h3><p class="note">Escribe cuánto cuesta cada actividad (en dólares). Si el servidor paga distinto, ponlo en su casilla; si la dejas vacía, paga igual que el participante.</p>
@@ -1013,9 +1099,9 @@ async function enter(u){
   const d=await S.getDoc(S.doc(db,'users',u.uid));
   me=d.exists()?Object.assign({uid:u.uid},d.data()):null;
  }catch(e){me=null}
- if(!me){let eE=false;try{eE=(await S.getDoc(S.doc(db,'estudiantes',u.uid))).exists()}catch(e){}
-  $('pt').textContent=eE?'Esta cuenta es de la Escuela de formación':'No encontramos tu perfil';
-  $('pp').textContent=eE?'Entra a la sección Escuela de formación para ver tu material. Para acceso de líderes, regístrate con otro correo.':'Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar y ver los recursos y enviar reportes.';
+ if(!me){let eE=false,dE=false;try{eE=(await S.getDoc(S.doc(db,'estudiantes',u.uid))).exists()}catch(e){}try{dE=(await S.getDoc(S.doc(db,'deptos_usuarios',u.uid))).exists()}catch(e){}
+  $('pt').textContent=dE?'Esta cuenta es de Departamentos':eE?'Esta cuenta es de la Escuela de formación':'No encontramos tu perfil';
+  $('pp').textContent=dE?'Entra por «Acceso de departamentos» (menú Descubre) para ver el espacio de tu equipo.':eE?'Entra a la sección Escuela de formación para ver tu material. Para acceso de líderes, regístrate con otro correo.':'Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar y ver los recursos y enviar reportes.';
   view('pend');return}
  $('pp').textContent='Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar y ver los recursos y enviar reportes.';
  if(me.rol!=='admin'&&me.estado!=='aprobado'){
@@ -1025,12 +1111,12 @@ async function enter(u){
  $('hi').textContent='Bienvenido, '+me.nombre;
  const adm=me.rol==='admin';
  const ps=me.rol==='pastor_sede';
- $('tabAdmin').hidden=!(adm||ps);$('tabAn').hidden=!adm;$('tabEsc').hidden=!(adm||ps);$('tabIk').hidden=!adm;$('tabEv').hidden=!(adm||ps);$('fr').hidden=!adm;
+ $('tabAdmin').hidden=!(adm||ps);$('tabAn').hidden=!adm;$('tabEsc').hidden=!(adm||ps);$('tabIk').hidden=!adm;$('tabEv').hidden=!(adm||ps);$('tabDp').hidden=!adm;$('fr').hidden=!adm;
  document.querySelectorAll('.onlyadm').forEach(e=>e.hidden=!adm);
  if(ps){$('rsede').value=me.sede;$('rsede').disabled=true;$('psnote').textContent='Pastor de sede: ves únicamente la información de '+me.sede+'.';$('psnote').hidden=false}else{$('rsede').disabled=false;$('psnote').hidden=true}
  view('dash');loaders.res();
 }
-A.onAuthStateChanged(auth,u=>{if(!busy){enter(u);escEnter(u)}});
+A.onAuthStateChanged(auth,u=>{if(!busy){enter(u);escEnter(u);dpEnter(u)}});
 
 $('fl').addEventListener('submit',async e=>{
  e.preventDefault();msg('');
@@ -1048,6 +1134,245 @@ $('fs').addEventListener('submit',async e=>{
   busy=false;$('fs').reset();await enter(c.user);
  }catch(x){busy=false;msg(er(x))}
 });
+
+/* ===== DEPARTAMENTOS ===== */
+const DP_BASE=['IBLT','Protocolo','Seguridad','Audiovisual','Logística','Gastronomía'];
+let DPU=null,DPL=[],DPADM=false,DPMEMS=[],TURNO=null;
+const dpMsg=t=>{$('dpmsg').textContent=t||''};
+const dpView=v=>{['dpauth','dppend','dpdash'].forEach(i=>{$(i).hidden=i!==v})};
+async function dpDeps(){DPL=[];try{const q=await S.getDocs(S.collection(db,'departamentos'));q.forEach(d=>DPL.push(Object.assign({id:d.id},d.data())))}catch(e){}DPL.sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||'','es'));return DPL}
+const dpNom=id=>{const d=DPL.find(x=>x.id===id);return d?d.nombre:'(departamento eliminado)'};
+function dpOpts(sel,soloActivos,v){sel.textContent='';DPL.filter(d=>!soloActivos||d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre+(d.activo===false?' (inactivo)':'');sel.appendChild(o)});if(v)sel.value=v}
+async function dpEnter(u){
+ if(document.body.getAttribute('data-v')!=='departamentos')return;
+ await dpDeps();
+ const rs=$('dpsd');rs.textContent='';const o0=document.createElement('option');o0.value='';o0.textContent='Elige tu departamento';rs.appendChild(o0);DPL.filter(d=>d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre;rs.appendChild(o)});
+ if(!u){DPU=null;DPADM=false;dpView('dpauth');return}
+ DPU=null;DPADM=false;
+ try{const d=await S.getDoc(S.doc(db,'deptos_usuarios',u.uid));if(d.exists())DPU=Object.assign({uid:u.uid},d.data())}catch(e){}
+ if(!DPU){
+  try{const a=await S.getDoc(S.doc(db,'users',u.uid));DPADM=a.exists()&&a.data().rol==='admin'}catch(e){}
+  if(!DPADM){$('dppt').textContent='Esta cuenta no está registrada en Departamentos';$('dppp').textContent='Usa la pestaña «Registrarme» con otro correo, o entra con la cuenta de tu departamento.';dpView('dppend');return}
+ }else if(DPU.estado!=='aprobado'){
+  $('dppt').textContent=DPU.estado==='rechazado'?'Tu solicitud no fue aprobada':'Tu registro está pendiente';
+  $('dppp').textContent='Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar al espacio de tu departamento.';
+  dpView('dppend');return;
+ }
+ $('dphi').textContent='Bienvenido, '+(DPU?DPU.nombre:'administrador');
+ const sel=$('dpsel');$('dpadmsel').hidden=!DPADM;
+ if(DPADM){dpOpts(sel,false);}
+ dpView('dpdash');await dpPanel();
+}
+const dpCur=()=>DPADM?$('dpsel').value:(DPU&&DPU.deptoId);
+async function dpPanel(){
+ const id=dpCur(),av=$('dpavl'),mm=$('dpmem');av.textContent='';mm.textContent='';
+ $('dpname').textContent=id?dpNom(id):'Aún no hay departamentos creados';
+ $('dpaf').hidden=!id;if(!id){DPMEMS=[];TURNO=null;return}
+ try{
+  const q=await S.getDocs(S.query(S.collection(db,'deptos_avisos'),S.where('deptoId','==',id)));const L=[];q.forEach(d=>L.push(Object.assign({id:d.id},d.data())));
+  L.sort((a,b)=>((b.creado&&b.creado.seconds)||0)-((a.creado&&a.creado.seconds)||0));
+  if(!L.length){const li=document.createElement('li');li.textContent='Todavía no hay avisos.';av.appendChild(li)}
+  L.forEach(a=>{const li=document.createElement('li'),p=document.createElement('div'),m=document.createElement('small');p.className='dpav';p.textContent=a.texto;m.textContent=(a.autor||'')+(a.creado&&a.creado.seconds?' · '+new Date(a.creado.seconds*1000).toLocaleString('es'):'');li.append(p,m);
+   if(DPADM||(DPU&&a.uid===DPU.uid)){const b=document.createElement('button');b.type='button';b.className='btn alt sm';b.textContent='Borrar';b.onclick=async()=>{if(!confirm('¿Borrar este aviso?'))return;try{await S.deleteDoc(S.doc(db,'deptos_avisos',a.id));dpPanel()}catch(x){alert(er(x))}};li.appendChild(b)}
+   av.appendChild(li)});
+ }catch(e){const li=document.createElement('li');li.textContent='No se pudieron cargar los avisos.';av.appendChild(li)}
+ try{
+  const q=await S.getDocs(S.query(S.collection(db,'deptos_usuarios'),S.where('deptoId','==',id),S.where('estado','==','aprobado')));const L=[];q.forEach(d=>L.push(Object.assign({uid:d.id},d.data())));
+  L.sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||'','es'));DPMEMS=L;
+  if(!L.length){const li=document.createElement('li');li.textContent='Aún no hay integrantes aprobados.';mm.appendChild(li)}
+  L.forEach(x=>{const li=document.createElement('li');li.textContent=x.nombre+(x.rol==='coordinador'?' · Coordinador':'')+(x.telefono?' · '+x.telefono:'');mm.appendChild(li)});
+ }catch(e){}
+ if(!$('dpmes').value){const n=new Date();$('dpmes').value=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')}
+ await dpTurnoLoad();dpDraw();
+}
+$('dpsel').addEventListener('change',dpPanel);
+$('dpaf').addEventListener('submit',async e=>{e.preventDefault();const id=dpCur(),t=$('dpat').value.trim();if(!id||!t)return;
+ try{await S.addDoc(S.collection(db,'deptos_avisos'),{deptoId:id,texto:t,autor:DPU?DPU.nombre:'Administración',uid:auth.currentUser.uid,creado:S.serverTimestamp()});$('dpat').value='';dpPanel()}catch(x){alert(er(x))}});
+$('dpfl').addEventListener('submit',async e=>{e.preventDefault();dpMsg('');try{await A.signInWithEmailAndPassword(auth,$('dple').value.trim(),$('dplp').value);$('dplp').value=''}catch(x){dpMsg(er(x))}});
+$('dpfg').addEventListener('click',async()=>{const m=$('dple').value.trim();if(!m){dpMsg('Escribe tu correo arriba y vuelve a tocar el botón.');return}try{await A.sendPasswordResetEmail(auth,m);dpMsg('Te enviamos un enlace para crear una contraseña nueva. Revisa tu correo.')}catch(x){dpMsg(er(x))}});
+$('dpfs').addEventListener('submit',async e=>{e.preventDefault();dpMsg('');busy=true;
+ try{
+  const did=$('dpsd').value;if(!did)throw new Error('Elige tu departamento.');
+  const c=await A.createUserWithEmailAndPassword(auth,$('dpse').value.trim(),$('dpsp').value);
+  await S.setDoc(S.doc(db,'deptos_usuarios',c.user.uid),{nombre:$('dpsn').value.trim(),deptoId:did,deptoNombre:dpNom(did),telefono:$('dpst').value.trim(),email:$('dpse').value.trim(),estado:'pendiente',rol:'miembro',creado:S.serverTimestamp()});
+  busy=false;$('dpfs').reset();await dpEnter(c.user);
+ }catch(x){busy=false;dpMsg(x&&x.message&&!x.code?x.message:er(x))}});
+$('dppo').addEventListener('click',()=>A.signOut(auth));$('dpout').addEventListener('click',()=>A.signOut(auth));
+
+/* ===== CALENDARIO DE GUARDIAS ===== */
+const DIAS=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const SV={0:{h:'9:00 - 11:00 a. m.',a:9,b:11},1:{h:'6:00 - 8:00 p. m.',a:18,b:20}};
+const p2=n=>String(n).padStart(2,'0');
+const dpCoord=()=>!!(DPADM||(DPU&&DPU.rol==='coordinador'));
+function dpFechas(mes){const [y,m]=mes.split('-').map(Number),n=new Date(y,m,0).getDate(),L=[];for(let d=1;d<=n;d++){const w=new Date(y,m-1,d).getDay();if(SV[w])L.push({f:mes+'-'+p2(d),dow:w,d})}return L}
+const dpFTxt=f=>{const [y,m,d]=f.split('-').map(Number);return DIAS[new Date(y,m-1,d).getDay()]+' '+d+' de '+MESES[m-1]};
+async function dpTurnoLoad(){TURNO=null;const id=dpCur(),mes=$('dpmes').value;if(!id||!mes)return;try{const d=await S.getDoc(S.doc(db,'deptos_turnos',id+'_'+mes));if(d.exists())TURNO=d.data()}catch(e){}}
+async function dpSave(){const id=dpCur(),mes=$('dpmes').value;TURNO.deptoId=id;TURNO.mes=mes;TURNO.actualizado=S.serverTimestamp();await S.setDoc(S.doc(db,'deptos_turnos',id+'_'+mes),TURNO)}
+const dpNomU=u=>(TURNO&&TURNO.nombres&&TURNO.nombres[u])||(DPMEMS.find(x=>x.uid===u)||{}).nombre||'(ya no está)';
+function dpGen(mem,F,cup,gap){
+ const cnt={},last={},A={},falta=[];mem.forEach(m=>{cnt[m.uid]=0;last[m.uid]=-99});
+ F.forEach((s,i)=>{
+  const need=cup[s.dow],ok=mem.filter(m=>!(m.noDisp||[]).includes(s.f));
+  const rk=a=>a.slice().sort((x,y)=>cnt[x.uid]-cnt[y.uid]||last[x.uid]-last[y.uid]||(x.nombre||'').localeCompare(y.nombre||'','es'));
+  let pick=rk(ok.filter(m=>i-last[m.uid]>gap)).slice(0,need);
+  if(pick.length<need){const ids=pick.map(m=>m.uid);pick=pick.concat(rk(ok.filter(m=>!ids.includes(m.uid))).slice(0,need-pick.length))}
+  if(pick.length<need)falta.push(s.f);
+  A[s.f]=pick.map(m=>m.uid);pick.forEach(m=>{cnt[m.uid]++;last[m.uid]=i});
+ });
+ return {A,falta,cnt};
+}
+function dpDraw(){
+ const mes=$('dpmes').value,id=dpCur();if(!mes||!id){return}
+ const [y,m]=mes.split('-').map(Number),F=dpFechas(mes),T=TURNO,vis=!!T&&(T.publicado||dpCoord()),me=DPU?DPU.uid:null,AS=(T&&T.asign)||{},nd=(DPU&&DPU.noDisp)||[];
+ const hoy=new Date(),hs=hoy.getFullYear()+'-'+p2(hoy.getMonth()+1)+'-'+p2(hoy.getDate());
+ const g=$('dpgrid');g.textContent='';
+ ['D','L','M','M','J','V','S'].forEach(x=>{const b=document.createElement('b');b.textContent=x;g.appendChild(b)});
+ for(let i=0;i<new Date(y,m-1,1).getDay();i++)g.appendChild(document.createElement('div'));
+ const sv={};F.forEach(s=>sv[s.d]=s);
+ for(let d=1;d<=new Date(y,m,0).getDate();d++){
+  const c=document.createElement('div'),s=sv[d];c.textContent=d;
+  if(s){c.classList.add('sv');const mine=vis&&me&&(AS[s.f]||[]).includes(me);
+   if(mine)c.classList.add('mi');else if(nd.includes(s.f))c.classList.add('nd');
+   if(vis&&AS[s.f]){const sm=document.createElement('small');sm.textContent=AS[s.f].length+' pers.';c.appendChild(sm)}
+   c.title=dpFTxt(s.f)+' · '+SV[s.dow].h;
+   c.onclick=async()=>{
+    if(!DPU){return}
+    if(mine){alert('Ya tienes guardia ese día. Si no puedes asistir, avisa a tu coordinador.');return}
+    if(s.f<hs){return}
+    const was=nd.includes(s.f);
+    try{await S.updateDoc(S.doc(db,'deptos_usuarios',DPU.uid),{noDisp:was?S.arrayRemove(s.f):S.arrayUnion(s.f)});DPU.noDisp=was?nd.filter(x=>x!==s.f):nd.concat([s.f]);dpDraw()}catch(e){alert(er(e))}};
+  }
+  g.appendChild(c)}
+ const mis=F.filter(s=>vis&&me&&(AS[s.f]||[]).includes(me));
+ const sum=$('dpsum');
+ if(!T)sum.textContent=dpCoord()?'Este mes todavía no tiene rol. Usa «Generar rol del mes».':'El rol de este mes aún no está publicado.';
+ else if(!vis)sum.textContent='El rol de este mes aún no está publicado.';
+ else if(me)sum.textContent=mis.length?'Tienes '+mis.length+' guardia(s) este mes. Próxima: '+dpFTxt((mis.find(s=>s.f>=hs)||mis[0]).f)+'.':'No tienes guardias este mes: estás libre para congregarte.';
+ else sum.textContent='Rol de '+MESES[m-1]+' '+y+(T.publicado?' (publicado)':' (borrador, aún no visible para el equipo)')+'.';
+ $('dphint').textContent=me?'Toca un día de servicio para marcar «No puedo» (se tacha) y el sistema no te asignará ese día. Los días en color oscuro son tus guardias.':'';
+ $('dppm').hidden=!(me&&vis);$('dpics').hidden=!(me&&vis&&mis.length>0);$('dppt2').hidden=!vis;
+ const cw=$('dpcoord');cw.hidden=!dpCoord();
+ if(dpCoord()){$('dpcd').value=(T&&T.cupo&&T.cupo.dom)||$('dpcd').value;$('dpcl').value=(T&&T.cupo&&T.cupo.lun)||$('dpcl').value;$('dppub').hidden=!T;$('dppub').textContent=T&&T.publicado?'Quitar publicación':'Publicar para el equipo'}
+ const U=$('dpday');U.textContent='';
+ if(!vis)return;
+ F.forEach(s=>{
+  const li=document.createElement('li'),t=document.createElement('div'),L=AS[s.f]||[];
+  const st=document.createElement('strong');st.textContent=dpFTxt(s.f);t.append(st,document.createTextNode(' · '+SV[s.dow].h));li.appendChild(t);
+  const w=document.createElement('div');
+  L.forEach(u=>{const ch=document.createElement('span');ch.className='dpchip'+(u===me?' me':'');ch.appendChild(document.createTextNode(dpNomU(u)));
+   if(dpCoord()){const x=document.createElement('button');x.type='button';x.textContent='×';x.title='Quitar';x.onclick=async()=>{T.asign[s.f]=L.filter(z=>z!==u);try{await dpSave();dpDraw()}catch(e){alert(er(e))}};ch.appendChild(x)}
+   w.appendChild(ch)});
+  if(!L.length){const e=document.createElement('small');e.textContent='Sin asignar';w.appendChild(e)}
+  li.appendChild(w);
+  if(dpCoord()){const sel=document.createElement('select');const o0=document.createElement('option');o0.value='';o0.textContent='+ Añadir persona';sel.appendChild(o0);
+   DPMEMS.filter(x=>!L.includes(x.uid)).forEach(x=>{const o=document.createElement('option');o.value=x.uid;o.textContent=x.nombre+((x.noDisp||[]).includes(s.f)?' (no puede)':'');sel.appendChild(o)});
+   sel.onchange=async()=>{if(!sel.value)return;const x=DPMEMS.find(z=>z.uid===sel.value);T.asign[s.f]=L.concat([sel.value]);T.nombres=T.nombres||{};T.nombres[x.uid]=x.nombre;try{await dpSave();dpDraw()}catch(e){alert(er(e))}};
+   const b=document.createElement('div');b.className='dpb';b.appendChild(sel);li.appendChild(b)}
+  U.appendChild(li)});
+}
+$('dpmes').addEventListener('change',async()=>{await dpTurnoLoad();dpDraw()});
+$('dpgen').addEventListener('click',async()=>{
+ const mes=$('dpmes').value,id=dpCur();if(!mes||!id)return;
+ if(!DPMEMS.length){alert('Este departamento aún no tiene integrantes aprobados.');return}
+ if(TURNO&&Object.values(TURNO.asign||{}).some(a=>a.length)&&!confirm('Ya existe un rol para este mes. ¿Generarlo de nuevo y reemplazarlo?'))return;
+ const cup={0:Math.max(1,parseInt($('dpcd').value)||2),1:Math.max(1,parseInt($('dpcl').value)||2)};
+ const r=dpGen(DPMEMS,dpFechas(mes),cup,$('dprest').checked?1:0);
+ const nombres={};DPMEMS.forEach(x=>nombres[x.uid]=x.nombre);
+ TURNO={deptoId:id,mes,cupo:{dom:cup[0],lun:cup[1]},asign:r.A,nombres,publicado:!!(TURNO&&TURNO.publicado),descanso:$('dprest').checked};
+ try{await dpSave();$('dpcmsg').textContent=r.falta.length?'Rol generado, pero faltó gente en '+r.falta.length+' servicio(s) (por pocas personas o indisponibilidad). Complétalos a mano con «+ Añadir persona».':'Rol generado. Revísalo, ajusta lo que haga falta y publícalo para que el equipo lo vea.';dpDraw()}catch(e){alert(er(e))}});
+$('dppub').addEventListener('click',async()=>{if(!TURNO)return;TURNO.publicado=!TURNO.publicado;try{await dpSave();$('dpcmsg').textContent=TURNO.publicado?'Rol publicado: el equipo ya puede verlo y descargarlo.':'Rol oculto para el equipo.';dpDraw()}catch(e){TURNO.publicado=!TURNO.publicado;alert(er(e))}});
+
+/* PDF propio (sin librerías) */
+function pdfNew(){const P=[];let c;
+ const esc=t=>String(t).replace(/[–—]/g,'-').replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/[^\x00-\xff]/g,'?').replace(/[\\()]/g,'\\$&');
+ return {add(){c=[];P.push(c)},
+  text(x,y,t,sz,b,col){c.push('BT /F'+(b?2:1)+' '+sz+' Tf '+(col||'0 0 0')+' rg '+x+' '+y+' Td ('+esc(t)+') Tj ET')},
+  rect(x,y,w,h,col){c.push(col+' rg '+x+' '+y+' '+w+' '+h+' re f')},
+  line(x1,y,x2){c.push('0.82 G 0.6 w '+x1+' '+y+' m '+x2+' '+y+' l S')},
+  out(){const o=[];const n=P.length;
+   o[1]='<< /Type /Catalog /Pages 2 0 R >>';
+   o[2]='<< /Type /Pages /Kids ['+P.map((_,i)=>(5+i*2)+' 0 R').join(' ')+'] /Count '+n+' >>';
+   o[3]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>';
+   o[4]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>';
+   P.forEach((cs,i)=>{const st=cs.join('\n');o[5+i*2]='<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents '+(6+i*2)+' 0 R >>';o[6+i*2]='<< /Length '+st.length+' >>\nstream\n'+st+'\nendstream'});
+   let s='%PDF-1.4\n',off=[];for(let i=1;i<o.length;i++){off[i]=s.length;s+=i+' 0 obj\n'+o[i]+'\nendobj\n'}
+   const x=s.length;s+='xref\n0 '+o.length+'\n0000000000 65535 f \n';for(let i=1;i<o.length;i++)s+=String(off[i]).padStart(10,'0')+' 00000 n \n';
+   s+='trailer\n<< /Size '+o.length+' /Root 1 0 R >>\nstartxref\n'+x+'\n%%EOF';
+   return new Blob([Uint8Array.from(s,ch=>ch.charCodeAt(0))],{type:'application/pdf'})}};
+}
+function dpBaja(blob,nombre){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=nombre;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}
+const dpSlug=t=>String(t).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'').toLowerCase();
+function dpPdf(solo){
+ const mes=$('dpmes').value,[y,m]=mes.split('-').map(Number),F=dpFechas(mes),AS=(TURNO&&TURNO.asign)||{},me=DPU?DPU.uid:null,dep=dpNom(dpCur());
+ const D=pdfNew();let pg=0,yy=0;
+ const head=()=>{D.add();pg++;D.rect(0,772,595,70,'0.08 0.09 0.10');D.text(40,812,'CCI PIEDRA VIVA',18,1,'1 1 1');D.text(40,790,'Calendario de guardias - '+dep,11,0,'0.85 0.85 0.85');D.text(40,742,solo?'Servidor(a): '+DPU.nombre:'Calendario del equipo',13,1);D.text(40,724,MESES[m-1].charAt(0).toUpperCase()+MESES[m-1].slice(1)+' '+y,11,0,'0.35 0.35 0.35');yy=700};
+ const cab=()=>{D.rect(40,yy-6,515,20,'0.92 0.92 0.93');D.text(46,yy,'Fecha',9,1);D.text(190,yy,'Horario',9,1);D.text(290,yy,solo?'Te acompañan':'Equipo asignado',9,1);yy-=24};
+ head();cab();
+ const L=F.filter(s=>!solo||(AS[s.f]||[]).includes(me));
+ if(!L.length){D.text(46,yy,solo?'No tienes guardias este mes. Estás libre para congregarte como miembro.':'Este mes no hay servicios asignados.',10,0)}
+ L.forEach(s=>{
+  const nombres=(AS[s.f]||[]).filter(u=>!solo||u!==me).map(dpNomU).join(', ')||(solo?'-':'Sin asignar');
+  const lines=[];let cur='';nombres.split(' ').forEach(w=>{if((cur+' '+w).length>52){lines.push(cur);cur=w}else cur=cur?cur+' '+w:w});lines.push(cur);
+  const h=Math.max(1,lines.length)*12+10;
+  if(yy-h<60){head();cab()}
+  D.text(46,yy,dpFTxt(s.f),10,1);D.text(190,yy,SV[s.dow].h,10,0);lines.forEach((t,i)=>D.text(290,yy-i*12,t,10,0));
+  D.line(40,yy-h+8,555);yy-=h});
+ D.text(40,36,'Documento interno. Los dias sin guardia estas libre para congregarte. Generado el '+new Date().toLocaleDateString('es')+'.',8,0,'0.4 0.4 0.4');
+ dpBaja(D.out(),'guardias-'+dpSlug(dep)+'-'+mes+(solo?'-'+dpSlug(DPU.nombre):'-equipo')+'.pdf');
+}
+$('dppm').addEventListener('click',()=>{try{dpPdf(true)}catch(e){alert('No se pudo crear el PDF.')}});
+$('dppt2').addEventListener('click',()=>{try{dpPdf(false)}catch(e){alert('No se pudo crear el PDF.')}});
+$('dpics').addEventListener('click',()=>{
+ const mes=$('dpmes').value,F=dpFechas(mes),AS=(TURNO&&TURNO.asign)||{},dep=dpNom(dpCur());
+ const z=(y,mo,d,h)=>{const t=new Date(Date.UTC(y,mo-1,d,h+4,0,0));return t.getUTCFullYear()+p2(t.getUTCMonth()+1)+p2(t.getUTCDate())+'T'+p2(t.getUTCHours())+'0000Z'};
+ let o=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//CCI Piedra Viva//Guardias//ES','CALSCALE:GREGORIAN'];
+ F.filter(s=>(AS[s.f]||[]).includes(DPU.uid)).forEach(s=>{const [y,m,d]=s.f.split('-').map(Number);
+  o.push('BEGIN:VEVENT','UID:'+s.f+'-'+dpCur()+'-'+DPU.uid+'@ccipiedraviva','DTSTAMP:'+z(2026,1,1,0),'DTSTART:'+z(y,m,d,SV[s.dow].a),'DTEND:'+z(y,m,d,SV[s.dow].b),'SUMMARY:Guardia - '+dep,'DESCRIPTION:Servicio de '+dep+' en CCI Piedra Viva ('+SV[s.dow].h+')','BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY','DESCRIPTION:Mañana tienes guardia en '+dep,'END:VALARM','BEGIN:VALARM','TRIGGER:-PT2H','ACTION:DISPLAY','DESCRIPTION:Hoy tienes guardia en '+dep,'END:VALARM','END:VEVENT')});
+ o.push('END:VCALENDAR');dpBaja(new Blob([o.join('\r\n')],{type:'text/calendar'}),'guardias-'+dpSlug(dep)+'-'+mes+'.ics');
+});
+
+/* administración de departamentos (panel de pastores) */
+async function dpAdminUsers(){
+ const U=$('dpaul');U.textContent='';
+ try{
+  const q=await S.getDocs(S.collection(db,'deptos_usuarios'));const L=[];q.forEach(d=>L.push(Object.assign({id:d.id},d.data())));
+  const ord={pendiente:0,aprobado:1,rechazado:2};L.sort((a,b)=>(ord[a.estado]-ord[b.estado])||(a.nombre||'').localeCompare(b.nombre||'','es'));
+  if(!L.length){const li=document.createElement('li');li.textContent='Aún no hay personas registradas.';U.appendChild(li);return}
+  L.forEach(x=>{
+   const li=document.createElement('li'),t=document.createElement('div'),b=document.createElement('div');b.className='dpb';
+   const bd=document.createElement('span');bd.className='dpbad '+(x.estado==='aprobado'?'ok':x.estado==='rechazado'?'no':'wa');bd.textContent=x.estado==='aprobado'?'Aprobado':x.estado==='rechazado'?'Rechazado':'Pendiente';
+   const st=document.createElement('strong');st.textContent=x.nombre;t.append(st,document.createTextNode(' · '+(x.email||'')+' · '+(x.telefono||'')+' · '),bd);
+   const sel=document.createElement('select');dpOpts(sel,false,x.deptoId);sel.onchange=async()=>{try{await S.updateDoc(S.doc(db,'deptos_usuarios',x.id),{deptoId:sel.value,deptoNombre:dpNom(sel.value)});loaders.dp()}catch(e){alert(er(e))}};
+   const mk=(txt,fn,alt)=>{const k=document.createElement('button');k.type='button';k.className='btn sm'+(alt?' alt':'');k.textContent=txt;k.onclick=async()=>{try{await fn();loaders.dp()}catch(e){alert(er(e))}};b.appendChild(k)};
+   b.appendChild(sel);
+   if(x.estado!=='aprobado')mk('Aprobar',()=>S.updateDoc(S.doc(db,'deptos_usuarios',x.id),{estado:'aprobado'}));
+   if(x.estado==='pendiente')mk('Rechazar',()=>S.updateDoc(S.doc(db,'deptos_usuarios',x.id),{estado:'rechazado'}),1);
+   if(x.estado==='aprobado')mk(x.rol==='coordinador'?'Quitar coordinador':'Hacer coordinador',()=>S.updateDoc(S.doc(db,'deptos_usuarios',x.id),{rol:x.rol==='coordinador'?'miembro':'coordinador'}),1);
+   if(x.estado==='aprobado')mk('Suspender',()=>S.updateDoc(S.doc(db,'deptos_usuarios',x.id),{estado:'rechazado'}),1);
+   mk('Quitar',async()=>{if(!confirm('¿Quitar a '+x.nombre+' de Departamentos? Solo borra su perfil de departamento, no su correo.'))throw new Error('Cancelado.');await S.deleteDoc(S.doc(db,'deptos_usuarios',x.id))},1);
+   li.append(t,b);U.appendChild(li)});
+ }catch(e){const li=document.createElement('li');li.textContent='No se pudo cargar. ¿Publicaste las reglas nuevas de Firestore?';U.appendChild(li)}
+}
+loaders.dp=async()=>{
+ await dpDeps();const U=$('dpadl');U.textContent='';
+ let cnt={};try{const q=await S.getDocs(S.collection(db,'deptos_usuarios'));q.forEach(d=>{const x=d.data();if(x.estado==='aprobado')cnt[x.deptoId]=(cnt[x.deptoId]||0)+1})}catch(e){}
+ if(!DPL.length){const li=document.createElement('li');li.textContent='Todavía no hay departamentos. Usa «Cargar los departamentos base» o crea uno nuevo.';U.appendChild(li)}
+ DPL.forEach(d=>{
+  const li=document.createElement('li'),t=document.createElement('div'),b=document.createElement('div');b.className='dpb';
+  const st=document.createElement('strong');st.textContent=d.nombre;const bd=document.createElement('span');bd.className='dpbad '+(d.activo===false?'no':'ok');bd.textContent=d.activo===false?'Inactivo':'Activo';
+  t.append(st,document.createTextNode(' · '+(cnt[d.id]||0)+' integrante(s) · '),bd);
+  const mk=(txt,fn)=>{const k=document.createElement('button');k.type='button';k.className='btn alt sm';k.textContent=txt;k.onclick=async()=>{try{await fn();loaders.dp()}catch(e){if(e&&e.message!=='Cancelado.')alert(er(e))}};b.appendChild(k)};
+  mk('Renombrar',async()=>{const n=prompt('Nuevo nombre del departamento:',d.nombre);if(!n||!n.trim())throw new Error('Cancelado.');await S.updateDoc(S.doc(db,'departamentos',d.id),{nombre:n.trim()})});
+  mk(d.activo===false?'Activar':'Desactivar',()=>S.updateDoc(S.doc(db,'departamentos',d.id),{activo:d.activo===false}));
+  mk('Eliminar',async()=>{if(cnt[d.id]){alert('Este departamento tiene integrantes. Muévelos a otro departamento o desactívalo.');throw new Error('Cancelado.')}if(!confirm('¿Eliminar el departamento «'+d.nombre+'»? Esta acción no se puede deshacer.'))throw new Error('Cancelado.');await S.deleteDoc(S.doc(db,'departamentos',d.id))});
+  li.append(t,b);U.appendChild(li)});
+ await dpAdminUsers();
+};
+$('dpnf').addEventListener('submit',async e=>{e.preventDefault();const n=$('dpnn').value.trim();if(!n)return;await dpDeps();
+ if(DPL.some(d=>(d.nombre||'').toLowerCase()===n.toLowerCase())){alert('Ese departamento ya existe.');return}
+ try{await S.addDoc(S.collection(db,'departamentos'),{nombre:n,activo:true,creado:S.serverTimestamp()});$('dpnn').value='';loaders.dp()}catch(x){alert(er(x))}});
+$('dpbase').addEventListener('click',async()=>{await dpDeps();const have=DPL.map(d=>(d.nombre||'').toLowerCase());
+ try{for(const n of DP_BASE){if(!have.includes(n.toLowerCase()))await S.addDoc(S.collection(db,'departamentos'),{nombre:n,activo:true,creado:S.serverTimestamp()})}loaders.dp()}catch(x){alert(er(x))}});
 
 /* ===== ESCUELA DE FORMACIÓN ===== */
 const NIV=['Miembros', 'Discípulos', 'Líderes', 'Mentores', 'Diáconos', 'Ancianos', 'Ministros'],nvn=n=>NIV.indexOf(n)+1,CH=700000;
