@@ -1,0 +1,19 @@
+name: Correo de notificaciones a departamentos
+on:
+  schedule:
+    - cron: '*/15 * * * *'   # revisa cada 15 minutos si hay notificaciones nuevas
+  workflow_dispatch:         # permite ejecutarlo a mano desde la pestaña Actions
+jobs:
+  notifdeptos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --prefix enviar
+      - run: node enviar/notifdeptos.mjs
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
