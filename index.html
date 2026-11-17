@@ -1939,12 +1939,13 @@ function sdFill(k){
  else{const d=document.createElement('div');d.className='smno';d.textContent='Pronto publicaremos la dirección de esta sede.';MP.appendChild(d);go.href='?v=contacto';go.textContent='Contáctanos';go.removeAttribute('target');go.removeAttribute('rel')}
 }
 function sdOpen(k){
- sdOpener=document.activeElement;sdCur=k;sdFill(k);
+ sdOpener=document.activeElement;sdCur=k;$('smh').hidden=true;$('smtg').setAttribute('aria-expanded','false');sdFill(k);
  const m=document.getElementById('menu');if(m)m.classList.remove('open');
  $('sm').classList.add('on');document.documentElement.style.overflow='hidden';$('smx').focus();
  sdLoad().then(()=>{if(sdCur===k&&$('sm').classList.contains('on'))sdFill(k)});
 }
 function sdClose(){$('sm').classList.remove('on');$('smmedia').textContent='';$('smmap').textContent='';document.documentElement.style.overflow='';sdCur=null;try{if(sdOpener&&sdOpener.focus)sdOpener.focus()}catch(e){}}
+$('smtg').addEventListener('click',()=>{const o=$('smtg').getAttribute('aria-expanded')!=='true';$('smtg').setAttribute('aria-expanded',String(o));$('smh').hidden=!o});
 $('smx').addEventListener('click',sdClose);
 $('sm').addEventListener('click',e=>{if(e.target===$('sm'))sdClose()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('sm').classList.contains('on'))sdClose()});
@@ -2744,6 +2745,14 @@ body[data-v=app] #apxb,body.pwa #apxb{display:none!important}
 #sm .smi div{font-weight:600;line-height:1.45}
 #sm .smmap{border-radius:12px;overflow:hidden;min-height:280px;background:var(--soft);border:1px solid var(--line)}
 #sm .smmap iframe{width:100%;height:100%;min-height:280px;border:0;display:block}
+#sm .smtg{width:100%;font:inherit;text-align:left;cursor:pointer;align-items:center;color:#2f5fb3;font-weight:700}
+#sm .smtg .smtl{flex:1}
+#sm .smtg .smch{width:9px;height:9px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-2px);transition:transform .2s;flex:none}
+#sm .smtg[aria-expanded=true] .smch{transform:rotate(225deg) translate(-2px,-2px)}
+#sm .smtg:focus-visible{outline:2px solid #2f6bff;outline-offset:2px}
+#sm .smh{padding:2px 8px 8px 20px;animation:smin .2s ease-out}
+#sm .smh div{margin:6px 0;font-weight:500;font-size:1.02rem;color:var(--ink);line-height:1.4}
+#sm .smh div::before{content:"–";margin-right:8px;color:var(--muted)}
 #sm .smno{padding:24px;color:var(--muted);text-align:center;align-self:center}
 #sm .smgo{display:block;margin-top:16px;text-align:center;padding:16px;border-radius:10px;background:linear-gradient(90deg,#2f6bff,#1b3a8a);color:#fff;font-weight:800;letter-spacing:.03em;text-transform:uppercase;text-decoration:none}
 @media (max-width:760px){#sm{padding:10px 8px}#sm .smb{grid-template-columns:1fr}#sm .smmap,#sm .smmap iframe{height:250px;min-height:0}#sm .smx{top:18px;right:18px}}
@@ -2791,7 +2800,8 @@ var n=d.createElement('p');n.className='note';n.style.cssText='font-weight:700;m
 <div class="smmedia" id="smmedia"></div>
 <div class="smb"><div><div class="smk">Centro Cristiano Piedraviva</div><h3 class="smt" id="smt"></h3><p class="smp" id="smp"></p><p class="smd" id="smd"></p>
 <div class="smi"><span class="ic" aria-hidden="true">📍</span><span id="smaddr"></span></div>
-<div class="smi"><span class="ic" aria-hidden="true">🕒</span><div id="smh"></div></div></div>
+<button type="button" class="smi smtg" id="smtg" aria-expanded="false" aria-controls="smh"><span class="ic" aria-hidden="true">🕒</span><span class="smtl">Horarios de Servicios</span><span class="smch" aria-hidden="true"></span></button>
+<div class="smh" id="smh" hidden></div></div>
 <div class="smmap" id="smmap"></div></div>
 <a class="smgo" id="smgo" target="_blank" rel="noopener">Planea tu visita</a>
 </div></div>
