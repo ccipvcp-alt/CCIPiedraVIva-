@@ -864,7 +864,7 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <label>Descripción<textarea id="sede" rows="3" maxlength="500" placeholder="Unas líneas sobre esta sede"></textarea></label>
 <label>Dirección<input id="sedi" maxlength="200" placeholder="Calle, sector, ciudad"></label>
 <label>Horarios (uno por línea)<textarea id="seho" rows="4" maxlength="400" placeholder="Domingos: 9:00 a.m. a 11:00 a.m."></textarea></label>
-<label>Enlace de Google Maps (opcional)<input id="sema" type="url" placeholder="https://maps.app.goo.gl/..."></label>
+<label>Ubicación exacta en Google Maps (opcional)<input id="sema" placeholder="Pega aquí el enlace COMPLETO de tu lugar en Google Maps"></label><p class="note" style="margin:-4px 0 0">Abre tu lugar en Google Maps desde la computadora, copia la dirección larga de la barra del navegador y pégala aquí. (Los enlaces cortos tipo maps.app.goo.gl no sirven para el mapa.) También puedes pegar el código de «Compartir → Insertar un mapa».</p>
 <label>Video de los pastores, enlace de YouTube (opcional)<input id="sevi" type="url" placeholder="https://youtu.be/..."></label>
 <label>Foto de los pastores<input id="sefo" type="file" accept="image/*"></label>
 <div id="sepv"></div>
@@ -1886,7 +1886,7 @@ $('aplg').addEventListener('click',async()=>{const m=$('aple').value.trim();if(!
 
 /* ===== SEDES: ventana con foto/video, dirección, horarios y mapa ===== */
 const SD0={
- principal:{nombre:'Sede principal',pastores:'Pastores Daniel y Saraid De García',desc:'Somos una familia en crecimiento. Te esperamos con los brazos abiertos para que vivas un encuentro con Dios.',dir:'Calle Padre María de Triana',horarios:'Domingos: 9:00 a.m. a 11:00 a.m.\nLunes: 6:00 p.m. a 8:00 p.m.\nMartes: discipulados',mapa:'',video:'',foto:''},
+ principal:{nombre:'Sede principal',pastores:'Pastores Daniel y Saraid De García',desc:'Somos una familia en crecimiento. Te esperamos con los brazos abiertos para que vivas un encuentro con Dios.',dir:'Calle Padre María de Triana, Mariara, Carabobo',horarios:'Domingos: 9:00 a.m. a 11:00 a.m.\nCasa de Oración: Lunes 6:00 p.m. a 8:00 p.m.\nDiscipulados: Martes 6:00 p.m. a 8:00 p.m.',mapa:'https://www.google.com/maps/place/Centro+Cristiano+Internacional+Piedra+Viva/@10.2954177,-67.7165002,20z/data=!4m15!1m8!3m7!1s0x8e8038fcdfbb3af9:0x81d9d3908195d80!2sC.+Padre+Maria+de+Triana,+Mariara+2017,+Carabobo!3b1!8m2!3d10.2967506!4d-67.7166435!16s%2Fg%2F11h54zhtn1!3m5!1s0x8e8039000407d6dd:0xc0da0a6f0b909e41!8m2!3d10.2958375!4d-67.7167656!16s%2Fg%2F11z_k6v6qf',video:'',foto:''},
  guaricha:{nombre:'La Guaricha',pastores:'',desc:'Somos una familia en crecimiento. Te esperamos con los brazos abiertos para que vivas un encuentro con Dios.',dir:'',horarios:'',mapa:'',video:'',foto:''},
  valencia:{nombre:'Valencia',pastores:'',desc:'Somos una familia en crecimiento. Te esperamos con los brazos abiertos para que vivas un encuentro con Dios.',dir:'',horarios:'',mapa:'',video:'',foto:''},
  bocono:{nombre:'Bocono',pastores:'',desc:'Somos una familia en crecimiento. Te esperamos con los brazos abiertos para que vivas un encuentro con Dios.',dir:'',horarios:'',mapa:'',video:'',foto:''}
@@ -1897,6 +1897,19 @@ let sdP=null,sdCur=null,sdOpener=null;
 function sdLoad(){return sdP||(sdP=(async()=>{try{const q=await S.getDocs(S.collection(db,'sedes_info'));q.forEach(d=>{const x=d.data();if(SD[d.id])SDF.forEach(f=>{if(typeof x[f]==='string')SD[d.id][f]=x[f]})})}catch(e){}sdPaint()})())}
 function sdPaint(){document.querySelectorAll('.sdaddr[data-s]').forEach(e=>{const x=SD[e.dataset.s];if(x)e.textContent=x.dir||'Dirección y horarios por añadir.'})}
 const ytId=u=>{const m=/(?:youtu\.be\/|[?&]v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/.exec(u||'');return m&&m[1]};
+function mapInfo(raw,nombre){
+ let m=(raw||'').trim();
+ const fr=/<iframe[^>]*\ssrc=["']([^"']+)["']/i.exec(m);if(fr)m=fr[1].replace(/&amp;/g,'&');
+ if(/^https:\/\/www\.google\.com\/maps\/embed/.test(m))return {src:m,go:null};
+ if(/^https:\/\/(www\.)?google\.[a-z.]+\/maps\//.test(m)){
+  const pr=[...m.matchAll(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/g)].pop()||/@(-?\d+\.\d+),(-?\d+\.\d+)/.exec(m);
+  const nm=/\/maps\/place\/([^/@?]+)/.exec(m);
+  if(pr){let label=nombre;try{if(nm)label=decodeURIComponent(nm[1].replace(/\+/g,' '))}catch(e){}
+   return {src:'https://www.google.com/maps?q='+pr[1]+','+pr[2]+'('+encodeURIComponent(label)+')&z=18&output=embed',go:m}}
+  return {src:null,go:m}}
+ if(/^https:\/\//.test(m))return {src:null,go:m};
+ return {src:null,go:null};
+}
 function sdFill(k){
  const x=SD[k];if(!x)return;
  $('smt').textContent=x.nombre;
@@ -1917,12 +1930,12 @@ function sdFill(k){
  const H=$('smh');H.textContent='';(x.horarios||'Horarios por confirmar.').split('\n').filter(t=>t.trim()).forEach(t=>{const d=document.createElement('div');d.textContent=t;H.appendChild(d)});
  // mapa y botón
  const MP=$('smmap');MP.textContent='';const go=$('smgo');
- const link=/^https:\/\//.test(x.mapa||'')&&!/\/maps\/embed/.test(x.mapa)?x.mapa:null;
- if(x.dir||link){
+ const mi=mapInfo(x.mapa,x.nombre);
+ if(x.dir||mi.src||mi.go){
   const q=encodeURIComponent((x.dir+', '+x.nombre+', Venezuela').replace(/^, /,''));
   const f=document.createElement('iframe');f.loading='lazy';f.referrerPolicy='no-referrer-when-downgrade';f.title='Mapa de '+x.nombre;
-  f.src=/^https:\/\/www\.google\.com\/maps\/embed/.test(x.mapa||'')?x.mapa:'https://www.google.com/maps?q='+q+'&output=embed';MP.appendChild(f);MP.hidden=false;
-  go.href=link||('https://www.google.com/maps/dir/?api=1&destination='+q);go.textContent='Planea tu visita';go.target='_blank';go.rel='noopener'}
+  f.src=mi.src||('https://www.google.com/maps?q='+q+'&output=embed');MP.appendChild(f);MP.hidden=false;
+  go.href=mi.go||('https://www.google.com/maps/dir/?api=1&destination='+q);go.textContent='Planea tu visita';go.target='_blank';go.rel='noopener'}
  else{const d=document.createElement('div');d.className='smno';d.textContent='Pronto publicaremos la dirección de esta sede.';MP.appendChild(d);go.href='?v=contacto';go.textContent='Contáctanos';go.removeAttribute('target');go.removeAttribute('rel')}
 }
 function sdOpen(k){
