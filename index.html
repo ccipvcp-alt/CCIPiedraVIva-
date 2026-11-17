@@ -1785,7 +1785,7 @@ async function cdpLoad(){
   if(!r.length)L.appendChild(el('p','Todavía no hay temas de Casa de Paz publicados.'));
   r.forEach(x=>{
    const c=el('div',null,'pillar');c.appendChild(el('h3',x.titulo));
-   c.appendChild(el('p',(x.fecha?dpFTxt(x.fecha):'')+' · '+x.n+(x.n===1?' imagen':' imágenes')+(x.autor?' · '+x.autor:'')));
+   c.appendChild(el('p',(x.fecha?dpFTxt(x.fecha):'')+' · '+x.n+(x.n===1?' imagen':' imágenes')));
    if(x.nota)c.appendChild(el('p',x.nota));
    const v=el('button','Ver tema','btn sm');v.type='button';v.onclick=()=>cdpVer(x);c.appendChild(v);
    if(me&&(me.rol==='admin'||(cdPuede()&&auth.currentUser&&x.autorUid===auth.currentUser.uid))){const b=el('button','Eliminar','btn alt sm');b.type='button';b.onclick=()=>cdpDel(x);c.appendChild(b)}
