@@ -193,7 +193,24 @@ body[data-v=app] #appeq{min-height:calc(100vh - 52px);min-height:calc(100dvh - 5
 #appeq .apqr span{font-size:.85rem;color:rgba(255,255,255,.65)}
 #appeq .apqr button{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:12px;font:inherit;font-weight:700;cursor:pointer}
 button.apqc{font:inherit;cursor:pointer}
-#appeq #apt{display:grid;gap:12px;width:100%;max-width:420px}
+#appeq #apt{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;max-width:560px}
+@media(min-width:760px){#appeq #apt{grid-template-columns:repeat(3,minmax(0,1fr))}}
+#appeq #aphome.apqb{max-width:560px}
+body[data-v=app][data-ap=home] #appeq{justify-content:flex-start;padding-top:max(26px,env(safe-area-inset-top))}
+body[data-v=app][data-ap=home] #appeq .apqlogo{display:none}
+#aphd{display:flex;align-items:center;gap:14px;width:100%;text-align:left}
+#aphd h2{margin:0;font-size:1.5rem;text-align:left}
+.apav{flex:none;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#2f6bff,#7fb0ff);display:grid;place-items:center;font-weight:800;font-size:1.5rem;color:#fff;box-shadow:0 8px 20px rgba(47,107,255,.35)}
+.apchip{display:inline-block;margin:6px 6px 0 0;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.13);color:#dbe7ff;font-size:.78rem;font-weight:600}
+#apt .apqc{max-width:none;display:flex;flex-direction:column;gap:2px;min-height:136px;padding:16px;border-radius:22px;transition:transform .15s}
+#apt .apqc:active{transform:scale(.97)}
+#apt .apqc i{font-style:normal;font-size:1.45rem;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:rgba(47,107,255,.25);margin-bottom:8px}
+#apt .apqc strong{font-size:1rem;line-height:1.2;margin:0 0 3px}
+#apt .apqc span{display:block;font-size:.78rem;line-height:1.3}#apt .apqc div{line-height:1.2}
+#apt .apqc.wide{grid-column:1/-1;min-height:0;flex-direction:row;align-items:center;gap:14px}
+#apt .apqc.wide i{margin:0;flex:none}
+.acct{border-collapse:collapse;width:100%;max-width:640px;margin:10px 0}.acct th,.acct td{padding:8px 4px;font-size:.9rem;border-bottom:1px solid var(--line);text-align:center}.acct th:first-child,.acct td:first-child{text-align:left;font-weight:700}.acct input{width:20px;height:20px}
+
 #appeq{min-height:100vh;min-height:100dvh;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:max(32px,env(safe-area-inset-top)) 20px max(32px,env(safe-area-inset-bottom));background:radial-gradient(ellipse at 50% 0,#2a2f3a 0,#111 60%);color:#fff;text-align:center}
 #appeq .apqlogo{width:96px;height:96px;border-radius:22px}
 #appeq h2{margin:0;color:#fff;font-size:1.7rem}
@@ -692,7 +709,7 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <a class="apqs" href="./" style="text-align:center">Ir al sitio de la iglesia</a>
 </div>
 <div id="aphome" class="apqb" hidden>
-<h2 id="aphi" style="text-align:center"></h2>
+<div id="aphd"><div class="apav" id="apav" aria-hidden="true"></div><div><h2 id="aphi"></h2><div id="apch"></div></div></div>
 <p id="apps" style="text-align:center"></p>
 <div id="apt"></div>
 </div>
@@ -832,7 +849,7 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 
 <div id="dash" hidden>
 <div class="row" style="justify-content:space-between;align-items:center;margin-top:0"><h3 id="hi" style="margin:0"></h3><button class="btn alt" id="out" type="button">Salir</button></div>
-<div class="tabs" data-all="t1,t2,t3,t4,t5,t6,t7,t8,t9,t10"><button type="button" data-t="t1" class="on" data-load="res">Recursos</button><button type="button" data-t="t2">Reportar</button><button type="button" data-t="t3" data-load="mine">Mis reportes</button><button type="button" data-t="t4" data-load="adm" id="tabAdmin" hidden>Panel de pastores</button><button type="button" data-t="t5" data-load="adm" id="tabAn" hidden>Anuncios</button><button type="button" data-t="t6" data-load="esc" id="tabEsc" hidden>ESCUELA</button><button type="button" data-t="t7" data-load="ik" id="tabIk" hidden>IGLEKIDS</button><button type="button" data-t="t8" data-load="ev" id="tabEv" hidden>EVENTOS</button><button type="button" data-t="t9" data-load="dp" id="tabDp" hidden>DEPARTAMENTOS</button><button type="button" data-t="t10" data-load="sd" id="tabSd" hidden>SEDES</button></div>
+<div class="tabs" data-all="t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11"><button type="button" data-t="t1" class="on" data-load="res">Recursos</button><button type="button" data-t="t2">Reportar</button><button type="button" data-t="t3" data-load="mine">Mis reportes</button><button type="button" data-t="t4" data-load="adm" id="tabAdmin" hidden>Panel de pastores</button><button type="button" data-t="t5" data-load="adm" id="tabAn" hidden>Anuncios</button><button type="button" data-t="t6" data-load="esc" id="tabEsc" hidden>ESCUELA</button><button type="button" data-t="t7" data-load="ik" id="tabIk" hidden>IGLEKIDS</button><button type="button" data-t="t8" data-load="ev" id="tabEv" hidden>EVENTOS</button><button type="button" data-t="t9" data-load="dp" id="tabDp" hidden>DEPARTAMENTOS</button><button type="button" data-t="t10" data-load="sd" id="tabSd" hidden>SEDES</button><button type="button" data-t="t11" data-load="acc" id="tabAcc" hidden>ACCESOS</button></div>
 
 <div id="t1" class="tab"><div class="grid" id="resl"></div>
 <div id="cdpw" style="margin-top:28px"><h3>Temas de Casa de Paz</h3>
@@ -884,6 +901,14 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="seqf" style="width:auto"> Quitar la foto actual</label>
 <div><button class="btn" type="submit">Guardar sede</button> <button class="btn alt" type="button" id="sever">Ver cómo se ve</button> <span class="note" id="semsg" role="status"></span></div>
 </form>
+</div>
+</div>
+<div id="t11" class="tab" hidden>
+<div class="onlyadm">
+<h3>Qué ve cada cargo</h3>
+<p class="note">Marca lo que debe aparecer en la app y en el panel de cada cargo cuando esa persona entra con su correo y contraseña. El cargo sale del registro de la persona. Los administradores y pastores de sede siempre ven todo. Los accesos de Departamentos y Escuela dependen de que la persona esté registrada y aprobada allí.</p>
+<table class="acct" id="acct"></table>
+<div><button class="btn" type="button" id="accsv">Guardar accesos</button> <button class="btn alt" type="button" id="accrs">Restablecer valores</button> <span class="note" id="accm" role="status"></span></div>
 </div>
 </div>
 <div id="t9" class="tab" hidden>
@@ -1320,6 +1345,19 @@ function er(x){
 }
 function view(v){$('auth').hidden=v!=='auth';$('pend').hidden=v!=='pend';$('dash').hidden=v!=='dash'}
 
+/* ===== Accesos por cargo ===== */
+const CARGOS=['Apóstol','Pastor','Ministro','Anciano','Diácono','Mentor','Líder','Sub líder','Discípulo','Miembro'];
+const ACCK=[['recursos','Recursos'],['reportar','Reportar'],['mis','Mis reportes'],['escuela','Escuela']];
+const accDef=()=>{const o={};CARGOS.forEach(c=>{const al=c!=='Discípulo'&&c!=='Miembro';o[c]={recursos:true,reportar:al,mis:al,escuela:true}});return o};
+let ACC=accDef(),accP=null;
+function accLoad(){return accP||(accP=(async()=>{try{const d=await S.getDoc(S.doc(db,'sedes_info','accesos'));if(d.exists()){const m=d.data().m||{};CARGOS.forEach(c=>{if(m[c]&&typeof m[c]==='object')Object.assign(ACC[c],m[c])})}}catch(e){}})())}
+const accOk=(u,k)=>{if(!u)return false;if(u.rol==='admin'||u.rol==='pastor_sede')return true;const c=ACC[u.cargo];return c?c[k]!==false:true};
+function accPaint(){const T=$('acct');if(!T)return;T.textContent='';const h=document.createElement('tr');h.appendChild(el('th','Cargo'));ACCK.forEach(k=>h.appendChild(el('th',k[1])));T.appendChild(h);
+ CARGOS.forEach(c=>{const r=document.createElement('tr');r.appendChild(el('td',c));ACCK.forEach(k=>{const td=document.createElement('td'),i=document.createElement('input');i.type='checkbox';i.checked=ACC[c][k[0]]!==false;i.dataset.c=c;i.dataset.k=k[0];i.setAttribute('aria-label',c+': '+k[1]);td.appendChild(i);r.appendChild(td)});T.appendChild(r)})}
+loaders.acc=async()=>{await accLoad();accPaint()};
+$('accsv').onclick=async()=>{const o={};CARGOS.forEach(c=>o[c]={});document.querySelectorAll('#acct input').forEach(i=>{o[i.dataset.c][i.dataset.k]=i.checked});$('accm').textContent='Guardando…';
+ try{await S.setDoc(S.doc(db,'sedes_info','accesos'),{m:o,actualizado:S.serverTimestamp()});ACC=accDef();CARGOS.forEach(c=>Object.assign(ACC[c],o[c]));$('accm').textContent='Guardado. Se aplica la próxima vez que cada persona entre.'}catch(x){$('accm').textContent='No se guardó ['+(x.code||x.message)+']'}};
+$('accrs').onclick=()=>{ACC=accDef();accPaint();$('accm').textContent='Valores originales puestos. Toca «Guardar accesos» para aplicarlos.'};
 async function enter(u){
  if(!u){me=null;view('auth');return}
  try{
@@ -1338,10 +1376,13 @@ async function enter(u){
  $('hi').textContent='Bienvenido, '+me.nombre;
  const adm=me.rol==='admin';
  const ps=me.rol==='pastor_sede';
- $('tabSd').hidden=!adm;$('tabAdmin').hidden=!(adm||ps);$('tabAn').hidden=!adm;$('tabEsc').hidden=!(adm||ps);$('tabIk').hidden=!adm;$('tabEv').hidden=!(adm||ps);$('tabDp').hidden=!adm;$('fr').hidden=!adm;
+ $('tabSd').hidden=!adm;$('tabAcc').hidden=!adm;$('tabAdmin').hidden=!(adm||ps);$('tabAn').hidden=!adm;$('tabEsc').hidden=!(adm||ps);$('tabIk').hidden=!adm;$('tabEv').hidden=!(adm||ps);$('tabDp').hidden=!adm;$('fr').hidden=!adm;
  document.querySelectorAll('.onlyadm').forEach(e=>e.hidden=!adm);
  if(ps){$('rsede').value=me.sede;$('rsede').disabled=true;$('psnote').textContent='Pastor de sede: ves únicamente la información de '+me.sede+'.';$('psnote').hidden=false}else{$('rsede').disabled=false;$('psnote').hidden=true}
- view('dash');loaders.res();
+ await accLoad();
+ {const hid=(t,v)=>{const b=document.querySelector('#lideres .tabs [data-t='+t+']');if(b)b.hidden=v};hid('t1',!accOk(me,'recursos'));hid('t2',!accOk(me,'reportar'));hid('t3',!accOk(me,'mis'))}
+ view('dash');
+ if(!accOk(me,'recursos')){const f=[...document.querySelectorAll('#lideres .tabs button')].find(b=>!b.hidden);if(f)f.click()}else loaders.res();
 }
 A.onAuthStateChanged(auth,u=>{if(!busy){enter(u);escEnter(u);dpEnter(u);apEnter(u)}});
 
@@ -1884,23 +1925,29 @@ async function apEnter(u){
  const pend=[];if(a&&!AP.r.lid)pend.push('Líderes');if(b&&!AP.r.dep)pend.push('Departamentos');if(c&&!AP.r.est)pend.push('Escuela');
  const nm=(a&&a.nombre)||(b&&b.nombre)||(c&&c.nombre)||'';
  $('aphi').textContent=nm?'Hola, '+nm.trim().split(/\s+/)[0]:'Hola';
+ await accLoad();
  const T=$('apt');T.textContent='';
- const tile=(t,sub,fn)=>{const x=document.createElement('button');x.type='button';x.className='apqc';const st=document.createElement('strong');st.textContent=t;const sp=document.createElement('span');sp.textContent=sub;x.append(st,sp);x.onclick=fn;T.appendChild(x)};
+ const tile=(ic,t,sub,fn,wide)=>{const x=document.createElement('button');x.type='button';x.className='apqc'+(wide?' wide':'');const i=document.createElement('i');i.textContent=ic;i.setAttribute('aria-hidden','true');const d=document.createElement('div');const st=document.createElement('strong');st.textContent=t;const sp=document.createElement('span');sp.textContent=sub;d.append(st,sp);x.append(i,d);x.onclick=fn;T.appendChild(x)};
  const adm=!!(a&&a.rol==='admin'),pas=!!(a&&a.rol==='pastor_sede');
+ $('apav').textContent=(nm.trim()[0]||'?').toUpperCase();
+ const CH=$('apch');CH.textContent='';const chip=t=>{if(t){const c=document.createElement('span');c.className='apchip';c.textContent=t;CH.appendChild(c)}};
+ chip(adm?'Administrador':pas?'Pastor de sede':(a&&a.cargo)||'');chip(a&&a.sede);if(b&&b.deptoNombre)chip(b.deptoNombre);if(c&&c.nivel)chip('Escuela: '+c.nivel);
  if(AP.r.lid){
-  tile('Hacer un reporte','Casa de paz, nuevos creyentes, evangelismo o ayuda social',()=>apTab('t2'));
-  tile('Recursos y Casa de Paz','Material y temas de la semana',()=>apTab('t1'));
-  tile('Mis reportes','Lo que ya has enviado',()=>apTab('t3'));
-  if(adm||pas)tile(adm?'Panel de pastores':'Panel de mi sede','Solicitudes, aportes, miembros y eventos',()=>apTab('t4'));
-  if(adm)tile('Departamentos','Crear departamentos, notificaciones y material',()=>apTab('t9'));
-  if(adm)tile('Sedes','Foto, dirección y horarios de cada sede',()=>apTab('t10'));
+  if(accOk(a,'recursos'))tile('📚','Recursos y Casa de Paz','Material y temas de la semana',()=>apTab('t1'));
+  if(accOk(a,'reportar'))tile('📝','Hacer un reporte','Casa de paz, nuevos creyentes, evangelismo o ayuda social',()=>apTab('t2'));
+  if(accOk(a,'mis'))tile('🗂️','Mis reportes','Lo que ya has enviado',()=>apTab('t3'));
+  if(adm||pas)tile('⛪',adm?'Panel de pastores':'Panel de mi sede','Solicitudes, aportes, miembros y eventos',()=>apTab('t4'));
+  if(adm)tile('👥','Departamentos','Crear departamentos, notificaciones y material',()=>apTab('t9'));
+  if(adm)tile('📍','Sedes','Foto, dirección y horarios de cada sede',()=>apTab('t10'));
+  if(adm)tile('🔑','Accesos por cargo','Qué ve cada líder, mentor, diácono…',()=>apTab('t11'));
  }
- if(AP.r.dep)tile('Mi departamento'+(b&&b.deptoNombre?' · '+b.deptoNombre:''),'Calendario de guardias, avisos y material',()=>apGo('dep'));
- if(AP.r.est)tile('Escuela de formación','Tu material y tu nivel',()=>apGo('est'));
+ if(AP.r.dep)tile('👥','Mi departamento'+(b&&b.deptoNombre?' · '+b.deptoNombre:''),'Calendario de guardias, avisos y material',()=>apGo('dep'));
+ if(AP.r.est)tile('🎓','Escuela de formación','Tu material y tu nivel',()=>apGo('est'));
+ else if(AP.r.lid&&accOk(a,'escuela'))tile('🎓','Escuela de formación','Inscríbete y accede a tu material',()=>apGo('est'));
  if(pend.length)$('apps').textContent='Tu registro en '+pend.join(' y ')+' está pendiente de aprobación. Un pastor lo revisará.';
- else if(T.children.length)$('apps').textContent='¿Qué quieres hacer?';
+ else if(T.children.length)$('apps').textContent='Esto es lo que tienes disponible:';
  else{$('apps').textContent='Esta cuenta todavía no tiene acceso. Regístrate en el módulo que te corresponde:';
-  tile('Registrarme como líder','Reportes y recursos',()=>apGo('lid'));tile('Registrarme en un departamento','Calendario de guardias y avisos',()=>apGo('dep'));tile('Inscribirme en la Escuela','Material de formación',()=>apGo('est'))}
+  tile('📝','Registrarme como líder','Reportes y recursos',()=>apGo('lid'));tile('👥','Registrarme en un departamento','Calendario de guardias y avisos',()=>apGo('dep'));tile('🎓','Inscribirme en la Escuela','Material de formación',()=>apGo('est'))}
  const roles=['lid','dep','est'].filter(k=>AP.r[k]);
  if(roles.length===1&&roles[0]!=='lid'&&!pend.length)apGo(roles[0]);else apGo('home');
 }
