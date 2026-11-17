@@ -129,9 +129,7 @@ body[data-v=contacto] #ayuda,body[data-v=clinica] #clinica{display:block}
 .ay>div:hover{transform:translateY(-4px) scale(1.02)}
 .ay h3{margin:0}.ay p{margin:0;flex:1}
 .ay .ic{font-size:32px}
-body[data-v=escuela] #escuela,body[data-v=miembros] #recursos,body[data-v=lideres] #lideres,body[data-v=sedes] #nosotros{display:block}
-body[data-v=sedes] #nosotros h2,body[data-v=sedes] #nosotros .three>div:not(#sedes){display:none}
-body[data-v=sedes] #nosotros .three{display:block}
+body[data-v=escuela] #escuela,body[data-v=miembros] #recursos,body[data-v=lideres] #lideres,body[data-v=sedes] #sedespg{display:block}
 body[data-v] main{min-height:70vh}
 
 /* APÓSTOLES */
@@ -1153,13 +1151,21 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 </div></div>
 </section>
 
+<!-- SEDES (página propia: se abre con ?v=sedes) -->
+<section id="sedespg">
+<div class="wrap">
+<h2>Nuestras sedes</h2>
+<p class="sdint">Toca una sede para ver la foto de sus pastores, la dirección, los horarios y el mapa.</p>
+<div class="sdgrid" id="sdgrid"></div>
+</div>
+</section>
+
 <!-- 10. SOBRE NOSOTROS: 3 BLOQUES -->
 <section id="nosotros">
 <div class="wrap">
 <h2>Nuestros proyectos</h2>
 <div class="three">
 <div><h3>Nuestros pastores</h3><p>Daniel y Saraid De Garcia lideran el Centro Cristiano Piedraviva. Aquí puedes añadir su historia y su llamado.</p><a href="#">Conócelos</a></div>
-<div id="sedes"><h3>Nuestras sedes</h3><p><strong>1. Sede principal</strong><br><span class="sdaddr" data-s="principal">Calle Padre María de Triana</span><br><a href="?v=sedes" data-sede="principal">Ver foto, dirección y horarios</a></p><p><strong>2. Centro Cristiano Piedraviva La Guaricha</strong><br><span class="sdaddr" data-s="guaricha">Dirección y horarios por añadir.</span><br><a href="?v=sedes" data-sede="guaricha">Ver foto, dirección y horarios</a></p><p><strong>3. Centro Cristiano Piedraviva Valencia</strong><br><span class="sdaddr" data-s="valencia">Dirección y horarios por añadir.</span><br><a href="?v=sedes" data-sede="valencia">Ver foto, dirección y horarios</a></p><p><strong>4. Centro Cristiano Piedraviva Bocono</strong><br><span class="sdaddr" data-s="bocono">Dirección y horarios por añadir.</span><br><a href="?v=sedes" data-sede="bocono">Ver foto, dirección y horarios</a></p></div>
 <div id="medios"><h3>Red y medios</h3><p>Recursos, programas y comunidad para quienes quieren crecer contigo.</p><a href="#">Saber más</a></div>
 </div>
 </div>
@@ -1895,7 +1901,14 @@ const SDK=Object.keys(SD0),SDF=['nombre','pastores','desc','dir','horarios','map
 const SD={};SDK.forEach(k=>SD[k]={...SD0[k]});
 let sdP=null,sdCur=null,sdOpener=null;
 function sdLoad(){return sdP||(sdP=(async()=>{try{const q=await S.getDocs(S.collection(db,'sedes_info'));q.forEach(d=>{const x=d.data();if(SD[d.id])SDF.forEach(f=>{if(typeof x[f]==='string')SD[d.id][f]=x[f]})})}catch(e){}sdPaint()})())}
-function sdPaint(){document.querySelectorAll('.sdaddr[data-s]').forEach(e=>{const x=SD[e.dataset.s];if(x)e.textContent=x.dir||'Dirección y horarios por añadir.'})}
+function sdGrid(){const G=$('sdgrid');if(!G)return;G.textContent='';SDK.forEach(k=>{const x=SD[k];const a=document.createElement('a');a.className='sdcard';a.href='?v=sedes';a.dataset.sede=k;
+ const im=document.createElement('div');im.className='sdci';if(x.foto){const i=document.createElement('img');i.src=x.foto;i.alt='Pastores de la sede '+x.nombre;i.loading='lazy';im.appendChild(i)}else{const t=document.createElement('span');t.textContent='Centro Cristiano Piedraviva';t.style.fontSize='1.05rem';im.appendChild(t)}
+ const b=document.createElement('div');b.className='sdcb';const h=document.createElement('h3');h.textContent=x.nombre;b.appendChild(h);
+ if(x.pastores){const p=document.createElement('p');p.className='sdp';p.textContent=x.pastores;b.appendChild(p)}
+ const d=document.createElement('p');d.className='sda';d.textContent=x.dir||'Dirección y horarios por añadir.';b.appendChild(d);
+ const g=document.createElement('span');g.className='sdgo';g.textContent='Ver foto, dirección y horarios →';b.appendChild(g);
+ a.append(im,b);G.appendChild(a)})}
+function sdPaint(){sdGrid()}
 const ytId=u=>{const m=/(?:youtu\.be\/|[?&]v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/.exec(u||'');return m&&m[1]};
 function mapInfo(raw,nombre){
  let m=(raw||'').trim();
@@ -1951,6 +1964,7 @@ $('sm').addEventListener('click',e=>{if(e.target===$('sm'))sdClose()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('sm').classList.contains('on'))sdClose()});
 document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('[data-sede]');if(!a||!SD[a.dataset.sede])return;e.preventDefault();sdOpen(a.dataset.sede)});
 try{const q=new URLSearchParams(location.search).get('sede');if(q&&SD[q])setTimeout(()=>sdOpen(q),300)}catch(e){}
+sdGrid();
 if('requestIdleCallback' in window)requestIdleCallback(()=>sdLoad());else setTimeout(sdLoad,2500);
 /* editor (solo administradores) */
 function seFill(k){const x=SD[k];$('sen').value=x.nombre;$('sepa').value=x.pastores;$('sede').value=x.desc;$('sedi').value=x.dir;$('seho').value=x.horarios;$('sema').value=x.mapa;$('sevi').value=x.video;$('sefo').value='';$('seqf').checked=false;const P=$('sepv');P.textContent='';if(x.foto){const i=document.createElement('img');i.src=x.foto;i.alt='Foto actual';i.style.cssText='max-width:260px;border-radius:10px;display:block';P.appendChild(i)}}
@@ -2756,7 +2770,20 @@ body[data-v=app] #apxb,body.pwa #apxb{display:none!important}
 #sm .smno{padding:24px;color:var(--muted);text-align:center;align-self:center}
 #sm .smgo{display:block;margin-top:16px;text-align:center;padding:16px;border-radius:10px;background:linear-gradient(90deg,#2f6bff,#1b3a8a);color:#fff;font-weight:800;letter-spacing:.03em;text-transform:uppercase;text-decoration:none}
 @media (max-width:760px){#sm{padding:10px 8px}#sm .smb{grid-template-columns:1fr}#sm .smmap,#sm .smmap iframe{height:250px;min-height:0}#sm .smx{top:18px;right:18px}}
-#sedes a[data-sede]{font-weight:700;text-decoration:underline}
+#sedespg{display:none;background:var(--soft)}
+#sedespg .sdint{max-width:60ch;color:var(--muted);margin-bottom:24px}
+.sdgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:20px}
+.sdcard{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;text-decoration:none;color:inherit;box-shadow:0 2px 10px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s}
+.sdcard:hover,.sdcard:focus-visible{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.16)}
+.sdci{aspect-ratio:16/10;background:linear-gradient(135deg,#0c1220,#1b2a4a 60%,#0c1220);display:grid;place-items:center;overflow:hidden}
+.sdci img{width:100%;height:100%;object-fit:cover;display:block}
+.sdci span{color:rgba(255,255,255,.88);font-weight:800;font-size:1.5rem;text-align:center;padding:12px}
+.sdcb{padding:16px 18px 20px;display:grid;gap:6px}
+.sdcb h3{margin:0;font-size:1.25rem}
+.sdcb .sdp{font-weight:700;margin:0}
+.sdcb .sda{color:var(--muted);margin:0}
+.sdcb .sdgo{margin-top:6px;font-weight:800;color:#2f5fb3}
+@media (min-width:861px){#nosotros .three{grid-template-columns:repeat(2,1fr)}}
 .hsilk{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
 .hbg.silk .pvb,.hbg.silk .pvs{display:none}
 .hbg.silk::after{background:linear-gradient(90deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.55) 38%,rgba(0,0,0,.18) 62%,transparent 80%)}
