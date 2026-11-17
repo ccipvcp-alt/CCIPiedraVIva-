@@ -183,6 +183,11 @@ body[data-v=app]{background:#111}
 #appeq .apqi{display:none;background:#fff;color:#111;border:0;border-radius:999px;padding:12px 22px;font:inherit;font-weight:700;cursor:pointer}
 #appeq .apqh{display:none;font-size:.85rem}
 #appeq .apqs{color:rgba(255,255,255,.6);font-size:.85rem}
+.cdbar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}
+.cdnav{display:flex;justify-content:center;gap:14px;align-items:center;margin-top:10px;flex-wrap:wrap}
+#cdpv{border:0;border-radius:16px;padding:16px;width:min(96vw,860px);max-height:94vh;overflow:auto;background:var(--surface);color:var(--ink)}
+#cdpv::backdrop{background:rgba(0,0,0,.78)}
+#cdpv img{display:block;width:100%;height:auto;border-radius:10px;background:#eee}
 #apostoles .btn{margin-top:20px}
 #apg{display:none;position:relative;min-height:100vh;overflow:hidden;color:#fff;background:#0a1f66}
 body[data-v=apostoles] #apg{display:block}
@@ -424,6 +429,10 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <!-- 1. BARRA DE TRANSMISIÓN / AVISO -->
 <div class="live">Estamos en vivo ahora. <a href="#envivo">Ver transmisión</a></div>
 <a class="apphome" href="?v=app">← Menú del equipo</a>
+<dialog id="cdpv"><div class="cdbar"><strong class="cdtt" id="cdptt"></strong><button type="button" class="btn alt sm" id="cdpx">Cerrar</button></div>
+<img id="cdpi" alt="Imagen del tema"><div class="cdnav"><button type="button" class="btn alt sm" id="cdpp">‹ Anterior</button><span id="cdpc"></span><button type="button" class="btn alt sm" id="cdpn">Siguiente ›</button></div>
+<div class="cdnav"><a class="btn alt sm" id="cdpd" download="tema.jpg">Descargar esta imagen</a></div></dialog>
+
 
 <!-- 2. ENCABEZADO + MENÚ -->
 <header>
@@ -751,6 +760,16 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <div class="tabs" data-all="t1,t2,t3,t4,t5,t6,t7,t8,t9"><button type="button" data-t="t1" class="on" data-load="res">Recursos</button><button type="button" data-t="t2">Reportar</button><button type="button" data-t="t3" data-load="mine">Mis reportes</button><button type="button" data-t="t4" data-load="adm" id="tabAdmin" hidden>Panel de pastores</button><button type="button" data-t="t5" data-load="adm" id="tabAn" hidden>Anuncios</button><button type="button" data-t="t6" data-load="esc" id="tabEsc" hidden>ESCUELA</button><button type="button" data-t="t7" data-load="ik" id="tabIk" hidden>IGLEKIDS</button><button type="button" data-t="t8" data-load="ev" id="tabEv" hidden>EVENTOS</button><button type="button" data-t="t9" data-load="dp" id="tabDp" hidden>DEPARTAMENTOS</button></div>
 
 <div id="t1" class="tab"><div class="grid" id="resl"></div>
+<div id="cdpw" style="margin-top:28px"><h3>Temas de Casa de Paz</h3>
+<div class="grid" id="cdpl"></div>
+<form id="cdpf" hidden style="margin-top:20px;max-width:640px"><h3>Publicar tema de Casa de Paz</h3>
+<label>Título del tema<input id="cdt" required maxlength="120" placeholder="Ej.: El poder del perdón"></label>
+<label>Fecha del tema<input id="cdf" type="date" required></label>
+<label>Nota (opcional)<input id="cdn" maxlength="300"></label>
+<label>Imágenes del tema (de 1 a 10)<input id="cdi" type="file" accept="image/*" multiple></label>
+<div class="dpb" id="cdpv2" style="gap:12px;margin:6px 0"></div>
+<div><button class="btn" type="submit" id="cdsb">Publicar tema</button> <span class="note" id="cdm" role="status"></span></div></form>
+<div id="cda" hidden style="margin-top:24px"><h3>¿Quién puede publicar temas de Casa de Paz?</h3><p class="note">Tú siempre puedes. Activa a las personas aprobadas que quieras que también puedan publicar y borrar sus propios temas.</p><ul class="dpl" id="cdal"></ul></div></div>
 <form id="fr" hidden style="margin-top:20px"><h3>Agregar recurso</h3>
 <label>Título<input id="rt1" required></label>
 <label>Descripción<input id="rt2"></label>
@@ -1646,6 +1665,89 @@ async function ikSup(){
  add('Para enviar un aviso o material a los maestros: pestaña DEPARTAMENTOS, destino IGLEKIDS.');
 }
 
+/* ===== TEMAS DE CASA DE PAZ ===== */
+let CDF=[],CDV={i:0,L:[]};
+const cdPuede=()=>!!(me&&(me.rol==='admin'||me.cdp===true));
+async function cdpLoad(){
+ const L=$('cdpl'),F=$('cdpf'),A=$('cda');L.textContent='';F.hidden=!cdPuede();A.hidden=!(me&&me.rol==='admin');
+ if(!$('cdf').value)$('cdf').value=hoyStr();
+ try{
+  const q=await S.getDocs(S.collection(db,'cdp_temas'));const r=[];q.forEach(d=>r.push({id:d.id,...d.data()}));
+  r.sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')||(((b.creado&&b.creado.seconds)||0)-((a.creado&&a.creado.seconds)||0)));
+  if(!r.length)L.appendChild(el('p','Todavía no hay temas de Casa de Paz publicados.'));
+  r.forEach(x=>{
+   const c=el('div',null,'pillar');c.appendChild(el('h3',x.titulo));
+   c.appendChild(el('p',(x.fecha?dpFTxt(x.fecha):'')+' · '+x.n+(x.n===1?' imagen':' imágenes')+(x.autor?' · '+x.autor:'')));
+   if(x.nota)c.appendChild(el('p',x.nota));
+   const v=el('button','Ver tema','btn sm');v.type='button';v.onclick=()=>cdpVer(x);c.appendChild(v);
+   if(me&&(me.rol==='admin'||(cdPuede()&&auth.currentUser&&x.autorUid===auth.currentUser.uid))){const b=el('button','Eliminar','btn alt sm');b.type='button';b.onclick=()=>cdpDel(x);c.appendChild(b)}
+   L.appendChild(c)});
+ }catch(e){L.appendChild(el('p',er(e)))}
+ if(me&&me.rol==='admin')cdpPerm();
+}
+async function cdpDel(x){
+ if(!confirm('¿Eliminar el tema «'+x.titulo+'» y sus imágenes? No se puede deshacer.'))return;
+ try{for(let i=0;i<(x.n||0);i++)await S.deleteDoc(S.doc(db,'cdp_temas',x.id,'imgs',String(i)));await S.deleteDoc(S.doc(db,'cdp_temas',x.id));cdpLoad()}catch(e){alert(er(e))}
+}
+async function cdpPerm(){
+ const U=$('cdal');U.textContent='';
+ try{
+  const q=await S.getDocs(S.query(S.collection(db,'users'),S.where('estado','==','aprobado')));const L=[];q.forEach(d=>L.push({id:d.id,...d.data()}));
+  L.sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||'','es'));
+  if(!L.length)U.appendChild(el('li','Aún no hay personas aprobadas.'));
+  L.forEach(u=>{
+   const li=el('li',(u.nombre||'')+' · '+(u.sede||'')+' · '+(u.cargo||'')+(u.rol==='admin'?' · Administrador (siempre puede)':''));
+   if(u.rol!=='admin'){const b=el('button',u.cdp===true?'Puede publicar: SÍ (quitar)':'Puede publicar: NO (activar)','btn sm'+(u.cdp===true?'':' alt'));b.type='button';
+    b.onclick=async()=>{try{await S.updateDoc(S.doc(db,'users',u.id),{cdp:u.cdp!==true});cdpPerm()}catch(e){alert(er(e))}};li.appendChild(b)}
+   U.appendChild(li)});
+ }catch(e){U.appendChild(el('li',er(e)))}
+}
+function cdPrev(){
+ const P=$('cdpv2');P.textContent='';
+ CDF.forEach((x,i)=>{const w=document.createElement('div');w.style.position='relative';const im=document.createElement('img');im.src=x.url;im.alt='';im.style.cssText='width:84px;height:84px;object-fit:cover;border-radius:10px';
+  const b=document.createElement('button');b.type='button';b.textContent='×';b.title='Quitar';b.style.cssText='position:absolute;top:-6px;right:-6px;border:0;border-radius:50%;width:24px;height:24px;background:#e11d48;color:#fff;cursor:pointer';
+  b.onclick=()=>{URL.revokeObjectURL(x.url);CDF.splice(i,1);cdPrev()};w.append(im,b);P.appendChild(w)});
+}
+$('cdi').addEventListener('change',e=>{
+ $('cdm').textContent='';
+ for(const f of [...e.target.files]){if(CDF.length>=10){$('cdm').textContent='Máximo 10 imágenes por tema.';break}CDF.push({file:f,url:URL.createObjectURL(f)})}
+ e.target.value='';cdPrev();
+});
+$('cdpf').addEventListener('submit',async e=>{
+ e.preventDefault();const m=$('cdm'),btn=$('cdsb');m.textContent='';
+ if(!CDF.length){m.textContent='Agrega al menos una imagen.';return}
+ btn.disabled=true;const ref=S.doc(S.collection(db,'cdp_temas')),done=[];
+ try{
+  for(let i=0;i<CDF.length;i++){
+   m.textContent='Subiendo imagen '+(i+1)+' de '+CDF.length+'…';
+   let d=await reduce(CDF[i].file,1600);if(d.length>900000)d=await reduce(CDF[i].file,1200);
+   await S.setDoc(S.doc(db,'cdp_temas',ref.id,'imgs',String(i)),{d});done.push(i);
+  }
+  await S.setDoc(ref,{titulo:$('cdt').value.trim(),fecha:$('cdf').value,nota:$('cdn').value.trim(),n:CDF.length,autor:(me&&me.nombre)||'',autorUid:auth.currentUser.uid,creado:S.serverTimestamp()});
+  CDF.forEach(x=>URL.revokeObjectURL(x.url));CDF=[];cdPrev();$('cdpf').reset();m.textContent='Tema publicado.';cdpLoad();
+ }catch(x){
+  for(const i of done){try{await S.deleteDoc(S.doc(db,'cdp_temas',ref.id,'imgs',String(i)))}catch(y){}}
+  m.textContent='No se pudo publicar. '+er(x);
+ }
+ btn.disabled=false;
+});
+async function cdpVer(x){
+ const dlg=$('cdpv');$('cdptt').textContent=x.titulo;$('cdpi').removeAttribute('src');$('cdpc').textContent='Cargando…';$('cdpd').removeAttribute('href');
+ if(!dlg.open)dlg.showModal();
+ try{const q=await S.getDocs(S.collection(db,'cdp_temas',x.id,'imgs'));const L=[];q.forEach(d=>L.push({n:+d.id,d:d.data().d}));L.sort((a,b)=>a.n-b.n);CDV={i:0,L,t:x};cdpShow()}
+ catch(e){$('cdpc').textContent=er(e)}
+}
+function cdpShow(){
+ const L=CDV.L;if(!L.length){$('cdpc').textContent='Este tema no tiene imágenes.';return}
+ const it=L[CDV.i];$('cdpi').src=it.d;$('cdpc').textContent='Imagen '+(CDV.i+1)+' de '+L.length;
+ $('cdpd').href=it.d;$('cdpd').download=(CDV.t.titulo||'tema').replace(/[^\w\- ]+/g,'').trim().replace(/\s+/g,'-')+'-'+(CDV.i+1)+'.jpg';
+ $('cdpp').disabled=CDV.i===0;$('cdpn').disabled=CDV.i===L.length-1;
+}
+$('cdpp').onclick=()=>{if(CDV.i>0){CDV.i--;cdpShow()}};$('cdpn').onclick=()=>{if(CDV.i<CDV.L.length-1){CDV.i++;cdpShow()}};
+$('cdpx').onclick=()=>$('cdpv').close();
+$('cdpv').addEventListener('click',e=>{if(e.target===$('cdpv'))$('cdpv').close()});
+$('cdpv').addEventListener('keydown',e=>{if(e.key==='ArrowLeft')$('cdpp').click();if(e.key==='ArrowRight')$('cdpn').click()});
+
 /* administración de departamentos (panel de pastores) */
 async function dpAdminUsers(){
  const U=$('dpaul');U.textContent='';
@@ -2020,6 +2122,7 @@ loaders.res=async()=>{
    g.appendChild(c);
   });
  }catch(x){g.appendChild(el('p',er(x)))}
+ cdpLoad();
 };
 $('fr').addEventListener('submit',async e=>{
  e.preventDefault();
