@@ -1828,7 +1828,7 @@ $('cdpf').addEventListener('submit',async e=>{
  try{
   for(let i=0;i<CDF.length;i++){
    m.textContent='Subiendo imagen '+(i+1)+' de '+CDF.length+'…';
-   let d=await reduce(CDF[i].file,1600);if(d.length>900000)d=await reduce(CDF[i].file,1200);
+   m.textContent='Mejorando la calidad de la imagen '+(i+1)+' de '+CDF.length+'…';const d=await reduceHQ(CDF[i].file);
    await S.setDoc(S.doc(db,'cdp_temas',ref.id,'imgs',String(i)),{d});done.push(i);
   }
   await S.setDoc(ref,{titulo:$('cdt').value.trim(),fecha:$('cdf').value,nota:$('cdn').value.trim(),n:CDF.length,autor:(me&&me.nombre)||'',autorUid:auth.currentUser.uid,creado:S.serverTimestamp()});
@@ -2542,6 +2542,21 @@ let ANIMG=[];const DIMG=['','','','','','',''];
 function dPrev(i){const P=$('anp'+i);P.textContent='';if(!DIMG[i])return;const im=document.createElement('img');im.src=DIMG[i];im.alt='Flyer';im.style.cssText='width:90px;border-radius:8px;display:block';const x=el('button','Quitar imagen','btn alt sm');x.type='button';x.style.cssText='margin-top:4px;padding:2px 8px;font-size:.75rem';x.onclick=()=>{DIMG[i]='';dPrev(i)};P.appendChild(im);P.appendChild(x)}
 function anPrev(){const P=$('anPrev');P.textContent='';ANIMG.forEach((u,i)=>{const w=el('div','');w.style.cssText='position:relative';const im=document.createElement('img');im.src=u;im.alt='Imagen '+(i+1);im.style.cssText='width:90px;height:90px;object-fit:cover;border-radius:8px;display:block';
  const x=el('button','Quitar','btn alt sm');x.type='button';x.style.cssText='margin-top:4px;padding:2px 8px;font-size:.75rem';x.onclick=()=>{ANIMG.splice(i,1);anPrev()};w.appendChild(im);w.appendChild(x);P.appendChild(w)})}
+/* Imágenes de temas: si llegan pequeñas o de baja resolución se amplían (por pasos, con suavizado de alta calidad) y se afinan para que el texto y los bordes se vean nítidos. No cambia el contenido. */
+function reduceHQ(file){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),i=new Image();i.onerror=()=>{URL.revokeObjectURL(u);no(new Error('No se pudo leer la imagen'))};i.onload=()=>{try{
+ URL.revokeObjectURL(u);const W0=i.naturalWidth||i.width,H0=i.naturalHeight||i.height,L0=Math.max(W0,H0),T=2000;
+ const sc=(src,w,h)=>{const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.fillStyle='#fff';g.fillRect(0,0,w,h);g.drawImage(src,0,0,w,h);return c};
+ let cur=sc(i,W0,H0),up=false;
+ if(L0<1600){up=true;let L=L0;const k=T/L0;const tw=Math.round(W0*Math.min(k,4)),th=Math.round(H0*Math.min(k,4));
+  while(Math.max(cur.width,cur.height)<Math.max(tw,th)){const st=Math.min(2,Math.max(tw,th)/Math.max(cur.width,cur.height));cur=sc(cur,Math.min(tw,Math.round(cur.width*st)),Math.min(th,Math.round(cur.height*st)))}}
+ else if(L0>T){const k=T/L0;cur=sc(i,Math.round(W0*k),Math.round(H0*k))}
+ if(up){const g=cur.getContext('2d'),w=cur.width,h=cur.height,im=g.getImageData(0,0,w,h),a=im.data,o=new Uint8ClampedArray(a),A=0.55,C=1+4*A;
+  for(let y=1;y<h-1;y++){for(let x=1;x<w-1;x++){const p=(y*w+x)*4;for(let c=0;c<3;c++){const v=C*o[p+c]-A*(o[p+c-4]+o[p+c+4]+o[p+c-w*4]+o[p+c+w*4]);a[p+c]=v}}}
+  g.putImageData(im,0,0)}
+ let q=0.92,d=cur.toDataURL('image/jpeg',q);
+ while(d.length>900000&&q>0.6){q-=0.06;d=cur.toDataURL('image/jpeg',q)}
+ while(d.length>900000&&cur.width>600){cur=sc(cur,Math.round(cur.width*0.85),Math.round(cur.height*0.85));d=cur.toDataURL('image/jpeg',0.8)}
+ ok(d)}catch(e){no(e)}};i.src=u})}
 function reduce(file,M0){return new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const i=new Image();i.onerror=no;i.onload=()=>{const M=M0||900,k=Math.min(1,M/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(i,0,0,c.width,c.height);ok(c.toDataURL('image/jpeg',0.78))};i.src=r.result};r.readAsDataURL(file)})}
 [0,1,2,3,4,5,6].forEach(i=>$('ani'+i).addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{DIMG[i]=await reduce(f,1000);dPrev(i)}catch(x){$('anOk').textContent='No se pudo leer la imagen.'}e.target.value=''}));
 $('anFiles').addEventListener('change',async e=>{for(const f of [...e.target.files]){if(ANIMG.length>=3){$('anOk').textContent='Máximo 3 imágenes.';break}try{ANIMG.push(await reduce(f))}catch(x){$('anOk').textContent='No se pudo leer una imagen.'}}e.target.value='';anPrev()});
