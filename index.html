@@ -473,6 +473,9 @@ body.ytopen{overflow:hidden}
 <script>(function(){try{var q=new URLSearchParams(location.search);var st=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;
 /* Si ya está instalada como app y se abre sin destino, entra directo a la app del equipo */
 if(st&&!q.get('v')&&!q.get('e')&&!location.hash){location.replace('?v=app')}
+/* En computadora (navegador normal, no instalada) la app del equipo no aplica: se usa el panel de la página web */
+var esc=window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches&&innerWidth>900;
+if(!st&&esc&&q.get('v')==='app'&&q.get('app')!=='1'){location.replace('?v=lideres')}
 document.addEventListener('DOMContentLoaded',function(){var ai=document.querySelector('link[rel=apple-touch-icon]');if(ai)ai.href='apple-touch-icon.png'});
 if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}catch(e){}})();</script>
 </head>
