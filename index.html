@@ -838,6 +838,7 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <form id="aplf" class="apqb">
 <input id="aple" type="email" placeholder="Correo electrónico" required autocomplete="email">
 <input id="aplp" type="password" placeholder="Contraseña" required autocomplete="current-password">
+<button type="button" class="apql" id="aplsh">Mostrar contraseña</button>
 <button class="apqbtn" type="submit">Entrar</button>
 </form>
 <button type="button" class="apql" id="aplg">Olvidé mi contraseña</button>
@@ -1619,7 +1620,7 @@ const DP_BASE=['IBLT','Protocolo','Seguridad','Audiovisual','Logística','Gastro
 let DPU=null,DPL=[],DPADM=false,DPMEMS=[],TURNO=null,DPX=[],DPMY=[];
 const dpMsg=t=>{$('dpmsg').textContent=t||''};
 const dpView=v=>{['dpauth','dppend','dpdash'].forEach(i=>{$(i).hidden=i!==v})};
-async function dpDeps(){DPL=[];try{const q=await S.getDocs(S.collection(db,'departamentos'));q.forEach(d=>DPL.push(Object.assign({id:d.id},d.data())))}catch(e){}DPL.sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||'','es'));return DPL}
+async function dpDeps(){const L=[];try{const q=await S.getDocs(S.collection(db,'departamentos'));q.forEach(d=>{if(!L.some(x=>x.id===d.id))L.push(Object.assign({id:d.id},d.data()))})}catch(e){}L.sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||'','es'));DPL=L;return DPL}
 const dpNom=id=>{const d=DPL.find(x=>x.id===id);return d?d.nombre:'(departamento eliminado)'};
 async function dpPostular(u,nom,tel,did){
  if(!u||!did)return;
@@ -2419,6 +2420,7 @@ async function apEnter(u){
  if(roles.length===1&&roles[0]!=='lid'&&!pend.length)apGo(roles[0]);else apGo('home');
 }
 document.querySelectorAll('#appeq [data-ap]').forEach(b=>b.addEventListener('click',()=>apGo(b.getAttribute('data-ap'))));
+$('aplsh').addEventListener('click',()=>{const i=$('aplp'),on=i.type==='password';i.type=on?'text':'password';$('aplsh').textContent=on?'Ocultar contraseña':'Mostrar contraseña'});
 $('aplf').addEventListener('submit',async e=>{e.preventDefault();$('aplm').textContent='';try{await A.signInWithEmailAndPassword(auth,$('aple').value.trim(),$('aplp').value);$('aplp').value=''}catch(x){$('aplm').textContent=er(x)}});
 $('aplg').addEventListener('click',async()=>{const m=$('aple').value.trim();if(!m){$('aplm').textContent='Escribe tu correo arriba y vuelve a tocar el botón.';return}try{await A.sendPasswordResetEmail(auth,m);$('aplm').style.color='#b6f3c4';$('aplm').textContent='Te enviamos un enlace para crear una contraseña nueva. Revisa tu correo.'}catch(x){$('aplm').style.color='#ffb4b4';$('aplm').textContent=er(x)}});
 
