@@ -811,11 +811,12 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <div id="epend" hidden>
 <h3 id="ept">Tu inscripción está pendiente</h3>
 <p>La dirección de la iglesia revisará tu inscripción. Cuando sea aprobada podrás ver el material de tu escuela.</p>
-<button class="btn alt" type="button" id="eout1">Salir</button>
+<button class="btn alt gopost" type="button">Postularme a un departamento</button> <button class="btn alt" type="button" id="eout1">Salir</button>
 </div>
 <div id="edash" hidden>
 <div class="row" style="justify-content:space-between;align-items:center;margin-top:0"><h3 id="ehi" style="margin:0"></h3><button class="btn alt" id="eout2" type="button">Salir</button></div>
 <p id="eniv" style="font-weight:700"></p>
+<p style="margin:0 0 10px"><button class="btn alt gopost" type="button">Postularme a un departamento</button></p>
 <div id="emae" hidden><h3>Mis alumnos: notas e inasistencias</h3><p class="note">Alumnos aprobados de tu sede y de tu nivel. Notas del 0 al 20 por módulo.</p><ul class="rlist" id="emal"></ul><p class="note" id="emam" role="status"></p></div>
 <h3>Material de apoyo</h3>
 <ul class="rlist" id="emat"></ul>
@@ -1033,11 +1034,12 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <div id="pend" hidden>
 <h3 id="pt">Tu registro está pendiente</h3>
 <p id="pp">Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar y ver los recursos y enviar reportes.</p>
-<button class="btn alt" type="button" id="pout">Salir</button>
+<button class="btn alt gopost" type="button">Postularme a un departamento</button> <button class="btn alt" type="button" id="pout">Salir</button>
 </div>
 
 <div id="dash" hidden>
 <div class="row" style="justify-content:space-between;align-items:center;margin-top:0"><h3 id="hi" style="margin:0"></h3><button class="btn alt" id="out" type="button">Salir</button></div>
+<p style="margin:10px 0 0"><button class="btn alt gopost" type="button">Postularme a un departamento</button></p>
 <div class="tabs" data-all="t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11"><button type="button" data-t="t1" class="on" data-load="res">Recursos</button><button type="button" data-t="t2">Reportar</button><button type="button" data-t="t3" data-load="mine">Mis reportes</button><button type="button" data-t="t4" data-load="adm" id="tabAdmin" hidden>Panel de pastores</button><button type="button" data-t="t5" data-load="adm" id="tabAn" hidden>Anuncios</button><button type="button" data-t="t6" data-load="esc" id="tabEsc" hidden>ESCUELA</button><button type="button" data-t="t7" data-load="ik" id="tabIk" hidden>IGLEKIDS</button><button type="button" data-t="t8" data-load="ev" id="tabEv" hidden>EVENTOS</button><button type="button" data-t="t9" data-load="dp" id="tabDp" hidden>DEPARTAMENTOS</button><button type="button" data-t="t10" data-load="sd" id="tabSd" hidden>SEDES</button><button type="button" data-t="t11" data-load="acc" id="tabAcc" hidden>ACCESOS</button></div>
 
 <div id="t1" class="tab"><h3 class="apz-sec">Recursos de apoyo</h3><div class="grid" id="resl"></div>
@@ -1621,19 +1623,16 @@ async function dpEnter(u){
  if(!DPU){
   let usrData=null;try{const a=await S.getDoc(S.doc(db,'users',u.uid));if(a.exists())usrData=a.data();DPADM=!!(usrData&&usrData.rol==='admin')}catch(e){}
   if(!DPADM){
-   // Líder registrado en users → ofrecer postulación directa
-   const esLider=!!(usrData&&(usrData.rol==='admin'||usrData.estado==='aprobado'));
-   $('dppt').textContent=esLider?'Todavía no estás en ningún departamento':'Esta cuenta no está registrada en Departamentos';
-   $('dppp').textContent=esLider?'':'Usa la pestaña «Registrarme» con otro correo, o entra con la cuenta de tu departamento.';
-   const dppostEl=$('dppost');dppostEl.hidden=!esLider;
-   if(esLider){
-    // Prellenar nombre del líder
-    const nf=$('dppostn');if(usrData&&usrData.nombre)nf.value=usrData.nombre;else nf.value='';
-    const tf=$('dppostt');if(usrData&&usrData.telefono)tf.value=usrData.telefono;else tf.value='';
-    // Poblar select de departamentos
-    const sel=$('dpposts');sel.textContent='';const o0=document.createElement('option');o0.value='';o0.textContent='Elige un departamento';sel.appendChild(o0);
-    DPL.filter(d=>d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre;sel.appendChild(o)});
-   }
+   // Cualquier cuenta registrada (líder, miembro, discípulo, escuela…) puede postularse
+   let estData=null;if(!usrData){try{const e0=await S.getDoc(S.doc(db,'estudiantes',u.uid));if(e0.exists())estData=e0.data()}catch(e){}}
+   const pfd=usrData||estData||{};
+   $('dppt').textContent='Todavía no estás en ningún departamento';
+   $('dppp').textContent='';
+   $('dppost').hidden=false;
+   $('dppostn').value=pfd.nombre||u.displayName||'';
+   $('dppostt').value=pfd.telefono||'';
+   {const sel=$('dpposts');sel.textContent='';const o0=document.createElement('option');o0.value='';o0.textContent='Elige un departamento';sel.appendChild(o0);
+    DPL.filter(d=>d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre;sel.appendChild(o)})}
    dpView('dppend');return;
   }
  }else if(DPU.estado!=='aprobado'){
@@ -1710,6 +1709,7 @@ $('dpfs').addEventListener('submit',async e=>{e.preventDefault();dpMsg('');busy=
   await S.setDoc(S.doc(db,'deptos_usuarios',c.user.uid),{nombre:$('dpsn').value.trim(),deptoId:did,deptoNombre:dpNom(did),telefono:$('dpst').value.trim(),email:$('dpse').value.trim(),estado:'pendiente',rol:'miembro',creado:S.serverTimestamp()});
   busy=false;$('dpfs').reset();await dpEnter(c.user);
  }catch(x){busy=false;dpMsg(x&&x.message&&!x.code?x.message:er(x))}});
+document.querySelectorAll('.gopost').forEach(b=>b.addEventListener('click',()=>{if(apInApp())apGo('dep');else location.href='?v=departamentos'}));
 $('dppo').addEventListener('click',()=>A.signOut(auth));$('dpout').addEventListener('click',()=>A.signOut(auth));
 
 /* ===== CALENDARIO DE GUARDIAS ===== */
@@ -2356,13 +2356,13 @@ async function apEnter(u){
   if(adm)tile('key','Accesos por cargo','Qué ve cada líder, mentor, diácono…',()=>apTab('t11'));
  }
  if(AP.r.dep){tile('users','Mi departamento'+(b&&b.deptoNombre?' · '+b.deptoNombre:''),'Calendario de guardias, avisos y material',()=>apGo('dep'),cta?'':'dest');if(!cta)cta=['Mi departamento',()=>apGo('dep')]}
- else if(AP.r.lid&&b&&(b.estado==='pendiente'||b.estado==='rechazado')){tile('users','Departamento · '+(b.deptoNombre||'')+(b.estado==='pendiente'?' (pendiente)':" (no aprobado — postúlate de nuevo)"),'',()=>apGo('dep'))}
- else if(AP.r.lid&&!b){tile('users','Postularme a un departamento','Elige un departamento y envía tu solicitud',()=>apGo('dep'))}
+ else if(b&&(b.estado==='pendiente'||b.estado==='rechazado')){tile('users','Departamento · '+(b.deptoNombre||'')+(b.estado==='pendiente'?' (pendiente)':" (no aprobado — postúlate de nuevo)"),'',()=>apGo('dep'))}
+ else if(!b&&(a||c)){tile('users','Postularme a un departamento','Elige un departamento y envía tu solicitud',()=>apGo('dep'))}
  if(AP.r.est){tile('cap','Escuela de formación','Tu material y tu nivel',()=>apGo('est'),cta?'':'dest');if(!cta)cta=['Mi escuela',()=>apGo('est')]}
  else if(AP.r.lid&&accOk(a,'escuela'))tile('cap','Escuela de formación','Inscríbete y accede a tu material',()=>apGo('est'));
  const c1=$('ahc1');c1.hidden=!cta;if(cta){c1.textContent=cta[0];c1.onclick=cta[1]}
  $('ahc2').hidden=!AP.any;
- if(pend.length)$('apps').textContent='Tu registro en '+pend.join(' y ')+' está pendiente de aprobación. Un pastor lo revisará.';
+ if(pend.length)$('apps').textContent='Tu registro en '+pend.join(' y ')+' está pendiente de aprobación. '+(pend.length===1&&pend[0]==='Departamentos'?'El coordinador del departamento lo revisará.':'Un pastor lo revisará.');
  else if(T.children.length)$('apps').textContent='';
  else{$('apps').textContent='Esta cuenta todavía no tiene acceso. Regístrate en el módulo que te corresponde:';
   tile('edit','Registrarme como líder','Reportes y recursos',()=>apGo('lid'));tile('users','Registrarme en un departamento','Calendario de guardias y avisos',()=>apGo('dep'));tile('cap','Inscribirme en la Escuela','Material de formación',()=>apGo('est'))}
