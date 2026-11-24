@@ -1718,7 +1718,13 @@ async function dpPanel(){
    q2.forEach(d=>{const x=Object.assign({},d.data(),{docId:d.id,extra:true});if(x.estado==='aprobado')L.push(x);else if(x.estado==='pendiente'||x.estado==='rechazado')P.push(x)})}catch(e){}
   L.sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||'','es'));DPMEMS=L;
   if(!L.length){const li=document.createElement('li');li.textContent='Aún no hay integrantes aprobados.';mm.appendChild(li)}
-  L.forEach(x=>{const li=document.createElement('li');li.textContent=x.nombre+(x.rol==='coordinador'?' · Coordinador':'')+(x.telefono?' · '+x.telefono:'');mm.appendChild(li)});
+  L.forEach(x=>{const li=document.createElement('li');li.textContent=x.nombre+(x.rol==='coordinador'?' · Coordinador':'')+(x.telefono?' · '+x.telefono:'');
+   const miUid=auth.currentUser&&auth.currentUser.uid;
+   if(puedeSol&&x.uid!==miUid&&(DPADM||x.rol!=='coordinador')){const k=document.createElement('button');k.type='button';k.className='btn alt sm';k.style.marginLeft='10px';k.textContent='Quitar';
+    k.onclick=async()=>{if(!confirm('¿Quitar a '+x.nombre+' de '+dpNom(id)+'? Perderá el acceso a este departamento. Su cuenta no se borra y podrá volver a postularse.'))return;
+     try{await S.deleteDoc(x.extra?S.doc(db,'deptos_solicitudes',x.docId):S.doc(db,'deptos_usuarios',x.uid));await dpPanel()}catch(e){alert(e&&e.code==='permission-denied'?'Falta publicar las reglas nuevas de Firestore para quitar integrantes desde aquí.':er(e))}};
+    li.appendChild(k)}
+   mm.appendChild(li)});
   if(puedeSol){
    const ord={pendiente:0,rechazado:1};P.sort((a,b)=>(ord[a.estado]-ord[b.estado])||(a.nombre||'').localeCompare(b.nombre||'','es'));
    if(!P.length){const li=document.createElement('li');li.textContent='No hay solicitudes pendientes en tu departamento.';sl.appendChild(li)}
