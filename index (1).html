@@ -983,6 +983,10 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <h4>Avisos del departamento</h4>
 <form id="dpaf" style="max-width:640px"><label>Nuevo aviso<textarea id="dpat" rows="3" maxlength="1500" required placeholder="Escribe un aviso para tu equipo"></textarea></label><button class="btn" type="submit">Publicar aviso</button></form>
 <ul class="dpl" id="dpavl"></ul>
+<div id="dpsol" hidden>
+<h4>Solicitudes pendientes</h4>
+<ul class="dpl" id="dpsoll"></ul>
+</div>
 <h4>Integrantes</h4>
 <ul class="dpl" id="dpmem"></ul>
 </div>
@@ -1613,7 +1617,8 @@ async function dpEnter(u){
 }
 const dpCur=()=>DPADM?$('dpsel').value:(DPU&&DPU.deptoId);
 async function dpPanel(){
- const id=dpCur(),av=$('dpavl'),mm=$('dpmem');av.textContent='';mm.textContent='';
+ const id=dpCur(),av=$('dpavl'),mm=$('dpmem'),sw=$('dpsol'),sl=$('dpsoll'),puedeSol=!!(id&&(DPADM||(DPU&&DPU.rol==='coordinador'&&DPU.deptoId===id)));
+ av.textContent='';mm.textContent='';sl.textContent='';sw.hidden=!puedeSol;
  $('dpname').textContent=id?dpNom(id):'Aún no hay departamentos creados';
  $('dpaf').hidden=!id;if(!id){DPMEMS=[];TURNO=null;return}
  try{
@@ -1625,11 +1630,25 @@ async function dpPanel(){
    av.appendChild(li)});
  }catch(e){const li=document.createElement('li');li.textContent='No se pudieron cargar los avisos.';av.appendChild(li)}
  try{
-  const q=await S.getDocs(S.query(S.collection(db,'deptos_usuarios'),S.where('deptoId','==',id),S.where('estado','==','aprobado')));const L=[];q.forEach(d=>L.push(Object.assign({uid:d.id},d.data())));
+  const q=await S.getDocs(puedeSol?S.query(S.collection(db,'deptos_usuarios'),S.where('deptoId','==',id)):S.query(S.collection(db,'deptos_usuarios'),S.where('deptoId','==',id),S.where('estado','==','aprobado')));
+  const L=[],P=[];q.forEach(d=>{const x=Object.assign({uid:d.id},d.data());if(x.estado==='aprobado')L.push(x);else if(x.estado==='pendiente'||x.estado==='rechazado')P.push(x)});
   L.sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||'','es'));DPMEMS=L;
   if(!L.length){const li=document.createElement('li');li.textContent='Aún no hay integrantes aprobados.';mm.appendChild(li)}
   L.forEach(x=>{const li=document.createElement('li');li.textContent=x.nombre+(x.rol==='coordinador'?' · Coordinador':'')+(x.telefono?' · '+x.telefono:'');mm.appendChild(li)});
- }catch(e){}
+  if(puedeSol){
+   const ord={pendiente:0,rechazado:1};P.sort((a,b)=>(ord[a.estado]-ord[b.estado])||(a.nombre||'').localeCompare(b.nombre||'','es'));
+   if(!P.length){const li=document.createElement('li');li.textContent='No hay solicitudes pendientes en tu departamento.';sl.appendChild(li)}
+   P.forEach(x=>{
+    const li=document.createElement('li'),t=document.createElement('div'),b=document.createElement('div');b.className='dpb';
+    const bd=document.createElement('span');bd.className='dpbad '+(x.estado==='rechazado'?'no':'wa');bd.textContent=x.estado==='rechazado'?'Rechazado':'Pendiente';
+    const st=document.createElement('strong');st.textContent=x.nombre;t.append(st,document.createTextNode(' · '+(x.email||'')+(x.telefono?' · '+x.telefono:'')+' · '),bd);
+    const mk=(txt,est,alt)=>{const k=document.createElement('button');k.type='button';k.className='btn sm'+(alt?' alt':'');k.textContent=txt;
+     k.onclick=async()=>{try{await S.updateDoc(S.doc(db,'deptos_usuarios',x.uid),{estado:est});await dpPanel()}catch(e){alert(e&&e.code==='permission-denied'?'Falta publicar las reglas nuevas de Firestore para aprobar miembros desde aquí.':er(e))}};b.appendChild(k)};
+    mk('Aprobar','aprobado',false);if(x.estado==='pendiente')mk('Rechazar','rechazado',true);
+    li.append(t,b);sl.appendChild(li);
+   });
+  }
+ }catch(e){if(puedeSol){const li=document.createElement('li');li.textContent='No se pudieron cargar las solicitudes. ¿Publicaste las reglas nuevas de Firestore?';sl.appendChild(li)}}
  if(!$('dpmes').value){const n=new Date();$('dpmes').value=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')}
  await dpTurnoLoad();dpDraw();iknCargar();dpAvisosCargar();
 }
@@ -3442,7 +3461,7 @@ body[data-v=app] .tabs button,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .t
 body[data-v=app] .tabs button.on,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .tabs button.on{background:linear-gradient(135deg,#1450c4,#2f6bff);border-color:transparent;color:#fff;box-shadow:0 6px 16px rgba(20,80,196,.28)}
 /* encabezados de sección internos estilo app */
 body[data-v=app] :is(#lideres,#deptos,#escuela) :is(h2,h3,h4),body.pwa[data-v] :is(#lideres,#deptos,#escuela) :is(h2,h3,h4){text-transform:none;letter-spacing:0;color:#0e1526}
-body[data-v=app] .apz-sec,body.pwa[data-v] .apz-sec,body[data-v=app] #cdpw>h3,body.pwa[data-v] #cdpw>h3,body[data-v=app] #edash>h3,body.pwa[data-v] #edash>h3,body[data-v=app] #dpdash>h4,body.pwa[data-v] #dpdash>h4{display:block;font-size:.76rem!important;font-weight:800!important;letter-spacing:.12em!important;text-transform:uppercase!important;color:#1450c4!important;margin:18px 4px 10px!important}
+body[data-v=app] .apz-sec,body.pwa[data-v] .apz-sec,body[data-v=app] #cdpw>h3,body.pwa[data-v] #cdpw>h3,body[data-v=app] #edash>h3,body.pwa[data-v] #edash>h3,body[data-v=app] #dpdash>h4,body.pwa[data-v] #dpdash>h4,body[data-v=app] #dpsol>h4,body.pwa[data-v] #dpsol>h4{display:block;font-size:.76rem!important;font-weight:800!important;letter-spacing:.12em!important;text-transform:uppercase!important;color:#1450c4!important;margin:18px 4px 10px!important}
 body[data-v=app] .apz-sec,body.pwa[data-v] .apz-sec{margin-top:4px!important}
 /* tarjetas app de Recursos, Casa de Paz y listas */
 body[data-v=app] :is(#resl,#cdpl),body.pwa[data-v] :is(#resl,#cdpl){display:grid;grid-template-columns:1fr;gap:12px}
