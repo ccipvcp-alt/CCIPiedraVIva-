@@ -788,6 +788,8 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <label>Me inscribo como<select id="esT" required><option value="alumno">Alumno</option><option value="maestro">Maestro</option></select></label>
 <label>Escuela / nivel (si eres maestro, el nivel que enseñas)<select id="esv" required><option value="">Elige tu escuela</option><option>Miembros</option><option>Discípulos</option><option>Líderes</option><option>Mentores</option><option>Diáconos</option><option>Ancianos</option><option>Ministros</option></select></label>
 <label>Cédula de tu líder o mentor (quien te discipula, si aplica)<input id="esl" inputmode="numeric" pattern="[0-9.\\-]{5,12}" title="Solo números"></label>
+<label>¿Quieres servir en un departamento? (opcional)<select id="esdp"><option value="">No por ahora</option></select></label>
+<p class="note">Si eliges uno, el coordinador de ese departamento revisará tu postulación.</p>
 <label>Correo electrónico (será tu usuario)<input id="ese" type="email" required autocomplete="email"></label>
 <label>Contraseña (mínimo 6 caracteres)<input id="esp" type="password" minlength="6" required autocomplete="new-password"></label>
 <button class="btn" type="submit">Inscribirme</button>
@@ -804,6 +806,8 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <label>Me inscribo como<select id="fT" required><option value="alumno">Alumno</option><option value="maestro">Maestro</option></select></label>
 <label>Escuela / nivel (si eres maestro, el nivel que enseñas)<select id="fnv" required><option value="">Elige tu escuela</option><option>Miembros</option><option>Discípulos</option><option>Líderes</option><option>Mentores</option><option>Diáconos</option><option>Ancianos</option><option>Ministros</option></select></label>
 <label>Cédula de tu líder o mentor (quien te discipula, si aplica)<input id="fl2" inputmode="numeric" pattern="[0-9.\\-]{5,12}" title="Solo números"></label>
+<label>¿Quieres servir en un departamento? (opcional)<select id="fdp"><option value="">No por ahora</option></select></label>
+<p class="note">Si eliges uno, el coordinador de ese departamento revisará tu postulación.</p>
 <button class="btn" type="submit">Enviar inscripción</button>
 <button class="btn alt" type="button" id="eout0">Salir</button>
 <p class="note" id="efmsg" role="status"></p>
@@ -1023,6 +1027,8 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <label>Sede<select id="ss" required><option value="">Elige tu sede</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label>
 <label>Cargo en la iglesia<select id="sc" required><option value="">Elige tu cargo</option><option>Apóstol</option><option>Pastor</option><option>Ministro</option><option>Anciano</option><option>Diácono</option><option>Mentor</option><option>Líder</option><option>Sub líder</option><option>Discípulo</option><option>Miembro</option></select></label>
 <label>Teléfono<input id="st" type="tel" required autocomplete="tel"></label>
+<label>¿Quieres servir en un departamento? (opcional)<select id="sdp"><option value="">No por ahora</option></select></label>
+<p class="note">Si eliges uno, el coordinador de ese departamento revisará tu postulación.</p>
 <label>Correo electrónico (será tu usuario)<input id="se" type="email" required autocomplete="email"></label>
 <label>Contraseña (mínimo 6 caracteres)<input id="sp" type="password" minlength="6" required autocomplete="new-password"></label>
 <button class="btn" type="submit">Crear cuenta</button>
@@ -1597,6 +1603,7 @@ $('fs').addEventListener('submit',async e=>{
  try{
   const c=await A.createUserWithEmailAndPassword(auth,$('se').value.trim(),$('sp').value);
   await S.setDoc(S.doc(db,'users',c.user.uid),{nombre:$('sn').value.trim(),sede:$('ss').value,cargo:$('sc').value.trim(),telefono:$('st').value.trim(),email:$('se').value.trim(),estado:'pendiente',rol:'lider',creado:S.serverTimestamp()});
+  await dpPostular(c.user,$('sn').value.trim(),$('st').value.trim(),$('sdp').value);
   busy=false;$('fs').reset();await enter(c.user);
  }catch(x){busy=false;msg(er(x))}
 });
@@ -1608,6 +1615,16 @@ const dpMsg=t=>{$('dpmsg').textContent=t||''};
 const dpView=v=>{['dpauth','dppend','dpdash'].forEach(i=>{$(i).hidden=i!==v})};
 async function dpDeps(){DPL=[];try{const q=await S.getDocs(S.collection(db,'departamentos'));q.forEach(d=>DPL.push(Object.assign({id:d.id},d.data())))}catch(e){}DPL.sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||'','es'));return DPL}
 const dpNom=id=>{const d=DPL.find(x=>x.id===id);return d?d.nombre:'(departamento eliminado)'};
+async function dpPostular(u,nom,tel,did){
+ if(!u||!did)return;
+ try{
+  const d0=await S.getDoc(S.doc(db,'deptos_usuarios',u.uid));if(d0.exists())return;
+  if(!DPL.length)await dpDeps();
+  await S.setDoc(S.doc(db,'deptos_usuarios',u.uid),{nombre:nom,deptoId:did,deptoNombre:dpNom(did),telefono:tel||'',email:u.email||'',estado:'pendiente',rol:'miembro',creado:S.serverTimestamp()});
+ }catch(e){}
+}
+function dpFillRegs(){['sdp','esdp','fdp'].forEach(id=>{const s=$(id);if(!s)return;s.textContent='';const o=document.createElement('option');o.value='';o.textContent='No por ahora';s.appendChild(o);DPL.filter(d=>d.activo!==false).forEach(d=>{const x=document.createElement('option');x.value=d.id;x.textContent=d.nombre;s.appendChild(x)})})}
+dpDeps().then(dpFillRegs);
 function dpOpts(sel,soloActivos,v){sel.textContent='';DPL.filter(d=>!soloActivos||d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre+(d.activo===false?' (inactivo)':'');sel.appendChild(o)});if(v)sel.value=v}
 async function dpEnter(u){
  {const m0=document.body.getAttribute('data-v');if(m0!=='departamentos'&&m0!=='app'&&m0!=='lideres')return}
@@ -2538,9 +2555,10 @@ $('efg').addEventListener('click',async()=>{const m=$('ele').value.trim();if(!m)
 $('efs').addEventListener('submit',async e=>{e.preventDefault();emsg('');busy=true;
  try{const c=await A.createUserWithEmailAndPassword(auth,$('ese').value.trim(),$('esp').value);
   await S.setDoc(S.doc(db,'estudiantes',c.user.uid),{nombre:$('esn').value.trim(),ci:$('esci').value.replace(/\D/g,''),telefono:$('est').value.trim(),sede:$('ess').value,tipo:$('esT').value,nivel:$('esv').value,lider:$('esl').value.replace(/\D/g,''),email:$('ese').value.trim().toLowerCase(),estado:'pendiente',creado:S.serverTimestamp()});
+  await dpPostular(c.user,$('esn').value.trim(),$('est').value.trim(),$('esdp').value);
   busy=false;$('efs').reset();await escEnter(c.user);await enter(c.user)}catch(x){busy=false;emsg(er(x))}});
 $('eform').addEventListener('submit',async e=>{e.preventDefault();$('efmsg').textContent='';const u=auth.currentUser;if(!u)return;
- try{await S.setDoc(S.doc(db,'estudiantes',u.uid),{nombre:$('fn').value.trim(),ci:$('fci').value.replace(/\D/g,''),telefono:$('ft').value.trim(),sede:$('fsd').value,tipo:$('fT').value,nivel:$('fnv').value,lider:$('fl2').value.replace(/\D/g,''),email:(u.email||'').toLowerCase(),estado:'pendiente',creado:S.serverTimestamp()});await escEnter(u)}catch(x){$('efmsg').textContent=er(x)}});
+ try{await S.setDoc(S.doc(db,'estudiantes',u.uid),{nombre:$('fn').value.trim(),ci:$('fci').value.replace(/\D/g,''),telefono:$('ft').value.trim(),sede:$('fsd').value,tipo:$('fT').value,nivel:$('fnv').value,lider:$('fl2').value.replace(/\D/g,''),email:(u.email||'').toLowerCase(),estado:'pendiente',creado:S.serverTimestamp()});await dpPostular(u,$('fn').value.trim(),$('ft').value.trim(),$('fdp').value);await escEnter(u)}catch(x){$('efmsg').textContent=er(x)}});
 ['eout0','eout1','eout2'].forEach(i=>$(i).addEventListener('click',()=>A.signOut(auth)));
 
 
@@ -2897,7 +2915,7 @@ $('fm').addEventListener('submit',async e=>{
  const ci=f.ci.value.replace(/\D/g,'');
  try{
   await S.setDoc(S.doc(db,'miembros','ci_'+ci),{cargo:f.cargo.value,nombre:f.nombre.value.trim(),ci,telefono:f.telefono.value.trim(),...(f.email.value.trim()?{email:f.email.value.trim().toLowerCase()}:{}),sede:f.sede.value,lider:f.lider.value.trim(),codigo:f.codigo.value.trim().toUpperCase(),estado:'pendiente',creado:S.serverTimestamp()});
-  f.reset();o.textContent='¡Registro recibido! La dirección de la iglesia lo revisará.';
+  f.reset();o.textContent='¡Registro recibido! La dirección de la iglesia lo revisará. Si quieres servir en un departamento, crea tu cuenta en «Departamentos» (pestaña Registrarme) y postula allí.';
  }catch(x){o.textContent='No se pudo registrar ['+(x.code||x.message)+']: revisa que el código sea el de tu sede o es posible que esa cédula ya esté registrada.'}
 });
 $('fbol').addEventListener('submit',async e=>{
