@@ -1579,6 +1579,8 @@ async function enter(u){
  if(!accOk(me,'recursos')){const f=[...document.querySelectorAll('#lideres .tabs button')].find(b=>!b.hidden);if(f)f.click()}else loaders.res();
 }
 A.onAuthStateChanged(auth,u=>{if(!busy){enter(u);escEnter(u);dpEnter(u);apEnter(u)}});
+// En la web, re-ejecutar dpEnter cuando el usuario llegue con scroll a #deptos
+(()=>{const el=$('deptos');if(!el||!window.IntersectionObserver)return;let last=null;new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&auth.currentUser&&auth.currentUser!==last){last=auth.currentUser;dpEnter(auth.currentUser)}},{threshold:0.05}).observe(el)})();
 
 $('fl').addEventListener('submit',async e=>{
  e.preventDefault();msg('');
@@ -1606,7 +1608,11 @@ async function dpDeps(){DPL=[];try{const q=await S.getDocs(S.collection(db,'depa
 const dpNom=id=>{const d=DPL.find(x=>x.id===id);return d?d.nombre:'(departamento eliminado)'};
 function dpOpts(sel,soloActivos,v){sel.textContent='';DPL.filter(d=>!soloActivos||d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre+(d.activo===false?' (inactivo)':'');sel.appendChild(o)});if(v)sel.value=v}
 async function dpEnter(u){
- {const m0=document.body.getAttribute('data-v');if(m0!=='departamentos'&&m0!=='app')return}
+ {const m0=document.body.getAttribute('data-v');if(m0!=='departamentos'&&m0!=='app'&&m0!=='lideres')return}
+ // En modo lideres solo procesar si el #deptos está visible en pantalla
+ if(document.body.getAttribute('data-v')==='lideres'){
+  const dp=$('deptos'),r=dp&&dp.getBoundingClientRect();if(!r||r.bottom<=0||r.top>=window.innerHeight)return
+ }
  await dpDeps();
  const rs=$('dpsd');rs.textContent='';const o0=document.createElement('option');o0.value='';o0.textContent='Elige tu departamento';rs.appendChild(o0);DPL.filter(d=>d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre;rs.appendChild(o)});
  if(!u){DPU=null;DPADM=false;dpView('dpauth');return}
@@ -2188,6 +2194,7 @@ function apGo(v){
  $('aptt').textContent=({login:'Equipo Piedra Viva',home:'CCI Piedra Viva',lid:'Líderes',dep:'Mi departamento',est:'Escuela de formación',chat:'Mensajes',perfil:'Mi perfil'})[v]||'';
  if(v==='perfil')pfPaint();
  if(v==='chat'){CHT.cur?0:chShowList();chRender()}
+ if(v==='dep'&&AP.u)dpEnter(AP.u);
  apNav(v);window.scrollTo(0,0);
 }
 function apTab(t){apGo('lid');apSetZoneMeta(t);const b=document.querySelector('#lideres .tabs [data-t='+t+']');if(b&&!b.hidden){b.click()}else{apSetZoneMeta(t)}}
