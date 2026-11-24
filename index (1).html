@@ -769,6 +769,7 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <!-- ESCUELA DE FORMACIÓN -->
 <section id="escuela">
 <div class="wrap">
+<div class="apz-hero"><span class="apz-tag">Formación</span><h3>Escuela de formación</h3><p>Material de apoyo según tu nivel</p></div>
 <h2>Escuela de formación</h2>
 <p>Dios no te trajo a este mundo por error: tienes un propósito. Inscríbete en nuestras escuelas de formación (Miembros, Discípulos, Líderes, Mentores, Diáconos, Ancianos y Ministros) y recibe el material de apoyo de acuerdo al nivel que estás cursando.</p>
 <div id="eauth">
@@ -894,6 +895,7 @@ var ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='Ma
 if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <section id="deptos">
 <div class="wrap">
+<div class="apz-hero"><span class="apz-tag">Servicio</span><h3>Mi departamento</h3><p>Calendario de guardias, notificaciones y recursos</p></div>
 <h2>Departamentos de la iglesia</h2>
 <p>Espacio de trabajo para los equipos de servicio: IBLT, Protocolo, Seguridad, Audiovisual, Logística, Gastronomía y los que se vayan creando. Cada equipo tiene su propio acceso.</p>
 <div id="dpauth">
@@ -988,6 +990,7 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 </section>
 <section id="lideres" style="background:var(--soft)">
 <div class="wrap">
+<div class="apz-hero" id="apz-lid"><span class="apz-tag">Equipo CCI Piedra Viva</span><h3 id="apz-lid-t">Recursos y Casa de Paz</h3><p id="apz-lid-s">Material de apoyo y temas de la semana</p></div>
 <h2>Acceso para líderes</h2>
 <p>Espacio para los líderes de la estructura: recursos de apoyo y reportes de nuevos creyentes, casas de paz, evangelismo y ayudas sociales.</p>
 <p class="note" id="offline" hidden>El inicio de sesión se activa cuando la página está publicada en su dirección web.</p>
@@ -1023,7 +1026,7 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <div class="row" style="justify-content:space-between;align-items:center;margin-top:0"><h3 id="hi" style="margin:0"></h3><button class="btn alt" id="out" type="button">Salir</button></div>
 <div class="tabs" data-all="t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11"><button type="button" data-t="t1" class="on" data-load="res">Recursos</button><button type="button" data-t="t2">Reportar</button><button type="button" data-t="t3" data-load="mine">Mis reportes</button><button type="button" data-t="t4" data-load="adm" id="tabAdmin" hidden>Panel de pastores</button><button type="button" data-t="t5" data-load="adm" id="tabAn" hidden>Anuncios</button><button type="button" data-t="t6" data-load="esc" id="tabEsc" hidden>ESCUELA</button><button type="button" data-t="t7" data-load="ik" id="tabIk" hidden>IGLEKIDS</button><button type="button" data-t="t8" data-load="ev" id="tabEv" hidden>EVENTOS</button><button type="button" data-t="t9" data-load="dp" id="tabDp" hidden>DEPARTAMENTOS</button><button type="button" data-t="t10" data-load="sd" id="tabSd" hidden>SEDES</button><button type="button" data-t="t11" data-load="acc" id="tabAcc" hidden>ACCESOS</button></div>
 
-<div id="t1" class="tab"><div class="grid" id="resl"></div>
+<div id="t1" class="tab"><h3 class="apz-sec">Recursos de apoyo</h3><div class="grid" id="resl"></div>
 <div id="cdpw" style="margin-top:28px"><h3>Temas de Casa de Paz</h3>
 <div class="grid" id="cdpl"></div>
 <form id="cdpf" hidden style="margin-top:20px;max-width:640px"><h3>Publicar tema de Casa de Paz</h3>
@@ -1487,13 +1490,15 @@ const msg=t=>{$('amsg').textContent=t};
 let A,S,auth,db,me=null,busy=false;
 const loaders={};
 
-const AP_TABS={t1:'Recursos',t2:'Hacer un reporte',t3:'Mis reportes',t4:'Panel de pastores',t5:'Anuncios',t6:'Escuela',t7:'IGLEKIDS',t8:'Eventos',t9:'Departamentos',t10:'Sedes',t11:'Accesos'};
+const AP_TABS={t1:'Recursos y Casa de Paz',t2:'Hacer un reporte',t3:'Mis reportes',t4:'Panel de pastores',t5:'Anuncios',t6:'Escuela',t7:'IGLEKIDS',t8:'Eventos',t9:'Departamentos',t10:'Sedes',t11:'Accesos'};
+const AP_SUB={t1:'Material de apoyo y temas de la semana',t2:'Casa de paz, nuevos creyentes, evangelismo o ayuda social',t3:'Historial de reportes enviados',t4:'Solicitudes, aportes, miembros y eventos',t5:'Avisos y transmisiones de la iglesia',t6:'Inscripciones y material de la escuela',t7:'Contenido, inscritos y supervisión',t8:'Inscripciones a eventos',t9:'Equipos de servicio, avisos y recursos',t10:'Foto, dirección y horarios de cada sede',t11:'Permisos visibles por cada cargo'};
+function apSetZoneMeta(t){const tt=$('aptt'),zt=$('apz-lid-t'),zs=$('apz-lid-s');const nom=AP_TABS[t]||'Líderes';if(tt)tt.textContent=nom;if(zt)zt.textContent=nom;if(zs)zs.textContent=AP_SUB[t]||'';document.body.setAttribute('data-zone',t||'')}
 document.querySelectorAll('.tabs').forEach(g=>{
  const ids=g.dataset.all.split(',');
  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
   g.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
   ids.forEach(i=>{$(i).hidden=(i!==b.dataset.t)});
-  if(document.body.getAttribute('data-ap')==='lid'&&g.closest('#lideres')){const tt=$('aptt');if(tt)tt.textContent=AP_TABS[b.dataset.t]||b.textContent.trim()}
+  if(document.body.getAttribute('data-ap')==='lid'&&g.closest('#lideres')){apSetZoneMeta(b.dataset.t)}
   if(b.dataset.load&&loaders[b.dataset.load])loaders[b.dataset.load]();
  }));
 });
@@ -2000,12 +2005,12 @@ async function cdpLoad(){
   r.sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')||(((b.creado&&b.creado.seconds)||0)-((a.creado&&a.creado.seconds)||0)));
   if(!r.length)L.appendChild(el('p','Todavía no hay temas de Casa de Paz publicados.'));
   r.forEach(x=>{
-   const c=el('div',null,'pillar');c.appendChild(el('h3',x.titulo));
+   const c=el('div',null,'pillar');const ic=document.createElement('div');ic.className='ap-cico';ic.innerHTML=svg('home');c.appendChild(ic);c.appendChild(el('h3',x.titulo));
    c.appendChild(el('p',(x.fecha?dpFTxt(x.fecha):'')+' · '+x.n+(x.n===1?' imagen':' imágenes')));
    if(x.nota)c.appendChild(el('p',x.nota));
-   const v=el('button','Ver tema','btn sm');v.type='button';v.onclick=()=>cdpVer(x);c.appendChild(v);
-   if(me&&(me.rol==='admin'||(cdPuede()&&auth.currentUser&&x.autorUid===auth.currentUser.uid))){const b=el('button','Eliminar','btn alt sm');b.type='button';b.onclick=()=>cdpDel(x);c.appendChild(b)}
-   L.appendChild(c)});
+   const act=el('div',null,'ap-cact');const v=el('button','Ver tema','btn sm');v.type='button';v.onclick=()=>cdpVer(x);act.appendChild(v);
+   if(me&&(me.rol==='admin'||(cdPuede()&&auth.currentUser&&x.autorUid===auth.currentUser.uid))){const b=el('button','Eliminar','btn alt sm');b.type='button';b.onclick=()=>cdpDel(x);act.appendChild(b)}
+   c.appendChild(act);L.appendChild(c)});
  }catch(e){L.appendChild(el('p',er(e)))}
  if(me&&me.rol==='admin')cdpPerm();
 }
@@ -2116,6 +2121,7 @@ function apNav(v){
 }
 function apGo(v){
  document.body.setAttribute('data-ap',v);
+ if(v!=='lid')document.body.removeAttribute('data-zone');
  if(v!=='chat'){if(CHT.cur)chClose()}
  if(AP.u&&v!=='login')document.body.setAttribute('data-nav','1');else document.body.removeAttribute('data-nav');
  $('apmy').style.visibility=(AP.u&&v!=='perfil')?'visible':'hidden';
@@ -2125,7 +2131,7 @@ function apGo(v){
  if(v==='chat'){CHT.cur?0:chShowList();chRender()}
  apNav(v);window.scrollTo(0,0);
 }
-function apTab(t){apGo('lid');const b=document.querySelector('#lideres .tabs [data-t='+t+']');if(b&&!b.hidden){b.click()}else{$('aptt').textContent=AP_TABS[t]||'Líderes'}}
+function apTab(t){apGo('lid');apSetZoneMeta(t);const b=document.querySelector('#lideres .tabs [data-t='+t+']');if(b&&!b.hidden){b.click()}else{apSetZoneMeta(t)}}
 
 /* --- perfil (foto) --- */
 async function pfSync(u,a,b,c){
@@ -2764,10 +2770,12 @@ loaders.res=async()=>{
   r.sort((a,b)=>(a.titulo||'').localeCompare(b.titulo||''));
   if(!r.length)g.appendChild(el('p','Todavía no hay recursos publicados.'));
   r.forEach(x=>{
-   const c=el('div',null,'pillar');c.appendChild(el('h3',x.titulo));
+   const c=el('div',null,'pillar');const ic=document.createElement('div');ic.className='ap-cico';ic.innerHTML=svg('book');c.appendChild(ic);c.appendChild(el('h3',x.titulo));
    if(x.descripcion)c.appendChild(el('p',x.descripcion));
-   if(/^https:\/\//.test(x.url||'')){const a=el('a','Abrir recurso');a.href=x.url;a.target='_blank';a.rel='noopener';c.appendChild(a)}
-   if(me&&me.rol==='admin'){const b=el('button','Quitar','btn alt sm');b.type='button';b.onclick=async()=>{await S.deleteDoc(S.doc(db,'recursos',x.id));loaders.res()};c.appendChild(b)}
+   const act=el('div',null,'ap-cact');
+   if(/^https:\/\//.test(x.url||'')){const a=el('a','Abrir recurso');a.href=x.url;a.target='_blank';a.rel='noopener';act.appendChild(a)}
+   if(me&&me.rol==='admin'){const b=el('button','Quitar','btn alt sm');b.type='button';b.onclick=async()=>{await S.deleteDoc(S.doc(db,'recursos',x.id));loaders.res()};act.appendChild(b)}
+   if(act.children.length)c.appendChild(act);
    g.appendChild(c);
   });
  }catch(x){g.appendChild(el('p',er(x)))}
@@ -3399,59 +3407,86 @@ kick();
 
 </script>
 <style id="app-tema">
-/* ===== APP: todas las pantallas internas siguen el tema de la app (azul + claro) ===== */
-body[data-v=app],body.pwa[data-v]{--bg:#eef2fb;--surface:#fff;--ink:#0e1526;--muted:#6b7690;--brand:#1450c4;--brand-ink:#fff;--accent:#f5c542;--accent-ink:#0a1f66;--line:#e3e8f4;--soft:#e8efff;color-scheme:light;background:#eef2fb!important;color:#0e1526}
-body[data-v=app] :is(#lideres,#deptos,#escuela),body[data-v=app] :is(#lideres,#deptos,#escuela)[style],body.pwa[data-v] :is(#lideres,#deptos,#escuela),body.pwa[data-v] :is(#lideres,#deptos,#escuela)[style]{background:#eef2fb!important;background-image:none!important;padding:12px 0 36px}
+/* ===== APP: todas las pantallas internas siguen el tema y diseño de la app (azul rey + tarjetas limpias) ===== */
+.apz-hero,.apz-sec,.ap-cico{display:none}
+body[data-v=app],body.pwa[data-v]{--bg:#eef2fb;--surface:#fff;--ink:#0e1526;--muted:#6b7690;--brand:#1450c4;--brand-ink:#fff;--accent:#f5c542;--accent-ink:#0a1f66;--line:#dce4f5;--soft:#e8efff;color-scheme:light;background:#eef2fb!important;color:#0e1526}
+body[data-v=app] #lideres,body[data-v=app] #deptos,body[data-v=app] #escuela,body.pwa[data-v] #lideres,body.pwa[data-v] #deptos,body.pwa[data-v] #escuela{background:#eef2fb!important;background-image:none!important;padding:0 0 36px!important}
 body.pwa[data-v]:not([data-v=app]) section[style*="--soft"]{background:#eef2fb!important;background-image:none!important}
-body[data-v=app] :is(#lideres,#deptos,#escuela)>.wrap,body.pwa[data-v] :is(#lideres,#deptos,#escuela)>.wrap{max-width:680px;padding:0 16px}
-/* la barra de arriba ya dice dónde estás: se oculta el título/intro estilo web */
-body[data-v=app] :is(#lideres,#deptos,#escuela)>.wrap>h2,body[data-v=app] :is(#lideres,#deptos,#escuela)>.wrap>h2+p{display:none}
-body[data-v=app] :is(#lideres,#deptos,#escuela) :is(h2,h3,h4),body.pwa[data-v] :is(#lideres,#deptos,#escuela) :is(h2,h3,h4){text-transform:none;letter-spacing:0;color:#0e1526}
-body[data-v=app] :is(#lideres,#deptos,#escuela) h2,body.pwa[data-v] :is(#lideres,#deptos,#escuela) h2{font-size:1.38rem;font-weight:800}
-body[data-v=app] :is(#lideres,#deptos,#escuela) h3,body.pwa[data-v] :is(#lideres,#deptos,#escuela) h3{font-size:1.08rem;font-weight:800}
-body[data-v=app] :is(#lideres,#deptos,#escuela) h4,body.pwa[data-v] :is(#lideres,#deptos,#escuela) h4{font-size:.98rem;font-weight:800;color:#0a1f66}
-/* encabezado tipo tarjeta app dentro de cada zona */
-body[data-v=app] :is(#dash,#dpdash,#edash)>.row:first-child,body.pwa[data-v] :is(#dash,#dpdash,#edash)>.row:first-child{background:linear-gradient(140deg,#0a1f66 0%,#1450c4 62%,#2f6bff 100%);color:#fff;border-radius:22px;padding:16px 18px;margin:0 0 14px;box-shadow:0 12px 26px rgba(10,31,102,.18);gap:10px}
-body[data-v=app] :is(#dash,#dpdash,#edash)>.row:first-child h3,body.pwa[data-v] :is(#dash,#dpdash,#edash)>.row:first-child h3{color:#fff;font-size:1.06rem;font-weight:800;margin:0;line-height:1.25}
-body[data-v=app] :is(#out,#dpout,#eout2),body.pwa[data-v] :is(#out,#dpout,#eout2){background:rgba(255,255,255,.16);background-image:none;color:#fff;border:1px solid rgba(255,255,255,.28);box-shadow:none;padding:7px 14px;font-size:.82rem;border-radius:999px}
-body[data-v=app] #eniv,body.pwa[data-v] #eniv{display:inline-block;background:#e8efff;color:#1450c4;padding:8px 14px;border-radius:999px;font-size:.88rem;font-weight:800;margin:0 0 12px}
-body[data-v=app] #dpname,body.pwa[data-v] #dpname{color:#0a1f66;font-size:1.15rem;font-weight:800;margin:14px 0 8px}
-/* pestañas: fila deslizable con botones tipo píldora de app */
-body[data-v=app] .tabs,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;margin:4px -16px 14px;padding:4px 16px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+body[data-v=app] :is(#lideres,#deptos,#escuela)>.wrap,body.pwa[data-v] :is(#lideres,#deptos,#escuela)>.wrap{max-width:640px;padding:0 16px}
+/* barra superior hero estilo App v2 (igual que Perfil e Inicio) */
+body[data-v=app] .apz-hero,body.pwa[data-v] .apz-hero{display:block;position:relative;overflow:hidden;background:linear-gradient(150deg,#0a1f66 0%,#1450c4 62%,#2f6bff 100%);color:#fff;padding:18px 20px 22px;margin:0 -16px 16px;border-radius:0 0 30px 30px;box-shadow:0 12px 28px rgba(10,31,102,.22);text-align:left}
+body[data-v=app] .apz-hero:before,body.pwa[data-v] .apz-hero:before{content:'';position:absolute;right:-55px;top:-55px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.24),transparent 68%);pointer-events:none}
+body[data-v=app] .apz-hero:after,body.pwa[data-v] .apz-hero:after{content:'';position:absolute;left:-40px;bottom:-75px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(245,197,66,.22),transparent 66%);pointer-events:none}
+body[data-v=app] .apz-hero>*,body.pwa[data-v] .apz-hero>*{position:relative;z-index:1}
+body[data-v=app] .apz-tag,body.pwa[data-v] .apz-tag{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(245,197,66,.18);color:#f5c542;border:1px solid rgba(245,197,66,.35);font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+body[data-v=app] .apz-hero h3,body.pwa[data-v] .apz-hero h3{margin:0 0 4px;color:#fff!important;font-size:1.38rem!important;font-weight:800;line-height:1.15;text-transform:none;letter-spacing:0}
+body[data-v=app] .apz-hero p,body.pwa[data-v] .apz-hero p{margin:0;color:rgba(255,255,255,.86);font-size:.88rem;line-height:1.35;max-width:none}
+/* oculta el título web y el encabezado "Bienvenido / Salir" web dentro de la app */
+body[data-v=app] :is(#lideres,#deptos,#escuela)>.wrap>h2,body[data-v=app] :is(#lideres,#deptos,#escuela)>.wrap>h2+p,body.pwa[data-v] :is(#lideres,#deptos,#escuela)>.wrap>h2,body.pwa[data-v] :is(#lideres,#deptos,#escuela)>.wrap>h2+p{display:none}
+body[data-v=app] #dash>.row:first-child{display:none!important}
+body[data-v=app] :is(#dpdash,#edash)>.row:first-child,body.pwa[data-v] :is(#dash,#dpdash,#edash)>.row:first-child{background:#fff;border:1px solid #dce4f5;border-radius:18px;padding:12px 14px;margin:0 0 14px;box-shadow:0 4px 12px rgba(10,31,102,.05);gap:10px}
+body[data-v=app] :is(#dpdash,#edash)>.row:first-child h3,body.pwa[data-v] :is(#dash,#dpdash,#edash)>.row:first-child h3{color:#0e1526;font-size:.98rem;font-weight:800;margin:0}
+body[data-v=app] :is(#dpout,#eout2),body.pwa[data-v] :is(#out,#dpout,#eout2){background:#e8efff;background-image:none;color:#1450c4;border:1px solid #d5e1fb;box-shadow:none;padding:7px 14px;font-size:.82rem;border-radius:999px}
+body[data-v=app] #eniv,body.pwa[data-v] #eniv{display:inline-block;background:#e8efff;color:#1450c4;border:1px solid #d5e1fb;padding:8px 14px;border-radius:999px;font-size:.86rem;font-weight:800;margin:0 0 12px}
+body[data-v=app] #dpname,body.pwa[data-v] #dpname{color:#0a1f66;font-size:1.12rem;font-weight:800;margin:12px 0 8px}
+/* oculta las pestañas web cuando entras a una zona específica desde el inicio de la app */
+body[data-v=app]:is([data-zone=t1],[data-zone=t2],[data-zone=t3],[data-zone=t9],[data-zone=t10],[data-zone=t11]) #lideres #dash>.tabs{display:none!important}
+body[data-v=app]:is([data-zone=t4],[data-zone=t5],[data-zone=t6],[data-zone=t7],[data-zone=t8]) #lideres #dash>.tabs :is([data-t=t1],[data-t=t2],[data-t=t3],[data-t=t9],[data-t=t10],[data-t=t11]){display:none!important}
+/* pestañas tipo control segmentado / píldoras app */
+body[data-v=app] .tabs,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;margin:2px -16px 14px;padding:2px 16px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+body[data-v=app] :is(#auth,#dpauth,#eauth) .tabs,body.pwa[data-v] :is(#auth,#dpauth,#eauth) .tabs{background:#dfe7f8;border-radius:999px;padding:4px;margin:0 0 14px;gap:4px}
+body[data-v=app] :is(#auth,#dpauth,#eauth) .tabs button,body.pwa[data-v] :is(#auth,#dpauth,#eauth) .tabs button{flex:1;text-align:center;border:0;background:transparent;box-shadow:none;color:#44506b;padding:10px 12px}
+body[data-v=app] :is(#auth,#dpauth,#eauth) .tabs button.on,body.pwa[data-v] :is(#auth,#dpauth,#eauth) .tabs button.on{background:#1450c4;color:#fff;box-shadow:0 4px 12px rgba(20,80,196,.28)}
 body[data-v=app] .tabs::-webkit-scrollbar,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .tabs::-webkit-scrollbar{display:none}
-body[data-v=app] .tabs button,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .tabs button{flex:none;white-space:nowrap;border-radius:999px;border:1px solid #dce4f5;background:#fff;color:#44506b;font-weight:700;padding:9px 16px;font-size:.88rem;box-shadow:0 2px 8px rgba(10,31,102,.05)}
+body[data-v=app] .tabs button,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .tabs button{flex:none;white-space:nowrap;border-radius:999px;border:1px solid #dce4f5;background:#fff;color:#44506b;font-weight:700;padding:9px 16px;font-size:.86rem;box-shadow:0 2px 8px rgba(10,31,102,.05)}
 body[data-v=app] .tabs button.on,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .tabs button.on{background:linear-gradient(135deg,#1450c4,#2f6bff);border-color:transparent;color:#fff;box-shadow:0 6px 16px rgba(20,80,196,.28)}
-/* tarjetas, formularios, pendientes y listas */
-body[data-v=app] form,body.pwa[data-v] form{background:#fff;border:1px solid #e3e8f4;border-radius:22px;padding:18px;box-shadow:0 6px 18px rgba(10,31,102,.06)}
-body[data-v=app] :is(#pend,#dppend,#epend),body.pwa[data-v] :is(#pend,#dppend,#epend){background:#fff;border:1px solid #e3e8f4;border-radius:22px;padding:22px 18px;box-shadow:0 6px 18px rgba(10,31,102,.06);margin-top:8px}
+/* encabezados de sección internos estilo app */
+body[data-v=app] :is(#lideres,#deptos,#escuela) :is(h2,h3,h4),body.pwa[data-v] :is(#lideres,#deptos,#escuela) :is(h2,h3,h4){text-transform:none;letter-spacing:0;color:#0e1526}
+body[data-v=app] .apz-sec,body.pwa[data-v] .apz-sec,body[data-v=app] #cdpw>h3,body.pwa[data-v] #cdpw>h3,body[data-v=app] #edash>h3,body.pwa[data-v] #edash>h3,body[data-v=app] #dpdash>h4,body.pwa[data-v] #dpdash>h4{display:block;font-size:.76rem!important;font-weight:800!important;letter-spacing:.12em!important;text-transform:uppercase!important;color:#1450c4!important;margin:18px 4px 10px!important}
+body[data-v=app] .apz-sec,body.pwa[data-v] .apz-sec{margin-top:4px!important}
+/* tarjetas app de Recursos, Casa de Paz y listas */
+body[data-v=app] :is(#resl,#cdpl),body.pwa[data-v] :is(#resl,#cdpl){display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:560px){body[data-v=app] :is(#resl,#cdpl),body.pwa[data-v] :is(#resl,#cdpl){grid-template-columns:repeat(2,minmax(0,1fr))}}
+body[data-v=app] :is(#resl,#cdpl) .pillar,body.pwa[data-v] :is(#resl,#cdpl) .pillar{position:relative;display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid #dce4f5;border-top:1px solid #dce4f5;border-radius:22px;padding:18px;box-shadow:0 6px 18px rgba(10,31,102,.06)}
+body[data-v=app] .ap-cico,body.pwa[data-v] .ap-cico{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:#e8efff;color:#1450c4;margin-bottom:4px}
+body[data-v=app] .ap-cico svg,body.pwa[data-v] .ap-cico svg{width:22px;height:22px}
+body[data-v=app] :is(#resl,#cdpl) .pillar h3,body.pwa[data-v] :is(#resl,#cdpl) .pillar h3{margin:0;font-size:1.05rem;font-weight:800;color:#0e1526;line-height:1.25}
+body[data-v=app] :is(#resl,#cdpl) .pillar p,body.pwa[data-v] :is(#resl,#cdpl) .pillar p{margin:0;color:#6b7690;font-size:.86rem;line-height:1.4}
+body[data-v=app] .ap-cact,body.pwa[data-v] .ap-cact{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+body[data-v=app] :is(#resl,#cdpl) .ap-cact a:not(.btn),body.pwa[data-v] :is(#resl,#cdpl) .ap-cact a:not(.btn){display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1450c4,#2f6bff);color:#fff!important;border-radius:999px;padding:10px 18px;font-weight:800;font-size:.86rem;text-decoration:none;box-shadow:0 6px 14px rgba(20,80,196,.24)}
+body[data-v=app] #tot,body.pwa[data-v] #tot{background:#e8efff;border:1px solid #cfe0ff;color:#0a1f66;border-radius:18px;padding:13px 16px;font-weight:700;font-size:.9rem;margin:0 0 12px}
+body[data-v=app] #rtot,body.pwa[data-v] #rtot{display:inline-block;background:#e8efff;color:#1450c4;border-radius:999px;padding:6px 14px;font-weight:800;font-size:.88rem}
+/* tarjetas, formularios, pendientes y entradas */
+body[data-v=app] form,body.pwa[data-v] form{background:#fff;border:1px solid #dce4f5;border-radius:22px;padding:18px;box-shadow:0 6px 18px rgba(10,31,102,.06);max-width:none}
+body[data-v=app] :is(#pend,#dppend,#epend),body.pwa[data-v] :is(#pend,#dppend,#epend){background:#fff;border:1px solid #dce4f5;border-radius:22px;padding:22px 18px;box-shadow:0 6px 18px rgba(10,31,102,.06);margin-top:8px}
 body[data-v=app] :is(#lideres,#deptos,#escuela) :is(input,select,textarea),body.pwa[data-v] :is(#lideres,#deptos,#escuela) :is(input,select,textarea){background:#f6f8fe;border:1px solid #dbe3f3;border-radius:14px;padding:13px 14px;font-size:16px;color:#0e1526}
 body[data-v=app] :is(#lideres,#deptos,#escuela) :is(input,select,textarea):focus,body.pwa[data-v] :is(#lideres,#deptos,#escuela) :is(input,select,textarea):focus{outline:0;border-color:#1450c4;box-shadow:0 0 0 3px rgba(20,80,196,.18)}
 body[data-v=app] :is(#lideres,#deptos,#escuela) :is(input[type=checkbox],input[type=radio]),body.pwa[data-v] :is(#lideres,#deptos,#escuela) :is(input[type=checkbox],input[type=radio]){accent-color:#1450c4}
-body[data-v=app] :is(#lideres,#deptos,#escuela) :is(.card,.pillar,.rlist li,.ay>div,.dpcw,.dpl li),body.pwa[data-v] :is(.card,.pillar,.rlist li,.ay>div,.dpcw,.dpl li,.sdcard){background:#fff;border-radius:20px;border:1px solid #e3e8f4;box-shadow:0 4px 14px rgba(10,31,102,.05)}
-body[data-v=app] :is(#lideres,#deptos,#escuela) .pillar,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .pillar{border-top:1px solid #e3e8f4}
-body[data-v=app] :is(#lideres,#deptos,#escuela) details,body.pwa[data-v] :is(#lideres,#deptos,#escuela) details{background:#fff;border:1px solid #e3e8f4;border-radius:18px;padding:14px 16px;margin-bottom:12px;box-shadow:0 3px 10px rgba(10,31,102,.04)}
+body[data-v=app] :is(#lideres,#deptos,#escuela) :is(.card,.pillar,.rlist li,.ay>div,.dpcw,.dpl li),body.pwa[data-v] :is(.card,.pillar,.rlist li,.ay>div,.dpcw,.dpl li,.sdcard){background:#fff;border-radius:20px;border:1px solid #dce4f5;box-shadow:0 4px 14px rgba(10,31,102,.05)}
+body[data-v=app] :is(#lideres,#deptos,#escuela) details,body.pwa[data-v] :is(#lideres,#deptos,#escuela) details{background:#fff;border:1px solid #dce4f5;border-radius:18px;padding:14px 16px;margin-bottom:12px;box-shadow:0 3px 10px rgba(10,31,102,.04)}
 body[data-v=app] :is(#lideres,#deptos,#escuela) details summary,body.pwa[data-v] :is(#lideres,#deptos,#escuela) details summary{font-weight:800;color:#0a1f66;cursor:pointer}
-body[data-v=app] :is(#lideres,#deptos,#escuela) .grid,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .grid{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
 body[data-v=app] :is(#lideres,#deptos,#escuela) .note,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .note{color:#6b7690}
 body[data-v=app] :is(#lideres,#deptos,#escuela) a:not(.btn),body.pwa[data-v] :is(#lideres,#deptos,#escuela) a:not(.btn){color:#1450c4}
-body[data-v=app] :is(#lideres,#deptos,#escuela) table,body.pwa[data-v] :is(#lideres,#deptos,#escuela) table{background:#fff;border-radius:14px;overflow:hidden;border:1px solid #e3e8f4}
+body[data-v=app] :is(#lideres,#deptos,#escuela) table,body.pwa[data-v] :is(#lideres,#deptos,#escuela) table{background:#fff;border-radius:16px;overflow:hidden;border:1px solid #dce4f5}
 /* calendario de departamentos */
 body[data-v=app] .dpgrid,body.pwa[data-v] .dpgrid{gap:6px;margin-top:12px}
-body[data-v=app] .dpcell,body.pwa[data-v] .dpcell{background:#fff;border:1px solid #e3e8f4;border-radius:14px;padding:8px 6px;box-shadow:0 2px 6px rgba(10,31,102,.04)}
-body[data-v=app] .dpcell.mine,body.pwa[data-v] .dpcell.mine{background:#e8efff;border-color:#1450c4}
-body[data-v=app] .dpcell.today,body.pwa[data-v] .dpcell.today{border-color:#f5c542;box-shadow:0 0 0 2px rgba(245,197,66,.35)}
-body[data-v=app] .dpbad,body.pwa[data-v] .dpbad{background:#1450c4;color:#fff;border-radius:999px}
-body[data-v=app] .dpchip,body.pwa[data-v] .dpchip{background:#e8efff;color:#0a1f66;border-radius:8px}
-body[data-v=app] .dpchip.me,body.pwa[data-v] .dpchip.me{background:#1450c4;color:#fff}
+body[data-v=app] .dpgrid div.sv,body.pwa[data-v] .dpgrid div.sv{background:#fff;border:1px solid #dce4f5;border-radius:14px;color:#0e1526;box-shadow:0 2px 6px rgba(10,31,102,.04)}
+body[data-v=app] .dpgrid div.mi,body.pwa[data-v] .dpgrid div.mi{background:linear-gradient(135deg,#1450c4,#2f6bff);border-color:transparent;color:#fff;box-shadow:0 4px 12px rgba(20,80,196,.28)}
+body[data-v=app] .dpbad,body.pwa[data-v] .dpbad{background:#e8efff;color:#1450c4;border-radius:999px}
+body[data-v=app] .dpbad.ok,body.pwa[data-v] .dpbad.ok{background:#d9f2e0;color:#14532d}
+body[data-v=app] .dpbad.no,body.pwa[data-v] .dpbad.no{background:#fde2e2;color:#7f1d1d}
+body[data-v=app] .dpbad.wa,body.pwa[data-v] .dpbad.wa{background:#fff1c9;color:#6b4e00}
+body[data-v=app] .dpchip,body.pwa[data-v] .dpchip{background:#e8efff;border-color:#d5e1fb;color:#0a1f66;border-radius:999px}
+body[data-v=app] .dpchip.me,body.pwa[data-v] .dpchip.me{background:#1450c4;border-color:#1450c4;color:#fff}
 /* botones (especificidad superior a las reglas de la web) */
-body[data-v=app] .btn,body.pwa[data-v] .btn,body[data-v=app] .btn:not(.alt):not(.gold):not(.ikdon):not(.sm.alt),body.pwa[data-v] .btn:not(.alt):not(.gold):not(.ikdon):not(.sm.alt){border:0;background:#1450c4;background-image:none;color:#fff;border-radius:999px;font-weight:800;padding:13px 20px;box-shadow:0 8px 18px rgba(20,80,196,.24)}
+body[data-v=app] .btn,body.pwa[data-v] .btn,body[data-v=app] .btn:not(.alt):not(.gold):not(.ikdon):not(.sm.alt),body.pwa[data-v] .btn:not(.alt):not(.gold):not(.ikdon):not(.sm.alt){border:0;background:linear-gradient(135deg,#1450c4,#2f6bff);background-color:#1450c4;color:#fff;border-radius:999px;font-weight:800;padding:13px 20px;box-shadow:0 8px 18px rgba(20,80,196,.24)}
 body[data-v=app] .btn.alt,body.pwa[data-v] .btn.alt,body[data-v=app] .btn.sm.alt,body.pwa[data-v] .btn.sm.alt{background:#e8efff;background-image:none;color:#1450c4;border:1px solid #d7e2fb;box-shadow:none}
 body[data-v=app] .btn.gold,body.pwa[data-v] .btn.gold{background:#f5c542;background-image:none;color:#0a1f66;border:0;box-shadow:0 8px 18px rgba(245,197,66,.26)}
-body[data-v=app] .btn.sm,body.pwa[data-v] .btn.sm{padding:9px 15px;font-size:.86rem}
+body[data-v=app] .btn.sm,body.pwa[data-v] .btn.sm{padding:9px 16px;font-size:.86rem;margin-left:0}
 /* modales con estilo de app */
-body[data-v=app] dialog,body.pwa[data-v] dialog,body[data-v=app] #sm .smb,body.pwa[data-v] #sm .smb{background:#fff;color:#0e1526;border:1px solid #e3e8f4;border-radius:24px;box-shadow:0 18px 44px rgba(10,31,102,.18)}
+body[data-v=app] dialog,body.pwa[data-v] dialog,body[data-v=app] #sm .smb,body.pwa[data-v] #sm .smb{background:#fff;color:#0e1526;border:1px solid #dce4f5;border-radius:24px;box-shadow:0 18px 44px rgba(10,31,102,.18)}
 /* si se abre una pantalla web dentro de la app instalada: barra superior con el estilo de la app */
-body.pwa[data-v=lideres] .apphome,body.pwa[data-v=departamentos] .apphome,body.pwa[data-v] .apphome{background:rgba(255,255,255,.96);color:#1450c4;border-bottom:1px solid #e3e8f4}
+body.pwa[data-v=lideres] .apphome,body.pwa[data-v=departamentos] .apphome,body.pwa[data-v] .apphome{background:rgba(255,255,255,.96);color:#1450c4;border-bottom:1px solid #dce4f5}
 body.pwa[data-v] header{background:rgba(255,255,255,.96)}
 </style>
 </body>
