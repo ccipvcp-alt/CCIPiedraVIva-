@@ -636,7 +636,7 @@ var esc=window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matche
 if(!st&&esc&&q.get('v')==='app'&&q.get('app')!=='1'){location.replace('?v=lideres')}
 document.addEventListener('DOMContentLoaded',function(){var ai=document.querySelector('link[rel=apple-touch-icon]');if(ai)ai.href='apple-touch-icon.png'});
 if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}catch(e){}})();</script>
-<script>try{if(new URLSearchParams(location.search).get("v")==="app")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
+<script>try{var _q=new URLSearchParams(location.search),_st=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;if(_q.get("v")==="app"||_st){document.documentElement.setAttribute("data-theme","light");var _tc=document.querySelector('meta[name="theme-color"]');if(_tc)_tc.setAttribute("content","#ffffff")}}catch(e){}</script>
 </head>
 <body>
 <script>(function(){try{var v=new URLSearchParams(location.search).get('v');if(['escuela','lideres','sedes','iglekids','ikreg','evento','miembros','contacto','clinica','testimonio','apostoles','departamentos','app'].indexOf(v)<0)return;document.body.setAttribute('data-v',v);try{var q=new URLSearchParams(location.search),st=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;if(v==='app'||q.get('app')==='1'||st)document.body.classList.add('pwa');}catch(x){}if(v==='evento'&&new URLSearchParams(location.search).get('f'))document.body.setAttribute('data-f','1');document.title=({escuela:'Escuela de formación',lideres:'Líderes',sedes:'Nuestras sedes',iglekids:'IGLEKIDS',ikreg:'Inscripción IGLEKIDS',evento:'Inscripción a evento',miembros:'Registro de miembros',contacto:'¿Cómo podemos ayudarte?',clinica:'Clínica del Alma',testimonio:'Testimonio',apostoles:'Nuestros apóstoles',departamentos:'Departamentos',app:'Equipo CCI Piedra Viva'})[v]+' · CCI Piedra Viva';
@@ -769,6 +769,7 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <!-- ESCUELA DE FORMACIÓN -->
 <section id="escuela">
 <div class="wrap">
+<div class="apz-hero"><span class="apz-tag">Formación</span><h3>Escuela de formación</h3><p>Material de apoyo según tu nivel</p></div>
 <h2>Escuela de formación</h2>
 <p>Dios no te trajo a este mundo por error: tienes un propósito. Inscríbete en nuestras escuelas de formación (Miembros, Discípulos, Líderes, Mentores, Diáconos, Ancianos y Ministros) y recibe el material de apoyo de acuerdo al nivel que estás cursando.</p>
 <div id="eauth">
@@ -787,6 +788,8 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <label>Me inscribo como<select id="esT" required><option value="alumno">Alumno</option><option value="maestro">Maestro</option></select></label>
 <label>Escuela / nivel (si eres maestro, el nivel que enseñas)<select id="esv" required><option value="">Elige tu escuela</option><option>Miembros</option><option>Discípulos</option><option>Líderes</option><option>Mentores</option><option>Diáconos</option><option>Ancianos</option><option>Ministros</option></select></label>
 <label>Cédula de tu líder o mentor (quien te discipula, si aplica)<input id="esl" inputmode="numeric" pattern="[0-9.\\-]{5,12}" title="Solo números"></label>
+<label>¿Quieres servir en un departamento? (opcional)<select id="esdp"><option value="">No por ahora</option></select></label>
+<p class="note">Si eliges uno, el coordinador de ese departamento revisará tu postulación.</p>
 <label>Correo electrónico (será tu usuario)<input id="ese" type="email" required autocomplete="email"></label>
 <label>Contraseña (mínimo 6 caracteres)<input id="esp" type="password" minlength="6" required autocomplete="new-password"></label>
 <button class="btn" type="submit">Inscribirme</button>
@@ -803,6 +806,8 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <label>Me inscribo como<select id="fT" required><option value="alumno">Alumno</option><option value="maestro">Maestro</option></select></label>
 <label>Escuela / nivel (si eres maestro, el nivel que enseñas)<select id="fnv" required><option value="">Elige tu escuela</option><option>Miembros</option><option>Discípulos</option><option>Líderes</option><option>Mentores</option><option>Diáconos</option><option>Ancianos</option><option>Ministros</option></select></label>
 <label>Cédula de tu líder o mentor (quien te discipula, si aplica)<input id="fl2" inputmode="numeric" pattern="[0-9.\\-]{5,12}" title="Solo números"></label>
+<label>¿Quieres servir en un departamento? (opcional)<select id="fdp"><option value="">No por ahora</option></select></label>
+<p class="note">Si eliges uno, el coordinador de ese departamento revisará tu postulación.</p>
 <button class="btn" type="submit">Enviar inscripción</button>
 <button class="btn alt" type="button" id="eout0">Salir</button>
 <p class="note" id="efmsg" role="status"></p>
@@ -810,11 +815,12 @@ var l=document.querySelector('header .logo');if(l)l.setAttribute('href','./')})}
 <div id="epend" hidden>
 <h3 id="ept">Tu inscripción está pendiente</h3>
 <p>La dirección de la iglesia revisará tu inscripción. Cuando sea aprobada podrás ver el material de tu escuela.</p>
-<button class="btn alt" type="button" id="eout1">Salir</button>
+<button class="btn alt gopost" type="button">Postularme a un departamento</button> <button class="btn alt" type="button" id="eout1">Salir</button>
 </div>
 <div id="edash" hidden>
 <div class="row" style="justify-content:space-between;align-items:center;margin-top:0"><h3 id="ehi" style="margin:0"></h3><button class="btn alt" id="eout2" type="button">Salir</button></div>
 <p id="eniv" style="font-weight:700"></p>
+<p style="margin:0 0 10px"><button class="btn alt gopost" type="button">Postularme a un departamento</button></p>
 <div id="emae" hidden><h3>Mis alumnos: notas e inasistencias</h3><p class="note">Alumnos aprobados de tu sede y de tu nivel. Notas del 0 al 20 por módulo.</p><ul class="rlist" id="emal"></ul><p class="note" id="emam" role="status"></p></div>
 <h3>Material de apoyo</h3>
 <ul class="rlist" id="emat"></ul>
@@ -894,6 +900,7 @@ var ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='Ma
 if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <section id="deptos">
 <div class="wrap">
+<div class="apz-hero"><span class="apz-tag">Servicio</span><h3>Mi departamento</h3><p>Calendario de guardias, notificaciones y recursos</p></div>
 <h2>Departamentos de la iglesia</h2>
 <p>Espacio de trabajo para los equipos de servicio: IBLT, Protocolo, Seguridad, Audiovisual, Logística, Gastronomía y los que se vayan creando. Cada equipo tiene su propio acceso.</p>
 <div id="dpauth">
@@ -918,6 +925,16 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <div id="dppend" hidden>
 <h3 id="dppt">Tu registro está pendiente</h3>
 <p id="dppp">Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar al espacio de tu departamento.</p>
+<div id="dppost" hidden>
+<p style="margin-top:16px">¿Quieres servir en un departamento? Elige a cuál deseas unirte y el coordinador evaluará tu solicitud.</p>
+<form id="dppostf" style="max-width:420px">
+<label>Tu nombre<input id="dppostn" required maxlength="80" autocomplete="name"></label>
+<label>Departamento<select id="dpposts" required><option value="">Elige un departamento</option></select></label>
+<label>Teléfono (opcional)<input id="dppostt" type="tel" autocomplete="tel" maxlength="20"></label>
+<button class="btn" type="submit">Postularme</button>
+<p class="note" id="dppostm" role="status"></p>
+</form>
+</div>
 <button class="btn alt" type="button" id="dppo">Salir</button>
 </div>
 <div id="dpdash" hidden>
@@ -981,6 +998,10 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <h4>Avisos del departamento</h4>
 <form id="dpaf" style="max-width:640px"><label>Nuevo aviso<textarea id="dpat" rows="3" maxlength="1500" required placeholder="Escribe un aviso para tu equipo"></textarea></label><button class="btn" type="submit">Publicar aviso</button></form>
 <ul class="dpl" id="dpavl"></ul>
+<div id="dpsol" hidden>
+<h4>Solicitudes pendientes</h4>
+<ul class="dpl" id="dpsoll"></ul>
+</div>
 <h4>Integrantes</h4>
 <ul class="dpl" id="dpmem"></ul>
 </div>
@@ -988,6 +1009,7 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 </section>
 <section id="lideres" style="background:var(--soft)">
 <div class="wrap">
+<div class="apz-hero" id="apz-lid"><span class="apz-tag">Equipo CCI Piedra Viva</span><h3 id="apz-lid-t">Recursos y Casa de Paz</h3><p id="apz-lid-s">Material de apoyo y temas de la semana</p></div>
 <h2>Acceso para líderes</h2>
 <p>Espacio para los líderes de la estructura: recursos de apoyo y reportes de nuevos creyentes, casas de paz, evangelismo y ayudas sociales.</p>
 <p class="note" id="offline" hidden>El inicio de sesión se activa cuando la página está publicada en su dirección web.</p>
@@ -1005,6 +1027,8 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <label>Sede<select id="ss" required><option value="">Elige tu sede</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label>
 <label>Cargo en la iglesia<select id="sc" required><option value="">Elige tu cargo</option><option>Apóstol</option><option>Pastor</option><option>Ministro</option><option>Anciano</option><option>Diácono</option><option>Mentor</option><option>Líder</option><option>Sub líder</option><option>Discípulo</option><option>Miembro</option></select></label>
 <label>Teléfono<input id="st" type="tel" required autocomplete="tel"></label>
+<label>¿Quieres servir en un departamento? (opcional)<select id="sdp"><option value="">No por ahora</option></select></label>
+<p class="note">Si eliges uno, el coordinador de ese departamento revisará tu postulación.</p>
 <label>Correo electrónico (será tu usuario)<input id="se" type="email" required autocomplete="email"></label>
 <label>Contraseña (mínimo 6 caracteres)<input id="sp" type="password" minlength="6" required autocomplete="new-password"></label>
 <button class="btn" type="submit">Crear cuenta</button>
@@ -1016,14 +1040,15 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <div id="pend" hidden>
 <h3 id="pt">Tu registro está pendiente</h3>
 <p id="pp">Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar y ver los recursos y enviar reportes.</p>
-<button class="btn alt" type="button" id="pout">Salir</button>
+<button class="btn alt gopost" type="button">Postularme a un departamento</button> <button class="btn alt" type="button" id="pout">Salir</button>
 </div>
 
 <div id="dash" hidden>
 <div class="row" style="justify-content:space-between;align-items:center;margin-top:0"><h3 id="hi" style="margin:0"></h3><button class="btn alt" id="out" type="button">Salir</button></div>
+<p style="margin:10px 0 0"><button class="btn alt gopost" type="button">Postularme a un departamento</button></p>
 <div class="tabs" data-all="t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11"><button type="button" data-t="t1" class="on" data-load="res">Recursos</button><button type="button" data-t="t2">Reportar</button><button type="button" data-t="t3" data-load="mine">Mis reportes</button><button type="button" data-t="t4" data-load="adm" id="tabAdmin" hidden>Panel de pastores</button><button type="button" data-t="t5" data-load="adm" id="tabAn" hidden>Anuncios</button><button type="button" data-t="t6" data-load="esc" id="tabEsc" hidden>ESCUELA</button><button type="button" data-t="t7" data-load="ik" id="tabIk" hidden>IGLEKIDS</button><button type="button" data-t="t8" data-load="ev" id="tabEv" hidden>EVENTOS</button><button type="button" data-t="t9" data-load="dp" id="tabDp" hidden>DEPARTAMENTOS</button><button type="button" data-t="t10" data-load="sd" id="tabSd" hidden>SEDES</button><button type="button" data-t="t11" data-load="acc" id="tabAcc" hidden>ACCESOS</button></div>
 
-<div id="t1" class="tab"><div class="grid" id="resl"></div>
+<div id="t1" class="tab"><h3 class="apz-sec">Recursos de apoyo</h3><div class="grid" id="resl"></div>
 <div id="cdpw" style="margin-top:28px"><h3>Temas de Casa de Paz</h3>
 <div class="grid" id="cdpl"></div>
 <form id="cdpf" hidden style="margin-top:20px;max-width:640px"><h3>Publicar tema de Casa de Paz</h3>
@@ -1407,8 +1432,8 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <a href="https://www.instagram.com/ccipiedraviva" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
 <a href="https://youtube.com/@ccipiedravivaoficial" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg></a>
 <a href="https://www.tiktok.com/@cci.piedraviva.oficial" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+<a href="https://wa.me/584149442672" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M12.03 2a9.97 9.97 0 0 0-8.61 15l-1.4 5.13 5.26-1.38A9.97 9.97 0 1 0 12.03 2zm5.47 12.3-.1-.1c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.5z"/></svg></a>
 <a href="mailto:CCIPIDRAVIVA@gmail.com" aria-label="Correo" title="Correo"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="5" width="18.4" height="14" rx="2.6"/><path d="m3.6 7.2 8.4 6.1 8.4-6.1"/></svg></a>
-<a href="https://wa.me/584149442672" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg></a>
 </div>
 <form id="fbol" style="padding:0;border:0;background:none">
 <label>Anuncios semanales<input name="email" type="email" required maxlength="100" placeholder="tu@correo.com"></label>
@@ -1487,11 +1512,15 @@ const msg=t=>{$('amsg').textContent=t};
 let A,S,auth,db,me=null,busy=false;
 const loaders={};
 
+const AP_TABS={t1:'Recursos y Casa de Paz',t2:'Hacer un reporte',t3:'Mis reportes',t4:'Panel de pastores',t5:'Anuncios',t6:'Escuela',t7:'IGLEKIDS',t8:'Eventos',t9:'Departamentos',t10:'Sedes',t11:'Accesos'};
+const AP_SUB={t1:'Material de apoyo y temas de la semana',t2:'Casa de paz, nuevos creyentes, evangelismo o ayuda social',t3:'Historial de reportes enviados',t4:'Solicitudes, aportes, miembros y eventos',t5:'Avisos y transmisiones de la iglesia',t6:'Inscripciones y material de la escuela',t7:'Contenido, inscritos y supervisión',t8:'Inscripciones a eventos',t9:'Equipos de servicio, avisos y recursos',t10:'Foto, dirección y horarios de cada sede',t11:'Permisos visibles por cada cargo'};
+function apSetZoneMeta(t){const tt=$('aptt'),zt=$('apz-lid-t'),zs=$('apz-lid-s');const nom=AP_TABS[t]||'Líderes';if(tt)tt.textContent=nom;if(zt)zt.textContent=nom;if(zs)zs.textContent=AP_SUB[t]||'';document.body.setAttribute('data-zone',t||'')}
 document.querySelectorAll('.tabs').forEach(g=>{
  const ids=g.dataset.all.split(',');
  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
   g.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
   ids.forEach(i=>{$(i).hidden=(i!==b.dataset.t)});
+  if(document.body.getAttribute('data-ap')==='lid'&&g.closest('#lideres')){apSetZoneMeta(b.dataset.t)}
   if(b.dataset.load&&loaders[b.dataset.load])loaders[b.dataset.load]();
  }));
 });
@@ -1558,6 +1587,8 @@ async function enter(u){
  if(!accOk(me,'recursos')){const f=[...document.querySelectorAll('#lideres .tabs button')].find(b=>!b.hidden);if(f)f.click()}else loaders.res();
 }
 A.onAuthStateChanged(auth,u=>{if(!busy){enter(u);escEnter(u);dpEnter(u);apEnter(u)}});
+// En la web, re-ejecutar dpEnter cuando el usuario llegue con scroll a #deptos
+(()=>{const el=$('deptos');if(!el||!window.IntersectionObserver)return;let last=null;new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&auth.currentUser&&auth.currentUser!==last){last=auth.currentUser;dpEnter(auth.currentUser)}},{threshold:0.05}).observe(el)})();
 
 $('fl').addEventListener('submit',async e=>{
  e.preventDefault();msg('');
@@ -1572,6 +1603,7 @@ $('fs').addEventListener('submit',async e=>{
  try{
   const c=await A.createUserWithEmailAndPassword(auth,$('se').value.trim(),$('sp').value);
   await S.setDoc(S.doc(db,'users',c.user.uid),{nombre:$('sn').value.trim(),sede:$('ss').value,cargo:$('sc').value.trim(),telefono:$('st').value.trim(),email:$('se').value.trim(),estado:'pendiente',rol:'lider',creado:S.serverTimestamp()});
+  await dpPostular(c.user,$('sn').value.trim(),$('st').value.trim(),$('sdp').value);
   busy=false;$('fs').reset();await enter(c.user);
  }catch(x){busy=false;msg(er(x))}
 });
@@ -1583,20 +1615,52 @@ const dpMsg=t=>{$('dpmsg').textContent=t||''};
 const dpView=v=>{['dpauth','dppend','dpdash'].forEach(i=>{$(i).hidden=i!==v})};
 async function dpDeps(){DPL=[];try{const q=await S.getDocs(S.collection(db,'departamentos'));q.forEach(d=>DPL.push(Object.assign({id:d.id},d.data())))}catch(e){}DPL.sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||'','es'));return DPL}
 const dpNom=id=>{const d=DPL.find(x=>x.id===id);return d?d.nombre:'(departamento eliminado)'};
+async function dpPostular(u,nom,tel,did){
+ if(!u||!did)return;
+ try{
+  const d0=await S.getDoc(S.doc(db,'deptos_usuarios',u.uid));if(d0.exists())return;
+  if(!DPL.length)await dpDeps();
+  await S.setDoc(S.doc(db,'deptos_usuarios',u.uid),{nombre:nom,deptoId:did,deptoNombre:dpNom(did),telefono:tel||'',email:u.email||'',estado:'pendiente',rol:'miembro',creado:S.serverTimestamp()});
+ }catch(e){}
+}
+function dpFillRegs(){['sdp','esdp','fdp'].forEach(id=>{const s=$(id);if(!s)return;s.textContent='';const o=document.createElement('option');o.value='';o.textContent='No por ahora';s.appendChild(o);DPL.filter(d=>d.activo!==false).forEach(d=>{const x=document.createElement('option');x.value=d.id;x.textContent=d.nombre;s.appendChild(x)})})}
+dpDeps().then(dpFillRegs);
 function dpOpts(sel,soloActivos,v){sel.textContent='';DPL.filter(d=>!soloActivos||d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre+(d.activo===false?' (inactivo)':'');sel.appendChild(o)});if(v)sel.value=v}
 async function dpEnter(u){
- {const m0=document.body.getAttribute('data-v');if(m0!=='departamentos'&&m0!=='app')return}
+ {const m0=document.body.getAttribute('data-v');if(m0!=='departamentos'&&m0!=='app'&&m0!=='lideres')return}
+ // En modo lideres solo procesar si el #deptos está visible en pantalla
+ if(document.body.getAttribute('data-v')==='lideres'){
+  const dp=$('deptos'),r=dp&&dp.getBoundingClientRect();if(!r||r.bottom<=0||r.top>=window.innerHeight)return
+ }
  await dpDeps();
  const rs=$('dpsd');rs.textContent='';const o0=document.createElement('option');o0.value='';o0.textContent='Elige tu departamento';rs.appendChild(o0);DPL.filter(d=>d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre;rs.appendChild(o)});
  if(!u){DPU=null;DPADM=false;dpView('dpauth');return}
  DPU=null;DPADM=false;
  try{const d=await S.getDoc(S.doc(db,'deptos_usuarios',u.uid));if(d.exists())DPU=Object.assign({uid:u.uid},d.data())}catch(e){}
  if(!DPU){
-  try{const a=await S.getDoc(S.doc(db,'users',u.uid));DPADM=a.exists()&&a.data().rol==='admin'}catch(e){}
-  if(!DPADM){$('dppt').textContent='Esta cuenta no está registrada en Departamentos';$('dppp').textContent='Usa la pestaña «Registrarme» con otro correo, o entra con la cuenta de tu departamento.';dpView('dppend');return}
+  let usrData=null;try{const a=await S.getDoc(S.doc(db,'users',u.uid));if(a.exists())usrData=a.data();DPADM=!!(usrData&&usrData.rol==='admin')}catch(e){}
+  if(!DPADM){
+   // Cualquier cuenta registrada (líder, miembro, discípulo, escuela…) puede postularse
+   let estData=null;if(!usrData){try{const e0=await S.getDoc(S.doc(db,'estudiantes',u.uid));if(e0.exists())estData=e0.data()}catch(e){}}
+   const pfd=usrData||estData||{};
+   $('dppt').textContent='Todavía no estás en ningún departamento';
+   $('dppp').textContent='';
+   $('dppost').hidden=false;
+   $('dppostn').value=pfd.nombre||u.displayName||'';
+   $('dppostt').value=pfd.telefono||'';
+   {const sel=$('dpposts');sel.textContent='';const o0=document.createElement('option');o0.value='';o0.textContent='Elige un departamento';sel.appendChild(o0);
+    DPL.filter(d=>d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre;sel.appendChild(o)})}
+   dpView('dppend');return;
+  }
  }else if(DPU.estado!=='aprobado'){
-  $('dppt').textContent=DPU.estado==='rechazado'?'Tu solicitud no fue aprobada':'Tu registro está pendiente';
-  $('dppp').textContent='Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar al espacio de tu departamento.';
+  $('dppt').textContent=DPU.estado==='rechazado'?'Tu solicitud no fue aprobada':'Tu postulación está pendiente';
+  $('dppp').textContent=DPU.estado==='rechazado'?'Tu solicitud no fue aprobada. Puedes postularte a otro departamento si deseas.':'Tu postulación a «'+(DPU.deptoNombre||'un departamento')+'» está pendiente. El coordinador revisará tu solicitud.';
+  $('dppost').hidden=DPU.estado!=='rechazado';
+  if(DPU.estado==='rechazado'){
+   const sel=$('dpposts');sel.textContent='';const o0=document.createElement('option');o0.value='';o0.textContent='Elige un departamento';sel.appendChild(o0);
+   DPL.filter(d=>d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre;sel.appendChild(o)});
+   const nf=$('dppostn');if(DPU.nombre)nf.value=DPU.nombre;const tf=$('dppostt');if(DPU.telefono)tf.value=DPU.telefono;
+  }
   dpView('dppend');return;
  }
  $('dphi').textContent='Bienvenido, '+(DPU?DPU.nombre:'administrador');
@@ -1606,7 +1670,8 @@ async function dpEnter(u){
 }
 const dpCur=()=>DPADM?$('dpsel').value:(DPU&&DPU.deptoId);
 async function dpPanel(){
- const id=dpCur(),av=$('dpavl'),mm=$('dpmem');av.textContent='';mm.textContent='';
+ const id=dpCur(),av=$('dpavl'),mm=$('dpmem'),sw=$('dpsol'),sl=$('dpsoll'),puedeSol=!!(id&&(DPADM||(DPU&&DPU.rol==='coordinador'&&DPU.deptoId===id)));
+ av.textContent='';mm.textContent='';sl.textContent='';sw.hidden=!puedeSol;
  $('dpname').textContent=id?dpNom(id):'Aún no hay departamentos creados';
  $('dpaf').hidden=!id;if(!id){DPMEMS=[];TURNO=null;return}
  try{
@@ -1618,17 +1683,40 @@ async function dpPanel(){
    av.appendChild(li)});
  }catch(e){const li=document.createElement('li');li.textContent='No se pudieron cargar los avisos.';av.appendChild(li)}
  try{
-  const q=await S.getDocs(S.query(S.collection(db,'deptos_usuarios'),S.where('deptoId','==',id),S.where('estado','==','aprobado')));const L=[];q.forEach(d=>L.push(Object.assign({uid:d.id},d.data())));
+  const q=await S.getDocs(puedeSol?S.query(S.collection(db,'deptos_usuarios'),S.where('deptoId','==',id)):S.query(S.collection(db,'deptos_usuarios'),S.where('deptoId','==',id),S.where('estado','==','aprobado')));
+  const L=[],P=[];q.forEach(d=>{const x=Object.assign({uid:d.id},d.data());if(x.estado==='aprobado')L.push(x);else if(x.estado==='pendiente'||x.estado==='rechazado')P.push(x)});
   L.sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||'','es'));DPMEMS=L;
   if(!L.length){const li=document.createElement('li');li.textContent='Aún no hay integrantes aprobados.';mm.appendChild(li)}
   L.forEach(x=>{const li=document.createElement('li');li.textContent=x.nombre+(x.rol==='coordinador'?' · Coordinador':'')+(x.telefono?' · '+x.telefono:'');mm.appendChild(li)});
- }catch(e){}
+  if(puedeSol){
+   const ord={pendiente:0,rechazado:1};P.sort((a,b)=>(ord[a.estado]-ord[b.estado])||(a.nombre||'').localeCompare(b.nombre||'','es'));
+   if(!P.length){const li=document.createElement('li');li.textContent='No hay solicitudes pendientes en tu departamento.';sl.appendChild(li)}
+   P.forEach(x=>{
+    const li=document.createElement('li'),t=document.createElement('div'),b=document.createElement('div');b.className='dpb';
+    const bd=document.createElement('span');bd.className='dpbad '+(x.estado==='rechazado'?'no':'wa');bd.textContent=x.estado==='rechazado'?'Rechazado':'Pendiente';
+    const st=document.createElement('strong');st.textContent=x.nombre;t.append(st,document.createTextNode(' · '+(x.email||'')+(x.telefono?' · '+x.telefono:'')+' · '),bd);
+    const mk=(txt,est,alt)=>{const k=document.createElement('button');k.type='button';k.className='btn sm'+(alt?' alt':'');k.textContent=txt;
+     k.onclick=async()=>{try{await S.updateDoc(S.doc(db,'deptos_usuarios',x.uid),{estado:est});await dpPanel()}catch(e){alert(e&&e.code==='permission-denied'?'Falta publicar las reglas nuevas de Firestore para aprobar miembros desde aquí.':er(e))}};b.appendChild(k)};
+    mk('Aprobar','aprobado',false);if(x.estado==='pendiente')mk('Rechazar','rechazado',true);
+    li.append(t,b);sl.appendChild(li);
+   });
+  }
+ }catch(e){if(puedeSol){const li=document.createElement('li');li.textContent='No se pudieron cargar las solicitudes. ¿Publicaste las reglas nuevas de Firestore?';sl.appendChild(li)}}
  if(!$('dpmes').value){const n=new Date();$('dpmes').value=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')}
  await dpTurnoLoad();dpDraw();iknCargar();dpAvisosCargar();
 }
 $('dpsel').addEventListener('change',dpPanel);
 $('dpaf').addEventListener('submit',async e=>{e.preventDefault();const id=dpCur(),t=$('dpat').value.trim();if(!id||!t)return;
  try{await S.addDoc(S.collection(db,'deptos_avisos'),{deptoId:id,texto:t,autor:DPU?DPU.nombre:'Administración',uid:auth.currentUser.uid,creado:S.serverTimestamp()});$('dpat').value='';dpPanel()}catch(x){alert(er(x))}});
+$('dppostf').addEventListener('submit',async e=>{e.preventDefault();const u=auth.currentUser;if(!u)return;
+ const did=$('dpposts').value,nom=$('dppostn').value.trim(),tel=$('dppostt').value.trim();
+ const pm=$('dppostm');pm.textContent='';
+ if(!did){pm.textContent='Elige un departamento.';return}
+ if(!nom){pm.textContent='Escribe tu nombre.';return}
+ try{
+  await S.setDoc(S.doc(db,'deptos_usuarios',u.uid),{nombre:nom,deptoId:did,deptoNombre:dpNom(did),telefono:tel,email:u.email||'',estado:'pendiente',rol:'miembro',creado:S.serverTimestamp()});
+  await dpEnter(u);if(typeof apEnter==='function'&&AP&&AP.u)await apEnter(AP.u);
+ }catch(x){pm.textContent=x&&x.code==='permission-denied'?'Falta publicar las reglas nuevas de Firestore.':er(x)}});
 $('dpfl').addEventListener('submit',async e=>{e.preventDefault();dpMsg('');try{await A.signInWithEmailAndPassword(auth,$('dple').value.trim(),$('dplp').value);$('dplp').value=''}catch(x){dpMsg(er(x))}});
 $('dpfg').addEventListener('click',async()=>{const m=$('dple').value.trim();if(!m){dpMsg('Escribe tu correo arriba y vuelve a tocar el botón.');return}try{await A.sendPasswordResetEmail(auth,m);dpMsg('Te enviamos un enlace para crear una contraseña nueva. Revisa tu correo.')}catch(x){dpMsg(er(x))}});
 $('dpfs').addEventListener('submit',async e=>{e.preventDefault();dpMsg('');busy=true;
@@ -1638,6 +1726,7 @@ $('dpfs').addEventListener('submit',async e=>{e.preventDefault();dpMsg('');busy=
   await S.setDoc(S.doc(db,'deptos_usuarios',c.user.uid),{nombre:$('dpsn').value.trim(),deptoId:did,deptoNombre:dpNom(did),telefono:$('dpst').value.trim(),email:$('dpse').value.trim(),estado:'pendiente',rol:'miembro',creado:S.serverTimestamp()});
   busy=false;$('dpfs').reset();await dpEnter(c.user);
  }catch(x){busy=false;dpMsg(x&&x.message&&!x.code?x.message:er(x))}});
+document.querySelectorAll('.gopost').forEach(b=>b.addEventListener('click',()=>{if(apInApp())apGo('dep');else location.href='?v=departamentos'}));
 $('dppo').addEventListener('click',()=>A.signOut(auth));$('dpout').addEventListener('click',()=>A.signOut(auth));
 
 /* ===== CALENDARIO DE GUARDIAS ===== */
@@ -1983,7 +2072,7 @@ async function ikSup(){
   tx.className='dpav';tx.textContent=x.texto;m.textContent='Registrado por '+(x.autor||'');li.append(t,tx,m);
   if(x.comentarioAdmin){const c=document.createElement('div');c.className='dpav';c.style.cssText='border-left:3px solid var(--brand);padding-left:10px';c.textContent='Tu comentario: '+x.comentarioAdmin;li.appendChild(c)}
   const b=document.createElement('button');b.type='button';b.className='btn alt sm';b.textContent=x.comentarioAdmin?'Editar comentario':'Comentar al maestro';b.onclick=()=>ikComentar(x,ikSup);li.appendChild(b);ul.appendChild(li)});
- const a=document.createElement('a');a.className='btn alt sm';a.href='?v=departamentos';a.textContent='Abrir el espacio completo de maestros';a.style.marginLeft='0';B.appendChild(a);
+ const a=document.createElement('a');a.className='btn alt sm';a.href='?v=departamentos';if(apInApp()){a.href='#';a.onclick=e=>{e.preventDefault();apGo('dep')}}a.textContent='Abrir el espacio completo de maestros';a.style.marginLeft='0';B.appendChild(a);
  add('Para enviar un aviso o material a los maestros: pestaña DEPARTAMENTOS, destino IGLEKIDS.');
 }
 
@@ -1998,12 +2087,12 @@ async function cdpLoad(){
   r.sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')||(((b.creado&&b.creado.seconds)||0)-((a.creado&&a.creado.seconds)||0)));
   if(!r.length)L.appendChild(el('p','Todavía no hay temas de Casa de Paz publicados.'));
   r.forEach(x=>{
-   const c=el('div',null,'pillar');c.appendChild(el('h3',x.titulo));
+   const c=el('div',null,'pillar');const ic=document.createElement('div');ic.className='ap-cico';ic.innerHTML=svg('home');c.appendChild(ic);c.appendChild(el('h3',x.titulo));
    c.appendChild(el('p',(x.fecha?dpFTxt(x.fecha):'')+' · '+x.n+(x.n===1?' imagen':' imágenes')));
    if(x.nota)c.appendChild(el('p',x.nota));
-   const v=el('button','Ver tema','btn sm');v.type='button';v.onclick=()=>cdpVer(x);c.appendChild(v);
-   if(me&&(me.rol==='admin'||(cdPuede()&&auth.currentUser&&x.autorUid===auth.currentUser.uid))){const b=el('button','Eliminar','btn alt sm');b.type='button';b.onclick=()=>cdpDel(x);c.appendChild(b)}
-   L.appendChild(c)});
+   const act=el('div',null,'ap-cact');const v=el('button','Ver tema','btn sm');v.type='button';v.onclick=()=>cdpVer(x);act.appendChild(v);
+   if(me&&(me.rol==='admin'||(cdPuede()&&auth.currentUser&&x.autorUid===auth.currentUser.uid))){const b=el('button','Eliminar','btn alt sm');b.type='button';b.onclick=()=>cdpDel(x);act.appendChild(b)}
+   c.appendChild(act);L.appendChild(c)});
  }catch(e){L.appendChild(el('p',er(e)))}
  if(me&&me.rol==='admin')cdpPerm();
 }
@@ -2114,6 +2203,7 @@ function apNav(v){
 }
 function apGo(v){
  document.body.setAttribute('data-ap',v);
+ if(v!=='lid')document.body.removeAttribute('data-zone');
  if(v!=='chat'){if(CHT.cur)chClose()}
  if(AP.u&&v!=='login')document.body.setAttribute('data-nav','1');else document.body.removeAttribute('data-nav');
  $('apmy').style.visibility=(AP.u&&v!=='perfil')?'visible':'hidden';
@@ -2121,9 +2211,10 @@ function apGo(v){
  $('aptt').textContent=({login:'Equipo Piedra Viva',home:'CCI Piedra Viva',lid:'Líderes',dep:'Mi departamento',est:'Escuela de formación',chat:'Mensajes',perfil:'Mi perfil'})[v]||'';
  if(v==='perfil')pfPaint();
  if(v==='chat'){CHT.cur?0:chShowList();chRender()}
+ if(v==='dep'&&AP.u)dpEnter(AP.u);
  apNav(v);window.scrollTo(0,0);
 }
-function apTab(t){apGo('lid');const b=document.querySelector('#lideres .tabs [data-t='+t+']');if(b&&!b.hidden)b.click()}
+function apTab(t){apGo('lid');apSetZoneMeta(t);const b=document.querySelector('#lideres .tabs [data-t='+t+']');if(b&&!b.hidden){b.click()}else{apSetZoneMeta(t)}}
 
 /* --- perfil (foto) --- */
 async function pfSync(u,a,b,c){
@@ -2282,11 +2373,13 @@ async function apEnter(u){
   if(adm)tile('key','Accesos por cargo','Qué ve cada líder, mentor, diácono…',()=>apTab('t11'));
  }
  if(AP.r.dep){tile('users','Mi departamento'+(b&&b.deptoNombre?' · '+b.deptoNombre:''),'Calendario de guardias, avisos y material',()=>apGo('dep'),cta?'':'dest');if(!cta)cta=['Mi departamento',()=>apGo('dep')]}
+ else if(b&&(b.estado==='pendiente'||b.estado==='rechazado')){tile('users','Departamento · '+(b.deptoNombre||'')+(b.estado==='pendiente'?' (pendiente)':" (no aprobado — postúlate de nuevo)"),'',()=>apGo('dep'))}
+ else if(!b&&(a||c)){tile('users','Postularme a un departamento','Elige un departamento y envía tu solicitud',()=>apGo('dep'))}
  if(AP.r.est){tile('cap','Escuela de formación','Tu material y tu nivel',()=>apGo('est'),cta?'':'dest');if(!cta)cta=['Mi escuela',()=>apGo('est')]}
  else if(AP.r.lid&&accOk(a,'escuela'))tile('cap','Escuela de formación','Inscríbete y accede a tu material',()=>apGo('est'));
  const c1=$('ahc1');c1.hidden=!cta;if(cta){c1.textContent=cta[0];c1.onclick=cta[1]}
  $('ahc2').hidden=!AP.any;
- if(pend.length)$('apps').textContent='Tu registro en '+pend.join(' y ')+' está pendiente de aprobación. Un pastor lo revisará.';
+ if(pend.length)$('apps').textContent='Tu registro en '+pend.join(' y ')+' está pendiente de aprobación. '+(pend.length===1&&pend[0]==='Departamentos'?'El coordinador del departamento lo revisará.':'Un pastor lo revisará.');
  else if(T.children.length)$('apps').textContent='';
  else{$('apps').textContent='Esta cuenta todavía no tiene acceso. Regístrate en el módulo que te corresponde:';
   tile('edit','Registrarme como líder','Reportes y recursos',()=>apGo('lid'));tile('users','Registrarme en un departamento','Calendario de guardias y avisos',()=>apGo('dep'));tile('cap','Inscribirme en la Escuela','Material de formación',()=>apGo('est'))}
@@ -2462,9 +2555,10 @@ $('efg').addEventListener('click',async()=>{const m=$('ele').value.trim();if(!m)
 $('efs').addEventListener('submit',async e=>{e.preventDefault();emsg('');busy=true;
  try{const c=await A.createUserWithEmailAndPassword(auth,$('ese').value.trim(),$('esp').value);
   await S.setDoc(S.doc(db,'estudiantes',c.user.uid),{nombre:$('esn').value.trim(),ci:$('esci').value.replace(/\D/g,''),telefono:$('est').value.trim(),sede:$('ess').value,tipo:$('esT').value,nivel:$('esv').value,lider:$('esl').value.replace(/\D/g,''),email:$('ese').value.trim().toLowerCase(),estado:'pendiente',creado:S.serverTimestamp()});
+  await dpPostular(c.user,$('esn').value.trim(),$('est').value.trim(),$('esdp').value);
   busy=false;$('efs').reset();await escEnter(c.user);await enter(c.user)}catch(x){busy=false;emsg(er(x))}});
 $('eform').addEventListener('submit',async e=>{e.preventDefault();$('efmsg').textContent='';const u=auth.currentUser;if(!u)return;
- try{await S.setDoc(S.doc(db,'estudiantes',u.uid),{nombre:$('fn').value.trim(),ci:$('fci').value.replace(/\D/g,''),telefono:$('ft').value.trim(),sede:$('fsd').value,tipo:$('fT').value,nivel:$('fnv').value,lider:$('fl2').value.replace(/\D/g,''),email:(u.email||'').toLowerCase(),estado:'pendiente',creado:S.serverTimestamp()});await escEnter(u)}catch(x){$('efmsg').textContent=er(x)}});
+ try{await S.setDoc(S.doc(db,'estudiantes',u.uid),{nombre:$('fn').value.trim(),ci:$('fci').value.replace(/\D/g,''),telefono:$('ft').value.trim(),sede:$('fsd').value,tipo:$('fT').value,nivel:$('fnv').value,lider:$('fl2').value.replace(/\D/g,''),email:(u.email||'').toLowerCase(),estado:'pendiente',creado:S.serverTimestamp()});await dpPostular(u,$('fn').value.trim(),$('ft').value.trim(),$('fdp').value);await escEnter(u)}catch(x){$('efmsg').textContent=er(x)}});
 ['eout0','eout1','eout2'].forEach(i=>$(i).addEventListener('click',()=>A.signOut(auth)));
 
 
@@ -2762,10 +2856,12 @@ loaders.res=async()=>{
   r.sort((a,b)=>(a.titulo||'').localeCompare(b.titulo||''));
   if(!r.length)g.appendChild(el('p','Todavía no hay recursos publicados.'));
   r.forEach(x=>{
-   const c=el('div',null,'pillar');c.appendChild(el('h3',x.titulo));
+   const c=el('div',null,'pillar');const ic=document.createElement('div');ic.className='ap-cico';ic.innerHTML=svg('book');c.appendChild(ic);c.appendChild(el('h3',x.titulo));
    if(x.descripcion)c.appendChild(el('p',x.descripcion));
-   if(/^https:\/\//.test(x.url||'')){const a=el('a','Abrir recurso');a.href=x.url;a.target='_blank';a.rel='noopener';c.appendChild(a)}
-   if(me&&me.rol==='admin'){const b=el('button','Quitar','btn alt sm');b.type='button';b.onclick=async()=>{await S.deleteDoc(S.doc(db,'recursos',x.id));loaders.res()};c.appendChild(b)}
+   const act=el('div',null,'ap-cact');
+   if(/^https:\/\//.test(x.url||'')){const a=el('a','Abrir recurso');a.href=x.url;a.target='_blank';a.rel='noopener';act.appendChild(a)}
+   if(me&&me.rol==='admin'){const b=el('button','Quitar','btn alt sm');b.type='button';b.onclick=async()=>{await S.deleteDoc(S.doc(db,'recursos',x.id));loaders.res()};act.appendChild(b)}
+   if(act.children.length)c.appendChild(act);
    g.appendChild(c);
   });
  }catch(x){g.appendChild(el('p',er(x)))}
@@ -2819,7 +2915,7 @@ $('fm').addEventListener('submit',async e=>{
  const ci=f.ci.value.replace(/\D/g,'');
  try{
   await S.setDoc(S.doc(db,'miembros','ci_'+ci),{cargo:f.cargo.value,nombre:f.nombre.value.trim(),ci,telefono:f.telefono.value.trim(),...(f.email.value.trim()?{email:f.email.value.trim().toLowerCase()}:{}),sede:f.sede.value,lider:f.lider.value.trim(),codigo:f.codigo.value.trim().toUpperCase(),estado:'pendiente',creado:S.serverTimestamp()});
-  f.reset();o.textContent='¡Registro recibido! La dirección de la iglesia lo revisará.';
+  f.reset();o.textContent='¡Registro recibido! La dirección de la iglesia lo revisará. Si quieres servir en un departamento, crea tu cuenta en «Departamentos» (pestaña Registrarme) y postula allí.';
  }catch(x){o.textContent='No se pudo registrar ['+(x.code||x.message)+']: revisa que el código sea el de tu sede o es posible que esa cédula ya esté registrada.'}
 });
 $('fbol').addEventListener('submit',async e=>{
@@ -3396,5 +3492,88 @@ kick();
 })();
 
 </script>
+<style id="app-tema">
+/* ===== APP: todas las pantallas internas siguen el tema y diseño de la app (azul rey + tarjetas limpias) ===== */
+.apz-hero,.apz-sec,.ap-cico{display:none}
+body[data-v=app],body.pwa[data-v]{--bg:#eef2fb;--surface:#fff;--ink:#0e1526;--muted:#6b7690;--brand:#1450c4;--brand-ink:#fff;--accent:#f5c542;--accent-ink:#0a1f66;--line:#dce4f5;--soft:#e8efff;color-scheme:light;background:#eef2fb!important;color:#0e1526}
+body[data-v=app] #lideres,body[data-v=app] #deptos,body[data-v=app] #escuela,body.pwa[data-v] #lideres,body.pwa[data-v] #deptos,body.pwa[data-v] #escuela{background:#eef2fb!important;background-image:none!important;padding:0 0 36px!important}
+body.pwa[data-v]:not([data-v=app]) section[style*="--soft"]{background:#eef2fb!important;background-image:none!important}
+body[data-v=app] :is(#lideres,#deptos,#escuela)>.wrap,body.pwa[data-v] :is(#lideres,#deptos,#escuela)>.wrap{max-width:640px;padding:0 16px}
+/* barra superior hero estilo App v2 (igual que Perfil e Inicio) */
+body[data-v=app] .apz-hero,body.pwa[data-v] .apz-hero{display:block;position:relative;overflow:hidden;background:linear-gradient(150deg,#0a1f66 0%,#1450c4 62%,#2f6bff 100%);color:#fff;padding:18px 20px 22px;margin:0 -16px 16px;border-radius:0 0 30px 30px;box-shadow:0 12px 28px rgba(10,31,102,.22);text-align:left}
+body[data-v=app] .apz-hero:before,body.pwa[data-v] .apz-hero:before{content:'';position:absolute;right:-55px;top:-55px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.24),transparent 68%);pointer-events:none}
+body[data-v=app] .apz-hero:after,body.pwa[data-v] .apz-hero:after{content:'';position:absolute;left:-40px;bottom:-75px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(245,197,66,.22),transparent 66%);pointer-events:none}
+body[data-v=app] .apz-hero>*,body.pwa[data-v] .apz-hero>*{position:relative;z-index:1}
+body[data-v=app] .apz-tag,body.pwa[data-v] .apz-tag{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(245,197,66,.18);color:#f5c542;border:1px solid rgba(245,197,66,.35);font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+body[data-v=app] .apz-hero h3,body.pwa[data-v] .apz-hero h3{margin:0 0 4px;color:#fff!important;font-size:1.38rem!important;font-weight:800;line-height:1.15;text-transform:none;letter-spacing:0}
+body[data-v=app] .apz-hero p,body.pwa[data-v] .apz-hero p{margin:0;color:rgba(255,255,255,.86);font-size:.88rem;line-height:1.35;max-width:none}
+/* oculta el título web y el encabezado "Bienvenido / Salir" web dentro de la app */
+body[data-v=app] :is(#lideres,#deptos,#escuela)>.wrap>h2,body[data-v=app] :is(#lideres,#deptos,#escuela)>.wrap>h2+p,body.pwa[data-v] :is(#lideres,#deptos,#escuela)>.wrap>h2,body.pwa[data-v] :is(#lideres,#deptos,#escuela)>.wrap>h2+p{display:none}
+body[data-v=app] #dash>.row:first-child{display:none!important}
+body[data-v=app] :is(#dpdash,#edash)>.row:first-child,body.pwa[data-v] :is(#dash,#dpdash,#edash)>.row:first-child{background:#fff;border:1px solid #dce4f5;border-radius:18px;padding:12px 14px;margin:0 0 14px;box-shadow:0 4px 12px rgba(10,31,102,.05);gap:10px}
+body[data-v=app] :is(#dpdash,#edash)>.row:first-child h3,body.pwa[data-v] :is(#dash,#dpdash,#edash)>.row:first-child h3{color:#0e1526;font-size:.98rem;font-weight:800;margin:0}
+body[data-v=app] :is(#dpout,#eout2),body.pwa[data-v] :is(#out,#dpout,#eout2){background:#e8efff;background-image:none;color:#1450c4;border:1px solid #d5e1fb;box-shadow:none;padding:7px 14px;font-size:.82rem;border-radius:999px}
+body[data-v=app] #eniv,body.pwa[data-v] #eniv{display:inline-block;background:#e8efff;color:#1450c4;border:1px solid #d5e1fb;padding:8px 14px;border-radius:999px;font-size:.86rem;font-weight:800;margin:0 0 12px}
+body[data-v=app] #dpname,body.pwa[data-v] #dpname{color:#0a1f66;font-size:1.12rem;font-weight:800;margin:12px 0 8px}
+/* oculta las pestañas web cuando entras a una zona específica desde el inicio de la app */
+body[data-v=app]:is([data-zone=t1],[data-zone=t2],[data-zone=t3],[data-zone=t9],[data-zone=t10],[data-zone=t11]) #lideres #dash>.tabs{display:none!important}
+body[data-v=app]:is([data-zone=t4],[data-zone=t5],[data-zone=t6],[data-zone=t7],[data-zone=t8]) #lideres #dash>.tabs :is([data-t=t1],[data-t=t2],[data-t=t3],[data-t=t9],[data-t=t10],[data-t=t11]){display:none!important}
+/* pestañas tipo control segmentado / píldoras app */
+body[data-v=app] .tabs,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;margin:2px -16px 14px;padding:2px 16px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+body[data-v=app] :is(#auth,#dpauth,#eauth) .tabs,body.pwa[data-v] :is(#auth,#dpauth,#eauth) .tabs{background:#dfe7f8;border-radius:999px;padding:4px;margin:0 0 14px;gap:4px}
+body[data-v=app] :is(#auth,#dpauth,#eauth) .tabs button,body.pwa[data-v] :is(#auth,#dpauth,#eauth) .tabs button{flex:1;text-align:center;border:0;background:transparent;box-shadow:none;color:#44506b;padding:10px 12px}
+body[data-v=app] :is(#auth,#dpauth,#eauth) .tabs button.on,body.pwa[data-v] :is(#auth,#dpauth,#eauth) .tabs button.on{background:#1450c4;color:#fff;box-shadow:0 4px 12px rgba(20,80,196,.28)}
+body[data-v=app] .tabs::-webkit-scrollbar,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .tabs::-webkit-scrollbar{display:none}
+body[data-v=app] .tabs button,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .tabs button{flex:none;white-space:nowrap;border-radius:999px;border:1px solid #dce4f5;background:#fff;color:#44506b;font-weight:700;padding:9px 16px;font-size:.86rem;box-shadow:0 2px 8px rgba(10,31,102,.05)}
+body[data-v=app] .tabs button.on,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .tabs button.on{background:linear-gradient(135deg,#1450c4,#2f6bff);border-color:transparent;color:#fff;box-shadow:0 6px 16px rgba(20,80,196,.28)}
+/* encabezados de sección internos estilo app */
+body[data-v=app] :is(#lideres,#deptos,#escuela) :is(h2,h3,h4),body.pwa[data-v] :is(#lideres,#deptos,#escuela) :is(h2,h3,h4){text-transform:none;letter-spacing:0;color:#0e1526}
+body[data-v=app] .apz-sec,body.pwa[data-v] .apz-sec,body[data-v=app] #cdpw>h3,body.pwa[data-v] #cdpw>h3,body[data-v=app] #edash>h3,body.pwa[data-v] #edash>h3,body[data-v=app] #dpdash>h4,body.pwa[data-v] #dpdash>h4,body[data-v=app] #dpsol>h4,body.pwa[data-v] #dpsol>h4{display:block;font-size:.76rem!important;font-weight:800!important;letter-spacing:.12em!important;text-transform:uppercase!important;color:#1450c4!important;margin:18px 4px 10px!important}
+body[data-v=app] .apz-sec,body.pwa[data-v] .apz-sec{margin-top:4px!important}
+/* tarjetas app de Recursos, Casa de Paz y listas */
+body[data-v=app] :is(#resl,#cdpl),body.pwa[data-v] :is(#resl,#cdpl){display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:560px){body[data-v=app] :is(#resl,#cdpl),body.pwa[data-v] :is(#resl,#cdpl){grid-template-columns:repeat(2,minmax(0,1fr))}}
+body[data-v=app] :is(#resl,#cdpl) .pillar,body.pwa[data-v] :is(#resl,#cdpl) .pillar{position:relative;display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid #dce4f5;border-top:1px solid #dce4f5;border-radius:22px;padding:18px;box-shadow:0 6px 18px rgba(10,31,102,.06)}
+body[data-v=app] .ap-cico,body.pwa[data-v] .ap-cico{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:#e8efff;color:#1450c4;margin-bottom:4px}
+body[data-v=app] .ap-cico svg,body.pwa[data-v] .ap-cico svg{width:22px;height:22px}
+body[data-v=app] :is(#resl,#cdpl) .pillar h3,body.pwa[data-v] :is(#resl,#cdpl) .pillar h3{margin:0;font-size:1.05rem;font-weight:800;color:#0e1526;line-height:1.25}
+body[data-v=app] :is(#resl,#cdpl) .pillar p,body.pwa[data-v] :is(#resl,#cdpl) .pillar p{margin:0;color:#6b7690;font-size:.86rem;line-height:1.4}
+body[data-v=app] .ap-cact,body.pwa[data-v] .ap-cact{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+body[data-v=app] :is(#resl,#cdpl) .ap-cact a:not(.btn),body.pwa[data-v] :is(#resl,#cdpl) .ap-cact a:not(.btn){display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1450c4,#2f6bff);color:#fff!important;border-radius:999px;padding:10px 18px;font-weight:800;font-size:.86rem;text-decoration:none;box-shadow:0 6px 14px rgba(20,80,196,.24)}
+body[data-v=app] #tot,body.pwa[data-v] #tot{background:#e8efff;border:1px solid #cfe0ff;color:#0a1f66;border-radius:18px;padding:13px 16px;font-weight:700;font-size:.9rem;margin:0 0 12px}
+body[data-v=app] #rtot,body.pwa[data-v] #rtot{display:inline-block;background:#e8efff;color:#1450c4;border-radius:999px;padding:6px 14px;font-weight:800;font-size:.88rem}
+/* tarjetas, formularios, pendientes y entradas */
+body[data-v=app] form,body.pwa[data-v] form{background:#fff;border:1px solid #dce4f5;border-radius:22px;padding:18px;box-shadow:0 6px 18px rgba(10,31,102,.06);max-width:none}
+body[data-v=app] :is(#pend,#dppend,#epend),body.pwa[data-v] :is(#pend,#dppend,#epend){background:#fff;border:1px solid #dce4f5;border-radius:22px;padding:22px 18px;box-shadow:0 6px 18px rgba(10,31,102,.06);margin-top:8px}
+body[data-v=app] :is(#lideres,#deptos,#escuela) :is(input,select,textarea),body.pwa[data-v] :is(#lideres,#deptos,#escuela) :is(input,select,textarea){background:#f6f8fe;border:1px solid #dbe3f3;border-radius:14px;padding:13px 14px;font-size:16px;color:#0e1526}
+body[data-v=app] :is(#lideres,#deptos,#escuela) :is(input,select,textarea):focus,body.pwa[data-v] :is(#lideres,#deptos,#escuela) :is(input,select,textarea):focus{outline:0;border-color:#1450c4;box-shadow:0 0 0 3px rgba(20,80,196,.18)}
+body[data-v=app] :is(#lideres,#deptos,#escuela) :is(input[type=checkbox],input[type=radio]),body.pwa[data-v] :is(#lideres,#deptos,#escuela) :is(input[type=checkbox],input[type=radio]){accent-color:#1450c4}
+body[data-v=app] :is(#lideres,#deptos,#escuela) :is(.card,.pillar,.rlist li,.ay>div,.dpcw,.dpl li),body.pwa[data-v] :is(.card,.pillar,.rlist li,.ay>div,.dpcw,.dpl li,.sdcard){background:#fff;border-radius:20px;border:1px solid #dce4f5;box-shadow:0 4px 14px rgba(10,31,102,.05)}
+body[data-v=app] :is(#lideres,#deptos,#escuela) details,body.pwa[data-v] :is(#lideres,#deptos,#escuela) details{background:#fff;border:1px solid #dce4f5;border-radius:18px;padding:14px 16px;margin-bottom:12px;box-shadow:0 3px 10px rgba(10,31,102,.04)}
+body[data-v=app] :is(#lideres,#deptos,#escuela) details summary,body.pwa[data-v] :is(#lideres,#deptos,#escuela) details summary{font-weight:800;color:#0a1f66;cursor:pointer}
+body[data-v=app] :is(#lideres,#deptos,#escuela) .note,body.pwa[data-v] :is(#lideres,#deptos,#escuela) .note{color:#6b7690}
+body[data-v=app] :is(#lideres,#deptos,#escuela) a:not(.btn),body.pwa[data-v] :is(#lideres,#deptos,#escuela) a:not(.btn){color:#1450c4}
+body[data-v=app] :is(#lideres,#deptos,#escuela) table,body.pwa[data-v] :is(#lideres,#deptos,#escuela) table{background:#fff;border-radius:16px;overflow:hidden;border:1px solid #dce4f5}
+/* calendario de departamentos */
+body[data-v=app] .dpgrid,body.pwa[data-v] .dpgrid{gap:6px;margin-top:12px}
+body[data-v=app] .dpgrid div.sv,body.pwa[data-v] .dpgrid div.sv{background:#fff;border:1px solid #dce4f5;border-radius:14px;color:#0e1526;box-shadow:0 2px 6px rgba(10,31,102,.04)}
+body[data-v=app] .dpgrid div.mi,body.pwa[data-v] .dpgrid div.mi{background:linear-gradient(135deg,#1450c4,#2f6bff);border-color:transparent;color:#fff;box-shadow:0 4px 12px rgba(20,80,196,.28)}
+body[data-v=app] .dpbad,body.pwa[data-v] .dpbad{background:#e8efff;color:#1450c4;border-radius:999px}
+body[data-v=app] .dpbad.ok,body.pwa[data-v] .dpbad.ok{background:#d9f2e0;color:#14532d}
+body[data-v=app] .dpbad.no,body.pwa[data-v] .dpbad.no{background:#fde2e2;color:#7f1d1d}
+body[data-v=app] .dpbad.wa,body.pwa[data-v] .dpbad.wa{background:#fff1c9;color:#6b4e00}
+body[data-v=app] .dpchip,body.pwa[data-v] .dpchip{background:#e8efff;border-color:#d5e1fb;color:#0a1f66;border-radius:999px}
+body[data-v=app] .dpchip.me,body.pwa[data-v] .dpchip.me{background:#1450c4;border-color:#1450c4;color:#fff}
+/* botones (especificidad superior a las reglas de la web) */
+body[data-v=app] .btn,body.pwa[data-v] .btn,body[data-v=app] .btn:not(.alt):not(.gold):not(.ikdon):not(.sm.alt),body.pwa[data-v] .btn:not(.alt):not(.gold):not(.ikdon):not(.sm.alt){border:0;background:linear-gradient(135deg,#1450c4,#2f6bff);background-color:#1450c4;color:#fff;border-radius:999px;font-weight:800;padding:13px 20px;box-shadow:0 8px 18px rgba(20,80,196,.24)}
+body[data-v=app] .btn.alt,body.pwa[data-v] .btn.alt,body[data-v=app] .btn.sm.alt,body.pwa[data-v] .btn.sm.alt{background:#e8efff;background-image:none;color:#1450c4;border:1px solid #d7e2fb;box-shadow:none}
+body[data-v=app] .btn.gold,body.pwa[data-v] .btn.gold{background:#f5c542;background-image:none;color:#0a1f66;border:0;box-shadow:0 8px 18px rgba(245,197,66,.26)}
+body[data-v=app] .btn.sm,body.pwa[data-v] .btn.sm{padding:9px 16px;font-size:.86rem;margin-left:0}
+/* modales con estilo de app */
+body[data-v=app] dialog,body.pwa[data-v] dialog,body[data-v=app] #sm .smb,body.pwa[data-v] #sm .smb{background:#fff;color:#0e1526;border:1px solid #dce4f5;border-radius:24px;box-shadow:0 18px 44px rgba(10,31,102,.18)}
+/* si se abre una pantalla web dentro de la app instalada: barra superior con el estilo de la app */
+body.pwa[data-v=lideres] .apphome,body.pwa[data-v=departamentos] .apphome,body.pwa[data-v] .apphome{background:rgba(255,255,255,.96);color:#1450c4;border-bottom:1px solid #dce4f5}
+body.pwa[data-v] header{background:rgba(255,255,255,.96)}
+</style>
 </body>
 </html>
