@@ -920,6 +920,16 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <div id="dppend" hidden>
 <h3 id="dppt">Tu registro está pendiente</h3>
 <p id="dppp">Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar al espacio de tu departamento.</p>
+<div id="dppost" hidden>
+<p style="margin-top:16px">¿Quieres servir en un departamento? Elige a cuál deseas unirte y el coordinador evaluará tu solicitud.</p>
+<form id="dppostf" style="max-width:420px">
+<label>Tu nombre<input id="dppostn" required maxlength="80" autocomplete="name"></label>
+<label>Departamento<select id="dpposts" required><option value="">Elige un departamento</option></select></label>
+<label>Teléfono (opcional)<input id="dppostt" type="tel" autocomplete="tel" maxlength="20"></label>
+<button class="btn" type="submit">Postularme</button>
+<p class="note" id="dppostm" role="status"></p>
+</form>
+</div>
 <button class="btn alt" type="button" id="dppo">Salir</button>
 </div>
 <div id="dpdash" hidden>
@@ -1603,11 +1613,32 @@ async function dpEnter(u){
  DPU=null;DPADM=false;
  try{const d=await S.getDoc(S.doc(db,'deptos_usuarios',u.uid));if(d.exists())DPU=Object.assign({uid:u.uid},d.data())}catch(e){}
  if(!DPU){
-  try{const a=await S.getDoc(S.doc(db,'users',u.uid));DPADM=a.exists()&&a.data().rol==='admin'}catch(e){}
-  if(!DPADM){$('dppt').textContent='Esta cuenta no está registrada en Departamentos';$('dppp').textContent='Usa la pestaña «Registrarme» con otro correo, o entra con la cuenta de tu departamento.';dpView('dppend');return}
+  let usrData=null;try{const a=await S.getDoc(S.doc(db,'users',u.uid));if(a.exists())usrData=a.data();DPADM=!!(usrData&&usrData.rol==='admin')}catch(e){}
+  if(!DPADM){
+   // Líder registrado en users → ofrecer postulación directa
+   const esLider=!!(usrData&&(usrData.rol==='admin'||usrData.estado==='aprobado'));
+   $('dppt').textContent=esLider?'Todavía no estás en ningún departamento':'Esta cuenta no está registrada en Departamentos';
+   $('dppp').textContent=esLider?'':'Usa la pestaña «Registrarme» con otro correo, o entra con la cuenta de tu departamento.';
+   const dppostEl=$('dppost');dppostEl.hidden=!esLider;
+   if(esLider){
+    // Prellenar nombre del líder
+    const nf=$('dppostn');if(usrData&&usrData.nombre)nf.value=usrData.nombre;else nf.value='';
+    const tf=$('dppostt');if(usrData&&usrData.telefono)tf.value=usrData.telefono;else tf.value='';
+    // Poblar select de departamentos
+    const sel=$('dpposts');sel.textContent='';const o0=document.createElement('option');o0.value='';o0.textContent='Elige un departamento';sel.appendChild(o0);
+    DPL.filter(d=>d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre;sel.appendChild(o)});
+   }
+   dpView('dppend');return;
+  }
  }else if(DPU.estado!=='aprobado'){
-  $('dppt').textContent=DPU.estado==='rechazado'?'Tu solicitud no fue aprobada':'Tu registro está pendiente';
-  $('dppp').textContent='Un pastor revisará tu solicitud. Cuando sea aprobada podrás entrar al espacio de tu departamento.';
+  $('dppt').textContent=DPU.estado==='rechazado'?'Tu solicitud no fue aprobada':'Tu postulación está pendiente';
+  $('dppp').textContent=DPU.estado==='rechazado'?'Tu solicitud no fue aprobada. Puedes postularte a otro departamento si deseas.':'Tu postulación a «'+(DPU.deptoNombre||'un departamento')+'» está pendiente. El coordinador revisará tu solicitud.';
+  $('dppost').hidden=DPU.estado!=='rechazado';
+  if(DPU.estado==='rechazado'){
+   const sel=$('dpposts');sel.textContent='';const o0=document.createElement('option');o0.value='';o0.textContent='Elige un departamento';sel.appendChild(o0);
+   DPL.filter(d=>d.activo!==false).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.nombre;sel.appendChild(o)});
+   const nf=$('dppostn');if(DPU.nombre)nf.value=DPU.nombre;const tf=$('dppostt');if(DPU.telefono)tf.value=DPU.telefono;
+  }
   dpView('dppend');return;
  }
  $('dphi').textContent='Bienvenido, '+(DPU?DPU.nombre:'administrador');
@@ -1655,6 +1686,15 @@ async function dpPanel(){
 $('dpsel').addEventListener('change',dpPanel);
 $('dpaf').addEventListener('submit',async e=>{e.preventDefault();const id=dpCur(),t=$('dpat').value.trim();if(!id||!t)return;
  try{await S.addDoc(S.collection(db,'deptos_avisos'),{deptoId:id,texto:t,autor:DPU?DPU.nombre:'Administración',uid:auth.currentUser.uid,creado:S.serverTimestamp()});$('dpat').value='';dpPanel()}catch(x){alert(er(x))}});
+$('dppostf').addEventListener('submit',async e=>{e.preventDefault();const u=auth.currentUser;if(!u)return;
+ const did=$('dpposts').value,nom=$('dppostn').value.trim(),tel=$('dppostt').value.trim();
+ const pm=$('dppostm');pm.textContent='';
+ if(!did){pm.textContent='Elige un departamento.';return}
+ if(!nom){pm.textContent='Escribe tu nombre.';return}
+ try{
+  await S.setDoc(S.doc(db,'deptos_usuarios',u.uid),{nombre:nom,deptoId:did,deptoNombre:dpNom(did),telefono:tel,email:u.email||'',estado:'pendiente',rol:'miembro',creado:S.serverTimestamp()});
+  await dpEnter(u);if(typeof apEnter==='function'&&AP&&AP.u)await apEnter(AP.u);
+ }catch(x){pm.textContent=x&&x.code==='permission-denied'?'Falta publicar las reglas nuevas de Firestore.':er(x)}});
 $('dpfl').addEventListener('submit',async e=>{e.preventDefault();dpMsg('');try{await A.signInWithEmailAndPassword(auth,$('dple').value.trim(),$('dplp').value);$('dplp').value=''}catch(x){dpMsg(er(x))}});
 $('dpfg').addEventListener('click',async()=>{const m=$('dple').value.trim();if(!m){dpMsg('Escribe tu correo arriba y vuelve a tocar el botón.');return}try{await A.sendPasswordResetEmail(auth,m);dpMsg('Te enviamos un enlace para crear una contraseña nueva. Revisa tu correo.')}catch(x){dpMsg(er(x))}});
 $('dpfs').addEventListener('submit',async e=>{e.preventDefault();dpMsg('');busy=true;
@@ -2309,6 +2349,8 @@ async function apEnter(u){
   if(adm)tile('key','Accesos por cargo','Qué ve cada líder, mentor, diácono…',()=>apTab('t11'));
  }
  if(AP.r.dep){tile('users','Mi departamento'+(b&&b.deptoNombre?' · '+b.deptoNombre:''),'Calendario de guardias, avisos y material',()=>apGo('dep'),cta?'':'dest');if(!cta)cta=['Mi departamento',()=>apGo('dep')]}
+ else if(AP.r.lid&&b&&(b.estado==='pendiente'||b.estado==='rechazado')){tile('users','Departamento · '+(b.deptoNombre||'')+(b.estado==='pendiente'?' (pendiente)':" (no aprobado — postúlate de nuevo)"),'',()=>apGo('dep'))}
+ else if(AP.r.lid&&!b){tile('users','Postularme a un departamento','Elige un departamento y envía tu solicitud',()=>apGo('dep'))}
  if(AP.r.est){tile('cap','Escuela de formación','Tu material y tu nivel',()=>apGo('est'),cta?'':'dest');if(!cta)cta=['Mi escuela',()=>apGo('est')]}
  else if(AP.r.lid&&accOk(a,'escuela'))tile('cap','Escuela de formación','Inscríbete y accede a tu material',()=>apGo('est'));
  const c1=$('ahc1');c1.hidden=!cta;if(cta){c1.textContent=cta[0];c1.onclick=cta[1]}
