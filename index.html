@@ -948,6 +948,7 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <ul class="dpl" id="dpotl"></ul>
 </details>
 <h3 id="dpname" style="margin-top:20px"></h3>
+<div class="dpcw" id="dprep" hidden><strong>Reportar (Protocolo)</strong><p class="note">Estos datos van al reporte semanal de la sede que elijas.</p><form id="dprf" style="display:grid;gap:10px;max-width:560px"><label>Tipo de reporte<select id="dprt" required><option value="">Elige una opción</option><option>Servicio dominical</option><option>Casa de oración</option><option>Vigilia</option></select></label><label>Sede<select id="dprs" required><option value="">Elige la sede</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label><label>Fecha<input id="dprfe" type="date" required></label><div id="dprflds" hidden style="display:grid;gap:10px"><label data-f="h">Hombres<input name="a_h" type="number" required min="0" inputmode="numeric"></label><label data-f="m">Mujeres<input name="a_m" type="number" required min="0" inputmode="numeric"></label><label data-f="j">Jóvenes<input name="a_j" type="number" required min="0" inputmode="numeric"></label><label data-f="no">Niños<input name="a_no" type="number" required min="0" inputmode="numeric"></label><label data-f="na">Niñas<input name="a_na" type="number" required min="0" inputmode="numeric"></label><label data-f="n">Niños y niñas<input name="a_n" type="number" required min="0" inputmode="numeric"></label><label data-f="cf">Confesiones de fe<input name="a_cf" type="number" required min="0" inputmode="numeric"></label><label data-f="of">Ofrenda (monto)<input name="a_of" type="text" inputmode="decimal" placeholder="Ej: 500 o 150,50"></label><label data-f="of">Moneda de la ofrenda<select name="a_ofm"><option>Bs</option><option>USD</option></select></label><p class="note" id="dprtot"></p></div><div><button class="btn sm" type="submit">Enviar reporte</button> <span class="note" id="dprok" role="status"></span></div></form><details style="margin-top:8px"><summary>Mis reportes enviados</summary><ul class="dpl" id="dprl"></ul></details></div>
 <div class="dpcw" id="dpnw"><strong>Notificaciones</strong><ul class="dpl" id="dpnl"></ul></div>
 <div class="dpcw" id="dprw"><strong>Material de apoyo y recursos</strong><ul class="dpl" id="dprl"></ul></div>
 <h4>Calendario de guardias</h4>
@@ -1053,7 +1054,7 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <div id="dash" hidden>
 <div class="row" style="justify-content:space-between;align-items:center;margin-top:0"><h3 id="hi" style="margin:0"></h3><button class="btn alt" id="out" type="button">Salir</button></div>
 <p style="margin:10px 0 0"><button class="btn alt gopost" type="button">Postularme a un departamento</button></p>
-<div class="tabs" data-all="t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11"><button type="button" data-t="t1" class="on" data-load="res">Recursos</button><button type="button" data-t="t2">Reportar</button><button type="button" data-t="t3" data-load="mine">Mis reportes</button><button type="button" data-t="t4" data-load="adm" id="tabAdmin" hidden>Panel de pastores</button><button type="button" data-t="t5" data-load="adm" id="tabAn" hidden>Anuncios</button><button type="button" data-t="t6" data-load="esc" id="tabEsc" hidden>ESCUELA</button><button type="button" data-t="t7" data-load="ik" id="tabIk" hidden>IGLEKIDS</button><button type="button" data-t="t8" data-load="ev" id="tabEv" hidden>EVENTOS</button><button type="button" data-t="t9" data-load="dp" id="tabDp" hidden>DEPARTAMENTOS</button><button type="button" data-t="t10" data-load="sd" id="tabSd" hidden>SEDES</button><button type="button" data-t="t11" data-load="acc" id="tabAcc" hidden>ACCESOS</button></div>
+<div class="tabs" data-all="t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11"><button type="button" data-t="t1" class="on" data-load="res">Recursos</button><button type="button" data-t="t2" data-load="rep">Reportar</button><button type="button" data-t="t3" data-load="mine">Mis reportes</button><button type="button" data-t="t4" data-load="adm" id="tabAdmin" hidden>Panel de pastores</button><button type="button" data-t="t5" data-load="adm" id="tabAn" hidden>Anuncios</button><button type="button" data-t="t6" data-load="esc" id="tabEsc" hidden>ESCUELA</button><button type="button" data-t="t7" data-load="ik" id="tabIk" hidden>IGLEKIDS</button><button type="button" data-t="t8" data-load="ev" id="tabEv" hidden>EVENTOS</button><button type="button" data-t="t9" data-load="dp" id="tabDp" hidden>DEPARTAMENTOS</button><button type="button" data-t="t10" data-load="sd" id="tabSd" hidden>SEDES</button><button type="button" data-t="t11" data-load="acc" id="tabAcc" hidden>ACCESOS</button></div>
 
 <div id="t1" class="tab"><h3 class="apz-sec">Recursos de apoyo</h3><div class="grid" id="resl"></div>
 <div id="cdpw" style="margin-top:28px"><h3>Temas de Casa de Paz</h3>
@@ -1073,7 +1074,7 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <button class="btn" type="submit">Agregar</button></form></div>
 
 <div id="t2" class="tab" hidden>
-<form id="rep"><label>Tipo de reporte<select id="rty" required><option value="">Elige una opción</option><option>Casa de paz</option><option>Nuevos creyentes</option><option value="Evangelismo" id="optev">Evangelismo (solo mentores)</option><option>Ayuda social</option></select></label><label>Fecha<input id="rfe" type="date" required></label><div id="pcp" hidden><label>Nombre de la casa de paz<input name="casa" type="text" required  placeholder=""></label><label>Código<input name="codigo" type="text" required  placeholder="Ej: CP04"></label><label>Anfitrión<input name="anfitrion" type="text" required  placeholder=""></label><label>Líder<select class="ldr" name="lider" required><option value="">Elige un líder</option></select></label><label>Sub líder 1<select class="ldr" name="sub1" ><option value="">Elige un líder</option></select></label><label>Sub líder 2<select class="ldr" name="sub2" ><option value="">Elige un líder</option></select></label><label>Sub líder 3<select class="ldr" name="sub3" ><option value="">Elige un líder</option></select></label><label>Territorio<input name="territorio" type="text" required  placeholder=""></label><label>Hombres<input name="hombres" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Mujeres<input name="mujeres" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Adolescentes<input name="adolescentes" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Niños<input name="ninos" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Nro. de convertidos<input name="convertidos" type="number" required min="0" inputmode="numeric" placeholder=""></label><p class="note" id="rtot">Total de personas: 0</p><label>Ofrenda de la casa de paz (monto)<input name="ofrenda" type="text" inputmode="decimal" placeholder="Ej: 500 o 150,50"></label><label>Moneda de la ofrenda<select name="ofrenda_moneda"><option>Bs</option><option>USD</option></select></label><label>Referencia<input name="referencia" type="text"   placeholder="Efectivo o nro. de referencia"></label></div><div id="pnc" hidden><label>Fecha de conversión / aceptación<input name="conv_fecha" type="date" required  placeholder=""></label><label>Nombre completo del nuevo convertido<input name="conv_nombre" type="text" required  placeholder=""></label><label>Cédula / ID<input name="conv_cedula" type="text"   placeholder=""></label><label>Teléfono / WhatsApp<input name="conv_tel" type="tel"   placeholder=""></label><label>Dirección / sector<input name="conv_sector" type="text"   placeholder=""></label><label>Casa de paz / red<input name="conv_casa" type="text"   placeholder=""></label><label>Líder / consolidador asignado<select class="ldr" name="conv_lider" ><option value="">Elige un líder</option></select></label><label>Petición de oración principal<input name="conv_peticion" type="text"   placeholder=""></label><label>Estado de consolidación<select name="conv_estado" required><option value="">Elige una opción</option><option>Pendiente</option><option>En proceso</option><option>Completado</option></select></label><label>Asistencia a casa de paz<select name="conv_asis_cp" required><option value="">Elige una opción</option><option>Sí</option><option>No</option></select></label><label>Asistencia a servicio dominical<select name="conv_asis_dom" required><option value="">Elige una opción</option><option>Sí</option><option>No</option></select></label><label>Paso 1: visita de bienvenida (fecha)<input name="conv_visita" type="date"   placeholder=""></label><label>Paso 2: discipulado básico / lección<input name="conv_disc" type="text"   placeholder="Ej: Módulo 1"></label><label>Paso 3: bautismo<select name="conv_bautismo" required><option value="">Elige una opción</option><option>Pendiente</option><option>Bautizado</option></select></label><label>Observaciones / notas<textarea name="conv_obs" rows="3"></textarea></label></div><div id="pev" hidden><label>Sector / zona<input name="ev_sector" type="text" required  placeholder=""></label><label>Responsable (mentor)<select class="ldr" data-rol="mentor" name="ev_lider" required><option value="">Elige un mentor</option></select></label><label>Equipo de trabajo (cantidad de personas)<input name="ev_equipo" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Personas alcanzadas<input name="ev_alcanzadas" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Oraciones de fe / conversiones<input name="ev_conversiones" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Reconciliaciones<input name="ev_reconc" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Contactos para seguimiento<input name="ev_contactos" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Material entregado (Biblias / folletos)<input name="ev_material" type="text"   placeholder="Ej: 10 Biblias, 50 folletos"></label><label>Receptividad del sector<select name="ev_recep" required><option value="">Elige una opción</option><option>Alta</option><option>Media</option><option>Baja</option></select></label><label>Necesidades principales<textarea name="ev_nec" rows="2" placeholder="Ej: familiares, salud, espirituales"></textarea></label><label>Testimonio destacado<textarea name="ev_test" rows="2"></textarea></label><label>Casos urgentes para visitar<textarea name="ev_urg" rows="2"></textarea></label></div><div id="pge" hidden><label>Lugar<input name="lugar" type="text" required  placeholder="Barrio, casa o sector"></label><label>Cantidad de personas<input name="cantidad" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Detalle<textarea name="detalle" rows="3" placeholder="Qué se hizo y cómo respondieron"></textarea></label><p class="note">No escribas datos privados de las personas.</p></div><button class="btn" type="submit">Enviar reporte</button><p class="note" id="rok" role="status"></p></form></div>
+<form id="rep"><label>Tipo de reporte<select id="rty" required><option value="">Elige una opción</option><option>Casa de paz</option><option>Nuevos creyentes</option><option value="Evangelismo" id="optev">Evangelismo (solo mentores)</option><option>Ayuda social</option><option>Servicio dominical</option><option>Casa de oración</option><option>Discipulado</option><option>Vigilia</option><option>Cachorros de León</option><option>Altar familiar</option><option>Bautizos</option></select></label><label>Fecha<input id="rfe" type="date" required></label><div id="pcp" hidden><label>Nombre de la casa de paz<input name="casa" type="text" required  placeholder=""></label><label>Código<input name="codigo" type="text" required  placeholder="Ej: CP04"></label><label>Anfitrión<input name="anfitrion" type="text" required  placeholder=""></label><label>Líder<select class="ldr" name="lider" required><option value="">Elige un líder</option></select></label><label>Sub líder 1<select class="ldr" name="sub1" ><option value="">Elige un líder</option></select></label><label>Sub líder 2<select class="ldr" name="sub2" ><option value="">Elige un líder</option></select></label><label>Sub líder 3<select class="ldr" name="sub3" ><option value="">Elige un líder</option></select></label><label>Territorio<input name="territorio" type="text" required  placeholder=""></label><label>¿Se realizó la casa de paz esta semana?<select name="realizada" id="cpreal"><option>Sí</option><option>No</option></select></label><div id="pcpn"><label>Hombres<input name="hombres" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Mujeres<input name="mujeres" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Jóvenes / adolescentes<input name="adolescentes" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Niños<input name="ninos" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Niñas<input name="ninas" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Confesiones de fe (convertidos)<input name="convertidos" type="number" required min="0" inputmode="numeric" placeholder=""></label><p class="note" id="rtot">Total de personas: 0</p><label>Ofrenda de la casa de paz (monto)<input name="ofrenda" type="text" inputmode="decimal" placeholder="Ej: 500 o 150,50"></label><label>Moneda de la ofrenda<select name="ofrenda_moneda"><option>Bs</option><option>USD</option></select></label><label>Referencia<input name="referencia" type="text"   placeholder="Efectivo o nro. de referencia"></label></div></div><div id="pnc" hidden><label>Fecha de conversión / aceptación<input name="conv_fecha" type="date" required  placeholder=""></label><label>Nombre completo del nuevo convertido<input name="conv_nombre" type="text" required  placeholder=""></label><label>Cédula / ID<input name="conv_cedula" type="text"   placeholder=""></label><label>Teléfono / WhatsApp<input name="conv_tel" type="tel"   placeholder=""></label><label>Dirección / sector<input name="conv_sector" type="text"   placeholder=""></label><label>Casa de paz / red<input name="conv_casa" type="text"   placeholder=""></label><label>Líder / consolidador asignado<select class="ldr" name="conv_lider" ><option value="">Elige un líder</option></select></label><label>Petición de oración principal<input name="conv_peticion" type="text"   placeholder=""></label><label>Estado de consolidación<select name="conv_estado" required><option value="">Elige una opción</option><option>Pendiente</option><option>En proceso</option><option>Completado</option></select></label><label>Asistencia a casa de paz<select name="conv_asis_cp" required><option value="">Elige una opción</option><option>Sí</option><option>No</option></select></label><label>Asistencia a servicio dominical<select name="conv_asis_dom" required><option value="">Elige una opción</option><option>Sí</option><option>No</option></select></label><label>Paso 1: visita de bienvenida (fecha)<input name="conv_visita" type="date"   placeholder=""></label><label>Paso 2: discipulado básico / lección<input name="conv_disc" type="text"   placeholder="Ej: Módulo 1"></label><label>Paso 3: bautismo<select name="conv_bautismo" required><option value="">Elige una opción</option><option>Pendiente</option><option>Bautizado</option></select></label><label>Observaciones / notas<textarea name="conv_obs" rows="3"></textarea></label></div><div id="pev" hidden><label>Sector / zona<input name="ev_sector" type="text" required  placeholder=""></label><label>Responsable (mentor)<select class="ldr" data-rol="mentor" name="ev_lider" required><option value="">Elige un mentor</option></select></label><label>Equipo de trabajo (cantidad de personas)<input name="ev_equipo" type="number" required min="0" inputmode="numeric" placeholder=""></label><p class="note">Personas alcanzadas por grupo (para el reporte semanal):</p><label>Hombres<input name="ev_h" type="number" required min="0" inputmode="numeric"></label><label>Mujeres<input name="ev_m" type="number" required min="0" inputmode="numeric"></label><label>Jóvenes<input name="ev_j" type="number" required min="0" inputmode="numeric"></label><label>Niños<input name="ev_no" type="number" required min="0" inputmode="numeric"></label><label>Niñas<input name="ev_na" type="number" required min="0" inputmode="numeric"></label><label>Personas alcanzadas (total, se calcula solo)<input name="ev_alcanzadas" type="number" required min="0" inputmode="numeric" readonly placeholder=""></label><label>Oraciones de fe / conversiones<input name="ev_conversiones" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Reconciliaciones<input name="ev_reconc" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Contactos para seguimiento<input name="ev_contactos" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Material entregado (Biblias / folletos)<input name="ev_material" type="text"   placeholder="Ej: 10 Biblias, 50 folletos"></label><label>Receptividad del sector<select name="ev_recep" required><option value="">Elige una opción</option><option>Alta</option><option>Media</option><option>Baja</option></select></label><label>Necesidades principales<textarea name="ev_nec" rows="2" placeholder="Ej: familiares, salud, espirituales"></textarea></label><label>Testimonio destacado<textarea name="ev_test" rows="2"></textarea></label><label>Casos urgentes para visitar<textarea name="ev_urg" rows="2"></textarea></label></div><div id="pact" hidden><p class="note" id="actnote"></p><label data-f="h">Hombres<input name="a_h" type="number" required min="0" inputmode="numeric"></label><label data-f="m">Mujeres<input name="a_m" type="number" required min="0" inputmode="numeric"></label><label data-f="j">Jóvenes<input name="a_j" type="number" required min="0" inputmode="numeric"></label><label data-f="no">Niños<input name="a_no" type="number" required min="0" inputmode="numeric"></label><label data-f="na">Niñas<input name="a_na" type="number" required min="0" inputmode="numeric"></label><label data-f="n">Niños y niñas<input name="a_n" type="number" required min="0" inputmode="numeric"></label><label data-f="cf">Confesiones de fe<input name="a_cf" type="number" required min="0" inputmode="numeric"></label><label data-f="of">Ofrenda (monto)<input name="a_of" type="text" inputmode="decimal" placeholder="Ej: 500 o 150,50"></label><label data-f="of">Moneda de la ofrenda<select name="a_ofm"><option>Bs</option><option>USD</option></select></label><label data-f="tema">Tema<input name="a_tema" type="text" maxlength="120" required></label><label data-f="lugar">Familia o lugar (opcional)<input name="a_lugar" type="text" maxlength="120"></label><p class="note" id="atot"></p></div><div id="pge" hidden><label>Lugar<input name="lugar" type="text" required  placeholder="Barrio, casa o sector"></label><label>Cantidad de personas<input name="cantidad" type="number" required min="0" inputmode="numeric" placeholder=""></label><label>Detalle<textarea name="detalle" rows="3" placeholder="Qué se hizo y cómo respondieron"></textarea></label><p class="note">No escribas datos privados de las personas.</p></div><button class="btn" type="submit">Enviar reporte</button><p class="note" id="rok" role="status"></p></form></div>
 
 <div id="t3" class="tab" hidden><p id="tot"></p><ul class="rlist" id="rl"></ul></div>
 
@@ -1113,6 +1114,7 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <p class="note">Marca lo que debe aparecer en la app y en el panel de cada cargo cuando esa persona entra con su correo y contraseña. El cargo sale del registro de la persona. Los administradores y pastores de sede siempre ven todo. Los accesos de Departamentos y Escuela dependen de que la persona esté registrada y aprobada allí.</p>
 <table class="acct" id="acct"></table>
 <div><button class="btn" type="button" id="accsv">Guardar accesos</button> <button class="btn alt" type="button" id="accrs">Restablecer valores</button> <span class="note" id="accm" role="status"></span></div>
+<h3 style="margin-top:28px">Qué puede reportar cada cargo</h3><p class="note">En «Reportar» cada persona solo ve los tipos marcados para su cargo. Los administradores y pastores de sede pueden reportar todo. Servicios dominicales, casa de oración y vigilias los reporta el coordinador de Protocolo desde su panel de Departamentos.</p><div style="overflow-x:auto"><table class="acct" id="rept"></table></div><h3 style="margin-top:24px">Reportes extra por persona</h3><p class="note">Para una persona en particular, además de lo de su cargo. Ejemplo: Cachorros de León para la pastora Saraí de García.</p><div style="display:grid;gap:10px;max-width:560px"><label>Persona<select id="reppu"><option value="">Elige una persona</option></select></label><div id="reppc" style="display:flex;flex-wrap:wrap;gap:6px 16px"></div></div><ul class="rlist" id="reppl"></ul><div><button class="btn" type="button" id="repsv">Guardar permisos de reportes</button> <button class="btn alt" type="button" id="reprs">Restablecer valores</button> <span class="note" id="repm" role="status"></span></div>
 </div>
 </div>
 <div id="t9" class="tab" hidden>
@@ -1183,7 +1185,7 @@ if(ios&&!navigator.standalone)h.style.display='block'})()</script>
 <p class="note" id="anInfo"></p></div></div>
 </div>
 <div id="t4" class="tab" hidden>
-<p class="note" id="psnote" hidden></p>
+<div id="rsbox" style="margin-bottom:28px"><h3>Reporte semanal para la cobertura</h3><p class="note">Se llena solo con los reportes que envían los líderes en la semana (lunes a domingo). Revisa, corrige si hace falta y descárgalo.</p><div style="display:grid;gap:10px;max-width:640px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))"><label>Semana que termina el domingo<input id="rsw" type="date"></label><label id="rssedew">Sede<select id="rssede"><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label></div><p class="note" id="rsmsg" role="status"></p><div style="display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px"><button class="btn sm" type="button" id="rspng">Descargar imagen (PNG)</button><button class="btn sm" type="button" id="rsshr">Compartir imagen</button><button class="btn alt sm" type="button" id="rsxls">Descargar Excel</button><button class="btn alt sm" type="button" id="rsre">Actualizar</button></div><div style="overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#fff"><canvas id="rscv" style="width:100%;min-width:640px;display:block"></canvas></div><details style="margin-top:12px"><summary style="cursor:pointer;font-weight:700">Revisar o corregir números</summary><div style="display:grid;gap:8px;max-width:640px;margin:10px 0"><label>Nombre de la congregación<input id="rscong"></label><label>Pastores<input id="rspast"></label><label>Estado<input id="rsest"></label></div><div id="rsf"></div><button class="btn alt sm" type="button" id="rssave">Guardar nombre, pastores y casas de paz activas de esta sede</button></details><hr style="margin:28px 0;border:0;border-top:1px solid var(--line)"></div><p class="note" id="psnote" hidden></p>
 <h3>Resumen por sede</h3>
 <div style="display:grid;gap:10px;max-width:420px;margin-bottom:14px"><label>Sede<select id="rsede"><option value="">Todas las sedes</option><option>Sede principal</option><option>La Guaricha</option><option>Valencia</option><option>Bocono</option></select></label>
 <label>Ver detalle de<select id="rver"><option value="">Solo resumen</option><option>Aportes</option><option>Casa de paz</option><option>Nuevos creyentes</option><option>Evangelismo</option><option>Ayuda social</option></select></label></div>
@@ -1520,7 +1522,7 @@ let A,S,auth,db,me=null,busy=false;
 const loaders={};
 
 const AP_TABS={t1:'Recursos y Casa de Paz',t2:'Hacer un reporte',t3:'Mis reportes',t4:'Panel de pastores',t5:'Anuncios',t6:'Escuela',t7:'IGLEKIDS',t8:'Eventos',t9:'Departamentos',t10:'Sedes',t11:'Accesos'};
-const AP_SUB={t1:'Material de apoyo y temas de la semana',t2:'Casa de paz, nuevos creyentes, evangelismo o ayuda social',t3:'Historial de reportes enviados',t4:'Solicitudes, aportes, miembros y eventos',t5:'Avisos y transmisiones de la iglesia',t6:'Inscripciones y material de la escuela',t7:'Contenido, inscritos y supervisión',t8:'Inscripciones a eventos',t9:'Equipos de servicio, avisos y recursos',t10:'Foto, dirección y horarios de cada sede',t11:'Permisos visibles por cada cargo'};
+const AP_SUB={t1:'Material de apoyo y temas de la semana',t2:'Casa de paz, servicios, discipulados, vigilias y más',t3:'Historial de reportes enviados',t4:'Solicitudes, aportes, miembros y eventos',t5:'Avisos y transmisiones de la iglesia',t6:'Inscripciones y material de la escuela',t7:'Contenido, inscritos y supervisión',t8:'Inscripciones a eventos',t9:'Equipos de servicio, avisos y recursos',t10:'Foto, dirección y horarios de cada sede',t11:'Permisos visibles por cada cargo'};
 function apSetZoneMeta(t){const tt=$('aptt'),zt=$('apz-lid-t'),zs=$('apz-lid-s');const nom=AP_TABS[t]||'Líderes';if(tt)tt.textContent=nom;if(zt)zt.textContent=nom;if(zs)zs.textContent=AP_SUB[t]||'';document.body.setAttribute('data-zone',t||'')}
 document.querySelectorAll('.tabs').forEach(g=>{
  const ids=g.dataset.all.split(',');
@@ -1559,13 +1561,34 @@ const CARGOS=['Apóstol','Pastor','Ministro','Anciano','Diácono','Mentor','Líd
 const ACCK=[['recursos','Recursos'],['reportar','Reportar'],['mis','Mis reportes'],['escuela','Escuela']];
 const accDef=()=>{const o={};CARGOS.forEach(c=>{const al=c!=='Discípulo'&&c!=='Miembro';o[c]={recursos:true,reportar:al,mis:al,escuela:true}});return o};
 let ACC=accDef(),accP=null;
-function accLoad(){return accP||(accP=(async()=>{try{const d=await S.getDoc(S.doc(db,'sedes_info','accesos'));if(d.exists()){const m=d.data().m||{};CARGOS.forEach(c=>{if(m[c]&&typeof m[c]==='object')Object.assign(ACC[c],m[c])})}}catch(e){}})())}
+const REP_T=["Casa de paz", "Nuevos creyentes", "Evangelismo", "Ayuda social", "Servicio dominical", "Casa de oración", "Discipulado", "Vigilia", "Cachorros de León", "Altar familiar", "Bautizos"];
+const REP_DEF=c=>(c==='Líder'||c==='Sub líder')?['Casa de paz','Altar familiar','Nuevos creyentes','Ayuda social']:c==='Mentor'?['Evangelismo','Bautizos','Nuevos creyentes','Ayuda social']:c==='Anciano'?['Discipulado','Nuevos creyentes','Ayuda social']:['Nuevos creyentes','Ayuda social'];
+let REPA={},REPP={};
+const repCargo=c=>Array.isArray(REPA[c])?REPA[c]:REP_DEF(c);
+function repTipos(u){if(!u)return[];if(u.rol==='admin'||u.rol==='pastor_sede')return REP_T.slice();const t=new Set(repCargo(u.cargo));(REPP[u.uid]||[]).forEach(x=>t.add(x));return REP_T.filter(x=>t.has(x))}
+function accLoad(){return accP||(accP=(async()=>{try{const d=await S.getDoc(S.doc(db,'sedes_info','accesos'));if(d.exists()){const m=d.data().m||{};CARGOS.forEach(c=>{if(m[c]&&typeof m[c]==='object')Object.assign(ACC[c],m[c])});const r=d.data().r||{};CARGOS.forEach(c=>{if(Array.isArray(r[c]))REPA[c]=r[c]});const p=d.data().p||{};Object.keys(p).forEach(k=>{if(Array.isArray(p[k]))REPP[k]=p[k]})}}catch(e){}})())}
 const accOk=(u,k)=>{if(!u)return false;if(u.rol==='admin'||u.rol==='pastor_sede')return true;const c=ACC[u.cargo];return c?c[k]!==false:true};
 function accPaint(){const T=$('acct');if(!T)return;T.textContent='';const h=document.createElement('tr');h.appendChild(el('th','Cargo'));ACCK.forEach(k=>h.appendChild(el('th',k[1])));T.appendChild(h);
  CARGOS.forEach(c=>{const r=document.createElement('tr');r.appendChild(el('td',c));ACCK.forEach(k=>{const td=document.createElement('td'),i=document.createElement('input');i.type='checkbox';i.checked=ACC[c][k[0]]!==false;i.dataset.c=c;i.dataset.k=k[0];i.setAttribute('aria-label',c+': '+k[1]);td.appendChild(i);r.appendChild(td)});T.appendChild(r)})}
-loaders.acc=async()=>{await accLoad();accPaint()};
+loaders.acc=async()=>{await accLoad();accPaint();repPaint();repUsers()};
+let REPU=[];
+function repPaint(){const T=$('rept');if(!T)return;T.textContent='';const h=document.createElement('tr');h.appendChild(el('th','Cargo'));REP_T.forEach(t=>h.appendChild(el('th',t)));T.appendChild(h);
+ CARGOS.forEach(c=>{const r=document.createElement('tr');r.appendChild(el('td',c));const cur=repCargo(c);REP_T.forEach(t=>{const td=document.createElement('td'),i=document.createElement('input');i.type='checkbox';i.checked=cur.includes(t);i.dataset.c=c;i.dataset.t=t;i.setAttribute('aria-label',c+': '+t);td.appendChild(i);r.appendChild(td)});T.appendChild(r)})}
+function repPList(){const L=$('reppl');L.textContent='';const nm=id=>{const u=REPU.find(x=>x.uid===id);return u?u.nombre:'(persona no encontrada)'};
+ const ks=Object.keys(REPP).filter(k=>(REPP[k]||[]).length);if(!ks.length){L.appendChild(el('li','Nadie tiene reportes extra todavía.'));return}
+ ks.forEach(k=>L.appendChild(el('li',nm(k)+': '+REPP[k].join(', '))))}
+function repPChecks(){const c=$('reppc');c.textContent='';const id=$('reppu').value;if(!id)return;const cur=REPP[id]||[];
+ REP_T.forEach(t=>{const l=document.createElement('label');l.style.cssText='display:flex;gap:6px;align-items:center;font-weight:500';const i=document.createElement('input');i.type='checkbox';i.checked=cur.includes(t);
+  i.onchange=()=>{const a=new Set(REPP[id]||[]);i.checked?a.add(t):a.delete(t);REPP[id]=REP_T.filter(x=>a.has(x));repPList()};l.append(i,document.createTextNode(t));c.appendChild(l)})}
+async function repUsers(){try{const q=await S.getDocs(S.query(S.collection(db,'users'),S.where('estado','==','aprobado')));REPU=[];q.forEach(d=>REPU.push({uid:d.id,...d.data()}));
+ REPU.sort((a,b)=>(a.nombre||'').localeCompare(b.nombre||'','es'));const sel=$('reppu'),k=sel.value;sel.length=1;
+ REPU.forEach(u=>{const o=document.createElement('option');o.value=u.uid;o.textContent=(u.nombre||u.email)+' · '+(u.cargo||'')+' · '+(u.sede||'');sel.appendChild(o)});sel.value=k;repPChecks();repPList()}catch(x){$('repm').textContent=er(x)}}
+$('reppu').onchange=repPChecks;
+$('repsv').onclick=async()=>{const r={};CARGOS.forEach(c=>r[c]=[]);document.querySelectorAll('#rept input').forEach(i=>{if(i.checked)r[i.dataset.c].push(i.dataset.t)});$('repm').textContent='Guardando…';
+ try{await S.setDoc(S.doc(db,'sedes_info','accesos'),{r,p:REPP,actualizado:S.serverTimestamp()},{merge:true});REPA=r;$('repm').textContent='Guardado. Se aplica la próxima vez que cada persona entre.'}catch(x){$('repm').textContent='No se guardó ['+(x.code||x.message)+']'}};
+$('reprs').onclick=()=>{REPA={};repPaint();$('repm').textContent='Valores originales puestos. Toca «Guardar permisos de reportes» para aplicarlos.'};
 $('accsv').onclick=async()=>{const o={};CARGOS.forEach(c=>o[c]={});document.querySelectorAll('#acct input').forEach(i=>{o[i.dataset.c][i.dataset.k]=i.checked});$('accm').textContent='Guardando…';
- try{await S.setDoc(S.doc(db,'sedes_info','accesos'),{m:o,actualizado:S.serverTimestamp()});ACC=accDef();CARGOS.forEach(c=>Object.assign(ACC[c],o[c]));$('accm').textContent='Guardado. Se aplica la próxima vez que cada persona entre.'}catch(x){$('accm').textContent='No se guardó ['+(x.code||x.message)+']'}};
+ try{await S.setDoc(S.doc(db,'sedes_info','accesos'),{m:o,actualizado:S.serverTimestamp()},{merge:true});ACC=accDef();CARGOS.forEach(c=>Object.assign(ACC[c],o[c]));$('accm').textContent='Guardado. Se aplica la próxima vez que cada persona entre.'}catch(x){$('accm').textContent='No se guardó ['+(x.code||x.message)+']'}};
 $('accrs').onclick=()=>{ACC=accDef();accPaint();$('accm').textContent='Valores originales puestos. Toca «Guardar accesos» para aplicarlos.'};
 async function enter(u){
  if(!u){me=null;view('auth');return}
@@ -1605,10 +1628,21 @@ $('fg').addEventListener('click',async()=>{
  const m=$('le').value.trim();if(!m){msg('Escribe tu correo arriba y vuelve a tocar el botón.');return}
  try{await A.sendPasswordResetEmail(auth,m);msg('Te enviamos un enlace para crear una contraseña nueva. Revisa tu correo.')}catch(x){msg(er(x))}
 });
+/* Si el correo quedó en Authentication pero se borró su ficha en Firestore, lo recupera */
+async function crearCuenta(email,pass,col){
+ try{return await A.createUserWithEmailAndPassword(auth,email,pass)}
+ catch(x){
+  if(!x||x.code!=='auth/email-already-in-use')throw x;
+  let c;try{c=await A.signInWithEmailAndPassword(auth,email,pass)}catch(y){throw x}
+  const d=await S.getDoc(S.doc(db,col,c.user.uid));
+  if(d.exists()){await A.signOut(auth);throw x}
+  return c;
+ }
+}
 $('fs').addEventListener('submit',async e=>{
  e.preventDefault();msg('');busy=true;
  try{
-  const c=await A.createUserWithEmailAndPassword(auth,$('se').value.trim(),$('sp').value);
+  const c=await crearCuenta($('se').value.trim(),$('sp').value,'users');
   await S.setDoc(S.doc(db,'users',c.user.uid),{nombre:$('sn').value.trim(),sede:$('ss').value,cargo:$('sc').value.trim(),telefono:$('st').value.trim(),email:$('se').value.trim(),estado:'pendiente',rol:'lider',creado:S.serverTimestamp()});
   await dpPostular(c.user,$('sn').value.trim(),$('st').value.trim(),$('sdp').value);
   busy=false;$('fs').reset();await enter(c.user);
@@ -1702,7 +1736,7 @@ async function dpPanel(){
  const id=dpCur(),av=$('dpavl'),mm=$('dpmem'),sw=$('dpsol'),sl=$('dpsoll'),puedeSol=!!(id&&(DPADM||(DPU&&DPU.rol==='coordinador'&&DPU.deptoId===id)));
  av.textContent='';mm.textContent='';sl.textContent='';sw.hidden=!puedeSol;
  $('dpname').textContent=id?dpNom(id):'Aún no hay departamentos creados';
- $('dpaf').hidden=!id;if(!id){DPMEMS=[];TURNO=null;return}
+ $('dpaf').hidden=!id;dprShow(id);if(!id){DPMEMS=[];TURNO=null;return}
  try{
   const q=await S.getDocs(S.query(S.collection(db,'deptos_avisos'),S.where('deptoId','==',id)));const L=[];q.forEach(d=>L.push(Object.assign({id:d.id},d.data())));
   L.sort((a,b)=>((b.creado&&b.creado.seconds)||0)-((a.creado&&a.creado.seconds)||0));
@@ -1759,7 +1793,7 @@ $('dpfg').addEventListener('click',async()=>{const m=$('dple').value.trim();if(!
 $('dpfs').addEventListener('submit',async e=>{e.preventDefault();dpMsg('');busy=true;
  try{
   const did=$('dpsd').value;if(!did)throw new Error('Elige tu departamento.');
-  const c=await A.createUserWithEmailAndPassword(auth,$('dpse').value.trim(),$('dpsp').value);
+  const c=await crearCuenta($('dpse').value.trim(),$('dpsp').value,'deptos_usuarios');
   await S.setDoc(S.doc(db,'deptos_usuarios',c.user.uid),{nombre:$('dpsn').value.trim(),deptoId:did,deptoNombre:dpNom(did),telefono:$('dpst').value.trim(),email:$('dpse').value.trim(),estado:'pendiente',rol:'miembro',creado:S.serverTimestamp()});
   busy=false;$('dpfs').reset();await dpEnter(c.user);
  }catch(x){busy=false;dpMsg(x&&x.message&&!x.code?x.message:er(x))}});
@@ -2592,7 +2626,7 @@ $('efl').addEventListener('submit',async e=>{e.preventDefault();emsg('');
 $('efg').addEventListener('click',async()=>{const m=$('ele').value.trim();if(!m){emsg('Escribe tu correo arriba y vuelve a tocar el botón.');return}
  try{await A.sendPasswordResetEmail(auth,m);emsg('Te enviamos un enlace para crear una contraseña nueva. Revisa tu correo.')}catch(x){emsg(er(x))}});
 $('efs').addEventListener('submit',async e=>{e.preventDefault();emsg('');busy=true;
- try{const c=await A.createUserWithEmailAndPassword(auth,$('ese').value.trim(),$('esp').value);
+ try{const c=await crearCuenta($('ese').value.trim(),$('esp').value,'estudiantes');
   await S.setDoc(S.doc(db,'estudiantes',c.user.uid),{nombre:$('esn').value.trim(),ci:$('esci').value.replace(/\D/g,''),telefono:$('est').value.trim(),sede:$('ess').value,tipo:$('esT').value,nivel:$('esv').value,lider:$('esl').value.replace(/\D/g,''),email:$('ese').value.trim().toLowerCase(),estado:'pendiente',creado:S.serverTimestamp()});
   await dpPostular(c.user,$('esn').value.trim(),$('est').value.trim(),$('esdp').value);
   busy=false;$('efs').reset();await escEnter(c.user);await enter(c.user)}catch(x){busy=false;emsg(er(x))}});
@@ -2912,19 +2946,37 @@ $('fr').addEventListener('submit',async e=>{
 });
 
 const PAN={'Casa de paz':'pcp','Nuevos creyentes':'pnc','Evangelismo':'pev','Ayuda social':'pge'};
-function panel(){const p=PAN[$('rty').value];['pcp','pnc','pev','pge'].forEach(i=>{const d=$(i);d.hidden=i!==p;d.querySelectorAll('input,select,textarea').forEach(x=>x.disabled=i!==p)})}
-function permEv(){const ok=me&&(me.cargo==='Mentor'||me.rol==='admin');const o=$('optev');o.disabled=!ok;if(!ok&&$('rty').value==='Evangelismo'){$('rty').value='';panel()}}
+const ACT={'Servicio dominical':{f:['h','m','j','no','na','cf','of'],t:'Asistencia total del servicio del domingo. Basta con un reporte por servicio.'},
+ 'Casa de oración':{f:['h','m','j','n'],t:'Asistencia a la casa de oración.'},
+ 'Discipulado':{f:['h','m','j','no','na','tema'],t:'Personas que recibieron discipulado.'},
+ 'Vigilia':{f:['h','m','j'],t:'Envía un reporte por cada vigilia general realizada.'},
+ 'Cachorros de León':{f:['no','na'],t:'Niños y niñas que asistieron a Cachorros de León.'},
+ 'Altar familiar':{f:['h','m','j','n','lugar'],t:'Envía un reporte por cada altar familiar realizado.'},
+ 'Bautizos':{f:['h','m','j','n'],t:'Personas bautizadas.'}};
+Object.keys(ACT).forEach(k=>PAN[k]='pact');
+function panel(){const p=PAN[$('rty').value];['pcp','pnc','pev','pge','pact'].forEach(i=>{const d=$(i);d.hidden=i!==p;d.querySelectorAll('input,select,textarea').forEach(x=>x.disabled=i!==p)});actCfg();cpReal()}
+function actCfg(){const a=ACT[$('rty').value];if(!a)return;$('actnote').textContent=a.t;$('pact').querySelectorAll('[data-f]').forEach(l=>{const on=a.f.includes(l.dataset.f);l.hidden=!on;l.querySelectorAll('input,select').forEach(x=>x.disabled=!on)});atot()}
+function cpReal(){const off=$('pcp').hidden,no=$('cpreal').value==='No';const b=$('pcpn');b.hidden=no;b.querySelectorAll('input,select').forEach(x=>x.disabled=off||no)}
+function atot(){let t=0;['a_h','a_m','a_j','a_no','a_na','a_n'].forEach(n=>{const x=document.querySelector('#pact [name='+n+']');if(!x.disabled)t+=Number(x.value)||0});$('atot').textContent='Total de personas: '+t}
+$('cpreal').addEventListener('change',cpReal);$('pact').addEventListener('input',atot);
+$('pev').addEventListener('input',()=>{let t=0;['ev_h','ev_m','ev_j','ev_no','ev_na'].forEach(n=>t+=Number(document.querySelector('#pev [name='+n+']').value)||0);document.querySelector('#pev [name=ev_alcanzadas]').value=t});
+function permEv(){repOpts()}
+async function repOpts(){await accLoad();const sel=$('rty'),cur=sel.value,ok=repTipos(me);sel.textContent='';
+ const o0=document.createElement('option');o0.value='';o0.textContent=ok.length?'Elige una opción':'No tienes reportes asignados';sel.appendChild(o0);
+ ok.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;sel.appendChild(o)});sel.value=ok.includes(cur)?cur:'';panel()}
+loaders.rep=()=>repOpts();
 $('rty').addEventListener('change',panel);panel();
 const num=n=>Number(document.querySelector('#pcp [name='+n+']').value)||0;
-function tot(){$('rtot').textContent='Total de personas: '+(num('hombres')+num('mujeres')+num('adolescentes')+num('ninos'))}
+function tot(){$('rtot').textContent='Total de personas: '+(num('hombres')+num('mujeres')+num('adolescentes')+num('ninos')+num('ninas'))}
 $('pcp').addEventListener('input',tot);
 $('rep').addEventListener('submit',async e=>{
  e.preventDefault();$('rok').textContent='';
  try{
   const tipo=$('rty').value,p=$(PAN[tipo]);
-  if(tipo==='Evangelismo'&&!(me.cargo==='Mentor'||me.rol==='admin'))throw new Error('Solo los mentores pueden reportar evangelismo.');const d={};
-  p.querySelectorAll('input,select,textarea').forEach(x=>{d[x.name]=x.type==='number'?Number(x.value||0):x.value.trim()});
-  if(tipo==='Casa de paz'){d.total=d.hombres+d.mujeres+d.adolescentes+d.ninos;d.cantidad=d.total;d.lugar=d.territorio}
+  if(!repTipos(me).includes(tipo))throw new Error('Este tipo de reporte no está asignado a tu cargo.');const d={};
+  p.querySelectorAll('input,select,textarea').forEach(x=>{if(x.disabled||!x.name)return;d[x.name]=x.type==='number'?Number(x.value||0):x.value.trim()});
+  if(tipo==='Casa de paz'){['hombres','mujeres','adolescentes','ninos','ninas','convertidos'].forEach(k=>d[k]=d[k]||0);d.total=d.hombres+d.mujeres+d.adolescentes+d.ninos+d.ninas;d.cantidad=d.total;d.lugar=d.territorio}
+  if(ACT[tipo]){d.cantidad=['a_h','a_m','a_j','a_no','a_na','a_n'].reduce((t,k)=>t+(d[k]||0),0);d.lugar=d.a_lugar||d.a_tema||''}
   if(tipo==='Evangelismo'){d.cantidad=d.ev_alcanzadas;d.lugar=d.ev_sector}
   if(tipo==='Nuevos creyentes'){d.cantidad=1;d.lugar=d.conv_sector||''}
   await S.addDoc(S.collection(db,'reportes'),{...d,uid:me.uid,nombre:me.nombre,sede:me.sede,cargo:me.cargo,tipo,fecha:$('rfe').value,creado:S.serverTimestamp()});
@@ -2932,7 +2984,193 @@ $('rep').addEventListener('submit',async e=>{
  }catch(x){$('rok').textContent=er(x)}
 });
 
-const desc=x=>x.tipo==='Casa de paz'?'Casa de paz '+(x.casa||'')+' ('+(x.codigo||'')+') · '+x.cantidad+' personas · '+(x.convertidos||0)+' convertidos · ofrenda '+(x.ofrenda||'—'):x.tipo==='Evangelismo'?'Evangelismo · '+(x.ev_sector||'')+' · '+x.cantidad+' alcanzadas · '+(x.ev_conversiones||0)+' conversiones · '+(x.ev_reconc||0)+' reconciliaciones · receptividad '+(x.ev_recep||'—'):x.tipo==='Nuevos creyentes'?'Nuevo creyente: '+(x.conv_nombre||'')+' · '+(x.conv_estado||'')+' · bautismo: '+(x.conv_bautismo||'—'):x.tipo+' · '+x.cantidad+' personas · '+(x.lugar||'');
+/* ===== REPORTE SEMANAL PARA LA COBERTURA ===== */
+const RS_LOGO='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAwFBMVEUbY5lTX2lnjqomT25FcZEbe8C60N2NvuCcsb7f8PcJcbn+/v4Fa7PU5e9Ol8htqNAyiMOLuNYFV5C21OfG3OkDRXUDKUnk6+4ug7woe7WvxtWny+IINFYAO2eXwtwBTYOZxOF7stYIIzuVpbHO1dlcoc9MiLALYZsyRVYnOUpueoZ0hpSqusZ0l7CkqrACHjdUZnTFycwzVnFKWWcvZ49CjsODjJOMmqVocnxRd5MhfsCxt7yFrMVkncM9kMeMlJuCoM6rAAAAQHRSTlP/////////////////////////////////////////////////////////////////////////////////////73leyQAAD8BJREFUeNq1W2djmzoXpklv732NBkLCTOM94pXp7LT//1+9R2IJEI6dtrQfEptwHo7OHpb9pcvHgvN4NGLyGo1izgX2v/Qk6wu0ecwYpQQuJ7vkj3NK2Yjjvw0A8xGj5KfTkxcqL/VrAEjmlMX4rwHAMRB3Msq9DEJPu9SHAbCDnoPBOv3dgXpQ0e645NfAidMxnAhAjOS7f0a9YgtgYOLPAQDyTu8k4hUfXh0yFn8GgGBzp4eOvrD5cg5U/D4AMTKSr/gRVB+hJjLHGePfA4Bj2iYPvyMyzn+mNs2/J6R5p4RA0t8BwMekffaoF/OesIPsc8549unBjjhps+ofh/CvAsCjeWgSPcRtjLEihogd29lPFAecmQTiNWBfA8DHP80ShljEWZRxnlPCYgWA4TgOzBL5SvD5APyYBl1yTzi8cAbAARYpw4xSesRMONG5APCIHFGweSny6KgiVsIYsvMACHZM9Y1ffQaDngOAj51zDN9pl1kQjAB45/H/1uXgEwFwGqI/Tx4eGeCTAHDaQyc7HYTOOSsDAutr9BFyh94g6csrGQw81z0NRxuBdT7/gfig359cre6f15vHx836+ebuCnB47gnAnc8ACBp8EvIMk/7k23p/WwuC/dl+c5/0B58yAmz3UQAY9O/Yn7uDSf9m2uHl8f5bknifxWz0GADMjtFHbjJZ/SrfXGCZHPBaKO5P7xNveRwBOwIA7G/3BeTv33RpuQiJuuoeP7oBLhxFIDoB8Hm3AqDB9f22wfNdJneo4WlubwbDY4wMuwDgbgVAbv9q3z716FIBaKnS9m5wRBTQhxmA3+2A0GDy7GcY6wIYSRagYdvZXhxTSp1lGoC40wEv+1dvWXIyRtM6oXdXAtgZmHPXLQko9A0A4AC6pG9yr96bM9LzNg1C8tTcF1NE83IEwYcBQJcGouH1OgtRZIA8aAKQYaD73WgXdp0IEOItALzjAJB3/ZiFKPIGlEyb1gf45l62iKvccNppEtCiCaDLBCJv8pS5CBWiLPu3TVJgOtybFgCmgvFtJw/cqAGgSwLda0nfLyLE4apFivZ6XhvA2AnTYwhKY2AVEuh00H/UI1SUrNvvGvQGhk8hVJY2l3WZJJfVAMSkQ//ko/G/xbeov22RSh2UPLU/lUGdpHHRYQ8KFlg5A4xOGPXva/R7XvsEJAAjrF6OYOF22NatBsAsAci7wjUPhfqPtoHZ7lW7QBY7hcnzHzpY8F0DYFYBd/JWB+f2Z20A1DHIoD3K6liQxNoz8yEgd1YCMNsApAQAQsTy8u4NBo/2+r9MfMmkNsjNten9diUA5phu8CRnsZYioMRASZClmS+oCoDMThY9+DkAbIyD3cm+gc1gheCEfpr4gsvIQopBtDSKuNJEKzsBkwe+b6qna9ABexz2nwy5Bamp24XZyCxyAEY35E6ipnqahA3P3cS3jXYov6x3OCdkZgFWAIwnkDEgrfGm5QmVtBuMY+2RaAlkPowAhlsFwHgCy/6bTBJ0aGjwZKBkFMH6ye0kC4xidqEAGE9A2bz0Z90uPRkoDUznUgsuFQuIkQUPCoDJDyEpWc2zMUReIIKR0Qrpf+hCDBEZAXgzAIBNVkhJVto4m3bkhYl7Z1CBRnQvX9QOjEIwBQBGRygZ6zdZo3hZJ+UYBFM0o3skow9qNPYXAMBkBlF/ajDQyH1vAngdvLW40nYsUti40RI8AACTCLjJzCScCDXSUt7zmiKADS/UfQaX2MJzg6WW1tU3IEPNAkM4ZN30S+ujMpe5UQojSxhkUAXfwugiG6Uu5i266KNhFQ8OQaeYEcDUMpkhlIAfig/mUlfciP31aMhn5dOWyeSJ6PrDTaXE4c6KTTKY3LZFALmeLAahoJ4ebl8iQ3qP3MnqtlJwS1r8wATgxTIpgXsJVqARJkJ+urq5uV9BGSagtQL8zK88Uy5PcPNatyPS4tgmdXe/W2MTgDu7aZ9QslJv6t8+3kE56mFhqj5zp0imVtuaQUbyoKgJwJ1FDQCGNwpA7c6ryufcPm1+GetEGFlQQvP6iYpdNUMKwmaWwg4AHvCP1x2RIfcwXFOoHE5Wj7jpknvSj7FXg9P1LJJHj3rJU+bg3KkDmJ7UBbydTouwLdXPUD4xLl1URUsCUAeFQkrHJeT89rrC2uyspnA9mBqutSeiMOZFzDqwyGvWcsLQB8r/RDn+JoCnM7vidU8iAVQ85YKLPNmUALL7Qh6kheYbAAx2ZwKoq7enAUAO7qGs56UAZLqCUvuDlwB2LQBgzTEXZwFAXQAIhwpJBaBAxcBY6jIQ1Iv9Y0bnhMQnA6i5MqRLFXg0QvLjXiYFgMBBlakcSi1ouE8nUC3AWqUXSrVxHMP0hiFhmtdP8FEXwjHEchkt17Pm5TtWaih9hwhaHQ9Uc4eY/0vJIgiCA5mPR/ioCKiAOq0cpVOwx720TMU5CFRs3FW1JCKvmYVu1rDoe8sQxgVwZ1wuDflbTSrKdwVLODa56TvwL05H5wdocT6iFlTOn5/ebvf76eYyGda71Lxh95cywjLVAIb3Fuu12++dzisXB0LCweSmCATwdhttXLcX0s6um7uS7vW1PXnivVij1+LTkBSmUDmv8bHGwfW321IQpQymm+9QBCB+QR+1QzzNvVZDMIONxcNcLoTtFy15VfyNj3RtrtfVVBEWcfo+nUEtCPWIGjloRZko2VSmEYWCs7LqNrVwkFsHEbG0SKCkGuDuzsXkVzVQ9UNESg/57gJ4wLAaOWhF+W9V0QaMLkT3uQtM3iz7UDiIj5gW/X+VOJNO+nmpKo+EsM05pYupD7mHQ4lJq2StpZBB1KP58IEM/4VVhMtgHElQyKlKnFlHdat/U7z+jyhi7J19MMoiAf7PMvfS0eCbVjOBOjUrZGB4JzOjwkI7WkQgixcdZzBMZvXRMlv+E4J+vGyDDsh73TuOBY7zNx08y9ywNRej0kC/K6XOaoUge1ub2bHADNOYEhrudjNzsak3lCdQmSE4KPYzF4EnmR2HXaVcY0pdVmRA/qm9Y5DaLKbRBd6CbaYLMwM2jQCtnH6AqpdVEzbNFn3vKK8B10D6MC5EENgvxRDHYxq+MGPkK2soxhxcVr2sWrhMRgHSUmqGzOdp2z+EWNiU2h9MkIiFLAipO70AHvxj+ItnvRard9tlEcCqEmeYS+E8Lb63FkYWLEsRFDbb+taUu1tmRe87H0zAiBhq3ooBpQiiMQtKOyiLAFaVOKOYRB88RFopl7XKvLI7Az3byC6dHzhHSJRGAqb9wrAd5CsJqEQQwiFcRF5gBTIAtKiqMpjVrLd1FsiQNMn+mR2+4wXDMLRHKHcuGFqE7m7B271fVfDVijYIOaNcvVR9SwKICxPFscZCtAQpEE0WlP2pyMcvEb98irxN5K6jh/9+0P+x8SFstVz2WUu0Z9CBaVGsDsqZINTsabw3EEgORHaE8yMQEokNZnA04nOQgIXTPIBvtfAEtRRaAaBI+76SUlXp/u4ajmD3QzzM+CLCFMwQ5fOABQ8Ld/EActAwwlnFvUiae5ptQ8lzWa4XegDrEKS3F/GD2yztZYMCfnQXscEFGz4w944tX6JAUOrUOeBNZNjwbxmN0jjUuh9R1THRgQWiEhjZ441qh4CgKAQBvJ97Q/BZEAqwyGYMnJnTq501CMBUb7lAJLDgJM1/G9zrPaOK7TByVdkfNfGxrXXewE359i7iEFYQgSmcAhVwBAeYrAxD8rPd86vKhohgkdIU6RataNstynuEIDyoi8HUQ61qJQbLY0Vjbzd2H+A/RTsajJ3aCbgqbtLLhijgGOdwigZcDqDwO2ALGmVWphBocmDRH5hzqQUQxDEf72b2RwQGAci//tOm39BAWhidos1RtG4XmqmuK56Mtv/TxhGkaAqGQ8bDKA5YHNA0DCjwvyYBec/b1+pESLcBZQeyABB1j77EalajEgS04CAGQr57FDL28A7OaL5IQz0YQ8lkqvecpQTqfmI52Tfb9zWjW58QkzwQN5ogHGwmYtAGEELMP8QoSElANAGQEye3Dfpw/KRy9jJIawAQSz1xImPdEapy7KYajZGiCdk0TJP2GEXssKABdeaONnDzzc973qVyCfIuSJkSTqL2BAV1y8dzHPm1eIz6aipkUEoCjfxI8BQ4wKg4MHqYk9LaePnADWb6UKwceSrUKwsRWkMspbo68FheF8UsI31aFRACEgvBqVhEhI4JpVA7KMlPNn4+lalHYb0Yl4GAd2UaYqlMHoIh5VowJCekVeqJZR6qHvOPA26A41QwztJ87UBWc/uT9ayYSW6U+hlFekvUMMi0KxH0Mr9cCY0kqJjg/7rMZ+acn1Rul6TpGMg7GfXr1WPmKsrkyzD1mnlI4yiXVdobUqQKWk7s5CWA7XoFQ4xDQCuXOn46QagK2TBh+O2tHMkOOofCMg9pBlCFH9nYdnVqvWxKvKhC3D7erNQwZTJIZJViMrm6f9wWqdqIHpsJ9iZR9zTdVvN8ULciaExQbXFC25uYbaeP6/Xz83r9OH0rkyVfHCcPFvrXsYHGnWbw0tQiuBnmwvpIhLs3gGK1DIG6x52XmgYaRzoX1SkQsPiSAY25WedAaGpYKJLrR9kajHYzlAPrKV9NAE0A/JcKwUHVC1CY1kp++RqNXGuCwoC85NIVk6r4qlNHag8CEj+9kZ2s/M+maiEEq1dSUArpf3uhKFuwgv0qaYRAD1/r6S1CKtdHqeCR5qKuZp/PFYtGEEggBePIMNLc6byU74OEQUXZAB4doW+arBZWLQrkDIu8sGvcdWl3N7N9C8IyAdb4f3V72my5eNCjQKeHDyjPHdFJK0bqLigc1OwYyJ/h/Tum6/H3oS5M6kFgyzFHpnWe+gVLXmnGAlbbeVn2V7PT9wvq05AoD4wozxlReFWE2vKAx6FQnBrVShLu5Jt/1opHcygV0XSMsXokhlAcZSlMRsLRsnLEmEVj1JAYiBCfz11ymXqNQTwEeQWEDOggwERlazVCRg2g6ymuCkAHCFLmrULl5Nf5az6z1lgsUruGjCOpluAqQiQNBMBZCO204/SAWjPJ0Vf2jPzNwEUtDUNUyPBSA+D4+dl0rJzlEeJXVr22d4P2JByEAT2kH0EgAk7PHMk+ddfM3xgG1UvhPxRCCOXf7nn8Z/+31v1ub5Jh93SwsbCh6T5wP/rthce3u0/G9buXIa5X+z+y8rkHCEt0LvnkejX9Y0uvbzfJwD19nwfJ7OB+b//Jtd/bzap/GgYEazDXV+vbP7747O9vrvoyGkdHN4Dg3ZObvf93Vr/9/XoFuzyeu2x5RKRWn+T4wvPe/6vL77Pp+v5KZQQe7Fepa+ippStITJ6nt/Zf375Xkyz7x+f71UpSnUz6iVy6etxHX9r//z9ySViPMcTObQAAAABJRU5ErkJggg==';
+const RS_DEF={cong:'C.C.I. PIEDRA VIVA',past:'',estado:'',activas:0};
+const rsDefSede=sd=>sd==='Sede principal'?{...RS_DEF,past:'JESUS Y ERNESTINA DE GARCIA',estado:'MARIARA-CARABOBO'}:{...RS_DEF,cong:'C.C.I. PIEDRA VIVA - '+String(sd||'').toUpperCase()};
+let RS={},RSH={...RS_DEF},RSW=['',''];
+const rsIso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const rsDmy=s=>(s||'').split('-').reverse().join('/');
+function rsSunday(){const d=new Date();d.setDate(d.getDate()+((7-d.getDay())%7));return rsIso(d)}
+function rsRange(){const e=$('rsw').value||rsSunday();const d=new Date(e+'T12:00:00');d.setDate(d.getDate()-6);return [rsIso(d),e]}
+const rsNum=v=>{if(typeof v==='number')return v;v=String(v||'').trim().replace(/[^\d.,-]/g,'');if(v.includes(','))v=v.replace(/\./g,'').replace(',','.');else if(/^\d{1,3}(\.\d{3})+$/.test(v))v=v.replace(/\./g,'');return Number(v)||0};
+const rsOf=o=>Object.keys(o).filter(k=>o[k]).map(k=>k+' '+o[k].toLocaleString('es-VE',{minimumFractionDigits:Number.isInteger(o[k])?0:2,maximumFractionDigits:2})).join(' / ');
+const rsSede=()=>(me&&me.rol==='admin'?$('rssede').value:(me&&me.sede))||'Sede principal';
+function rsAgg(r){
+ const R={},of={cp:{},sd:{}};const add=(k,v)=>R[k]=(R[k]||0)+(Number(v)||0);
+ const by=t=>r.filter(x=>x.tipo===t);
+ const A=(t,p,ks)=>by(t).forEach(x=>ks.forEach(k=>add(p+'_'+k,x['a_'+k])));
+ const uq=a=>new Set(a.map((x,i)=>String(x.codigo||x.casa||('#'+i)).trim().toLowerCase())).size;
+ const cp=by('Casa de paz'),si=cp.filter(x=>x.realizada!=='No'),no=cp.filter(x=>x.realizada==='No');
+ R.cdp_act=Number(RSH.activas)||0;R.cdp_real=uq(si);R.cdp_noreal=uq(no);
+ si.forEach(x=>{add('cp_h',x.hombres);add('cp_m',x.mujeres);add('cp_j',x.adolescentes);add('cp_no',x.ninos);add('cp_na',x.ninas);add('cp_cf',x.convertidos);
+  const m=x.ofrenda_moneda||'Bs';of.cp[m]=(of.cp[m]||0)+rsNum(x.ofrenda)});
+ A('Servicio dominical','sd',['h','m','j','no','na','cf']);
+ by('Servicio dominical').forEach(x=>{const m=x.a_ofm||'Bs';of.sd[m]=(of.sd[m]||0)+rsNum(x.a_of)});
+ A('Casa de oración','co',['h','m','j','n']);
+ A('Discipulado','di',['h','m','j','no','na']);
+ R.di_tema=[...new Set(by('Discipulado').map(x=>(x.a_tema||'').trim()).filter(Boolean))].join(' · ');
+ A('Vigilia','vi',['h','m','j']);R.vi_num=by('Vigilia').length;
+ A('Cachorros de León','ca',['no','na']);
+ A('Altar familiar','al',['h','m','j','n']);R.al_num=by('Altar familiar').length;
+ by('Evangelismo').forEach(x=>['h','m','j','no','na'].forEach(k=>add('ev_'+k,x['ev_'+k])));
+ A('Bautizos','ba',['h','m','j','n']);
+ R.cp_of=rsOf(of.cp);R.sd_of=rsOf(of.sd);
+ return R;
+}
+const RSF=[
+ ['Casas de paz',[['cdp_act','Casas de paz activas'],['cdp_real','Realizadas'],['cdp_noreal','No realizadas']]],
+ ['Asistencia en casa de paz',[['cp_h','Hombres'],['cp_m','Mujeres'],['cp_j','Jóvenes'],['cp_no','Niños'],['cp_na','Niñas'],['cp_cf','Confesión de fe'],['cp_of','Ofrendas','t']]],
+ ['Servicios dominicales',[['sd_h','Hombres'],['sd_m','Mujeres'],['sd_j','Jóvenes'],['sd_no','Niños'],['sd_na','Niñas'],['sd_cf','Confesión de fe'],['sd_of','Ofrendas','t']]],
+ ['Casa de oración',[['co_h','Hombres'],['co_m','Mujeres'],['co_j','Jóvenes'],['co_n','Niños (as)']]],
+ ['Discipulados',[['di_h','Hombres'],['di_m','Mujeres'],['di_j','Jóvenes'],['di_no','Niños'],['di_na','Niñas'],['di_tema','Tema','t']]],
+ ['Vigilias generales',[['vi_num','N° de vigilias'],['vi_h','Hombres'],['vi_m','Mujeres'],['vi_j','Jóvenes']]],
+ ['Cachorros de León',[['ca_no','Niños'],['ca_na','Niñas']]],
+ ['Altares familiares',[['al_num','N° de altares'],['al_h','Hombres'],['al_m','Mujeres'],['al_j','Jóvenes'],['al_n','Niños (as)']]],
+ ['Evangelismo territorial',[['ev_h','Hombres'],['ev_m','Mujeres'],['ev_j','Jóvenes'],['ev_no','Niños'],['ev_na','Niñas']]],
+ ['Bautizos',[['ba_h','Hombres'],['ba_m','Mujeres'],['ba_j','Jóvenes'],['ba_n','Niños (as)']]]];
+function rsForm(){
+ const f=$('rsf');f.textContent='';
+ RSF.forEach(([t,ks])=>{const fs=document.createElement('fieldset');fs.style.cssText='border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:0 0 10px;display:grid;gap:6px;grid-template-columns:repeat(auto-fit,minmax(110px,1fr))';
+  const lg=document.createElement('legend');lg.textContent=t;lg.style.fontWeight='700';fs.appendChild(lg);
+  ks.forEach(([k,l,tp])=>{const lb=document.createElement('label');lb.textContent=l;const i=document.createElement('input');
+   if(tp==='t'){i.type='text';lb.style.gridColumn='1/-1'}else{i.type='number';i.min='0';i.inputMode='numeric'}
+   i.value=RS[k]!=null?RS[k]:(tp==='t'?'':0);i.oninput=()=>{RS[k]=tp==='t'?i.value:(Number(i.value)||0);rsDraw()};lb.appendChild(i);fs.appendChild(lb)});
+  f.appendChild(fs)});
+}
+const RSXW=[17.75,10.76,10.76,10.76,3.77,17.75,10.76,10.76,10.76,3.77,11.7,10.76,10.76,10.76];
+const RSPX=RSXW.map(w=>Math.round(w*7.4));
+const rsRowH=r=>r<=2?36:r===3?30:r===7?14:24;
+function rsCells(){
+ const R=RS,v=k=>Number(R[k])||0,s=(...k)=>k.reduce((a,x)=>a+v(x),0);
+ const norep=Math.max(0,v('cdp_act')-v('cdp_real')-v('cdp_noreal'));
+ const [a,b]=RSW;
+ const L=[
+ ['A3:J3','REPORTE PASTORES DE COBERTURA MAP RESTAURADOR DEL REINO','h1'],
+ ['A4:J4','NOMBRE CONGREGACIÓN: '+($('rscong').value||''),'hl'],
+ ['A5:J5','PASTORES:   '+($('rspast').value||'')+'          ESTADO: '+($('rsest').value||''),'hl'],
+ ['A6:J6','FECHA: '+rsDmy(b),'hl'],
+ ['A8:D8','CDP SEMANA DEL '+rsDmy(a)+'  HASTA '+rsDmy(b),'hd'],
+ ['A9:C9','TOTAL DE CASA DE PAZ ACTIVAS','lc'],['D9',v('cdp_act'),'n'],
+ ['A10:C10','CASAS DE PAZ REALIZADAS','lc'],['D10',v('cdp_real'),'n'],
+ ['A11:C11','CASAS DE PAZ NO REALIZADAS','rc'],['D11',v('cdp_noreal'),'n'],
+ ['A12:C12','CASAS DE PAZ NO REPORTADAS','rc'],['D12',norep,'n'],
+ ['A14:D14','ASISTENCIA EN CASA DE PAZ','hd'],
+ ['A23:B23','DISCIPULADOS','hd'],['C23:D23','','hd'],
+ ['F8:I8','SERVICIOS DOMINICALES','hd'],['F17:I17','CASA DE ORACIÓN','hd'],['F23:I23','VIGILIAS GENERALES','hd'],
+ ['K8:M8','CACHORROS DE LEÓN','hd'],['K12:N12','ALTARES FAMILIARES','hd'],['K19:N19','EVANGELISMO TERRITORIAL','hd'],['K26:N26','BAUTIZOS','hd']];
+ const blk=(col,ncol,r0,p,labs,keys)=>labs.forEach((l,i)=>{L.push([col+(r0+i),l,'l']);L.push([ncol+(r0+i),v(p+'_'+keys[i]),'n'])});
+ const H5=['HOMBRES','MUJERES','JOVENES','NIÑOS','NIÑAS'],K5=['h','m','j','no','na'],H4=['HOMBRES','MUJERES','JOVENES','NIÑOS (AS)'],K4=['h','m','j','n'];
+ // Asistencia casa de paz
+ blk('A','B',15,'cp',H5,K5);
+ L.push(['C15:C17',s('cp_h','cp_m','cp_j'),'sub'],['C18:C19',s('cp_no','cp_na'),'sub'],['D15:D19',s('cp_h','cp_m','cp_j','cp_no','cp_na'),'tot'],
+  ['A20','CONFESIÓN DE FÉ','l'],['B20:D20',v('cp_cf'),'n'],['A21','OFRENDAS','l'],['B21:D21',R.cp_of||'','nt']);
+ // Discipulados
+ blk('A','B',24,'di',H5,K5);
+ L.push(['C24:C26',s('di_h','di_m','di_j'),'sub'],['C27:C28',s('di_no','di_na'),'sub'],['D24:D28',s('di_h','di_m','di_j','di_no','di_na'),'tot'],
+  ['A29','TEMA','l'],['B29:D29',R.di_tema||'','nt']);
+ // Servicios dominicales
+ blk('F','G',9,'sd',H5,K5);
+ L.push(['H9:H11',s('sd_h','sd_m','sd_j'),'sub'],['H12:H13',s('sd_no','sd_na'),'sub'],['I9:I13',s('sd_h','sd_m','sd_j','sd_no','sd_na'),'tot'],
+  ['F14','CONFESIÓN DE FÉ','l'],['G14:I14',v('sd_cf'),'n'],['F15','OFRENDAS','l'],['G15:I15',R.sd_of||'','nt']);
+ // Casa de oración
+ blk('F','G',18,'co',H4,K4);
+ L.push(['H18:H20',s('co_h','co_m','co_j'),'sub'],['H21',v('co_n'),'sub'],['I18:I21',s('co_h','co_m','co_j','co_n'),'tot']);
+ // Vigilias
+ L.push(['F24','N° VIGILIAS','l'],['G24:I24',v('vi_num'),'n'],['F25','HOMBRES','l'],['G25:H25',v('vi_h'),'n'],['F26','MUJERES','l'],['G26:H26',v('vi_m'),'n'],
+  ['F27','JOVENES','l'],['G27:H27',v('vi_j'),'n'],['I25:I27',s('vi_h','vi_m','vi_j'),'tot']);
+ // Cachorros de León
+ L.push(['K9','NIÑOS','lb'],['L9',v('ca_no'),'n'],['K10','NIÑAS','lp'],['L10',v('ca_na'),'n'],['M9:M10',s('ca_no','ca_na'),'tot']);
+ // Altares familiares
+ L.push(['K13:L13','N° ALTARES','lc'],['M13:N13',v('al_num'),'n']);
+ blk('K','L',14,'al',H4,K4);
+ L.push(['M14:M16',s('al_h','al_m','al_j'),'sub'],['M17',v('al_n'),'sub'],['N14:N17',s('al_h','al_m','al_j','al_n'),'tot']);
+ // Evangelismo territorial
+ blk('K','L',20,'ev',H5,K5);
+ L.push(['M20:M22',s('ev_h','ev_m','ev_j'),'sub'],['M23:M24',s('ev_no','ev_na'),'sub'],['N20:N24',s('ev_h','ev_m','ev_j','ev_no','ev_na'),'tot']);
+ // Bautizos
+ blk('K','L',27,'ba',H4,K4);
+ L.push(['M27:M29',s('ba_h','ba_m','ba_j'),'sub'],['M30',v('ba_n'),'sub'],['N27:N30',s('ba_h','ba_m','ba_j','ba_n'),'tot']);
+ return L;
+}
+const rsRef=a=>{const m=/^([A-Z])(\d+)$/.exec(a);return [m[1].charCodeAt(0)-65,Number(m[2])]};
+const rsRng=g=>{const p=g.split(':');const [c1,r1]=rsRef(p[0]);const [c2,r2]=rsRef(p[1]||p[0]);return {c1,r1,c2,r2}};
+const RS_ST={h1:{f:'#66FFFF',z:13,al:'center'},hl:{f:'#66FFFF',z:12,al:'left'},hd:{f:'#66FFFF',z:11,al:'center'},lc:{z:10.5,al:'center'},rc:{z:10.5,al:'center',c:'#FF0000'},
+ l:{z:10.5,al:'left'},lb:{z:10.5,al:'left',c:'#2F5597'},lp:{z:10.5,al:'left',c:'#FF33CC'},n:{z:13,al:'center'},nt:{z:11,al:'center'},sub:{f:'#D9D9D9',z:13,al:'center'},tot:{f:'#99FFCC',z:15,al:'center'}};
+let rsLogoImg=null;
+function rsDraw(){
+ const cv=$('rscv');if(!cv)return;const K=2,M=14;
+ const X=[M];RSPX.forEach((w,i)=>X.push(X[i]+w));const Y=[0,M];for(let r=1;r<=30;r++)Y.push(Y[r]+rsRowH(r));
+ cv.width=(X[14]+M)*K;cv.height=(Y[31]+M)*K;const g=cv.getContext('2d');g.setTransform(K,0,0,K,0,0);
+ g.fillStyle='#fff';g.fillRect(0,0,cv.width,cv.height);
+ if(!rsLogoImg){rsLogoImg=new Image();rsLogoImg.onload=rsDraw;rsLogoImg.src=RS_LOGO}else if(rsLogoImg.complete)g.drawImage(rsLogoImg,X[0]+20,Y[1]+2,68,68);
+ rsCells().forEach(([rg,val,st])=>{const {c1,r1,c2,r2}=rsRng(rg),S0=RS_ST[st]||RS_ST.n;
+  const x=X[c1],y=Y[r1],w=X[c2+1]-x,h=Y[r2+1]-y;
+  g.fillStyle=S0.f||'#fff';g.fillRect(x,y,w,h);g.strokeStyle='#000';g.lineWidth=1;g.strokeRect(x+.5,y+.5,w,h);
+  const t=String(val==null?'':val);if(!t)return;let z=S0.z;
+  do{g.font='bold '+z+'px Arial, Helvetica, sans-serif';z-=.5}while(g.measureText(t).width>w-8&&z>6);
+  g.fillStyle=S0.c||'#000';g.textBaseline='middle';g.textAlign=S0.al;g.fillText(t,S0.al==='left'?x+4:x+w/2,y+h/2+.5)});
+}
+async function rsLoad(){
+ if(!me||!$('rsbox'))return;const adm=me.rol==='admin';
+ $('rssedew').hidden=!adm;
+ if(adm&&!$('rssede').dataset.ok){if(['Sede principal','La Guaricha','Valencia','Bocono'].includes(me.sede))$('rssede').value=me.sede;$('rssede').dataset.ok=1}
+ if(!$('rsw').value)$('rsw').value=rsSunday();
+ RSW=rsRange();const [a,b]=RSW;const sede=rsSede();$('rsmsg').textContent='Cargando reportes de '+sede+'…';
+ try{
+  RSH=rsDefSede(sede);try{const c=await S.getDoc(S.doc(db,'reporte_cfg',sede));if(c.exists())RSH={...RSH,...c.data()}}catch(e){}
+  $('rscong').value=RSH.cong||'';$('rspast').value=RSH.past||'';$('rsest').value=RSH.estado||'';
+  const q=await S.getDocs(S.query(S.collection(db,'reportes'),S.where('sede','==',sede)));
+  const r=[];q.forEach(d=>{const x=d.data();if(x.fecha>=a&&x.fecha<=b)r.push(x)});
+  RS=rsAgg(r);rsForm();rsDraw();
+  $('rsmsg').textContent=sede+': '+r.length+' reporte'+(r.length===1?'':'s')+' entre el '+rsDmy(a)+' y el '+rsDmy(b)+'. Puedes corregir cualquier número abajo antes de descargar.';
+ }catch(x){$('rsmsg').textContent=er(x)}
+}
+function rsFile(){return 'Reporte semanal '+rsDmy(RSW[1]).replace(/\//g,'-')}
+function rsSaveBlob(blob,name){const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),5000)}
+const rsPng=()=>new Promise(ok=>{rsDraw();$('rscv').toBlob(ok,'image/png')});
+async function rsXlsx(){
+ if(!window.ExcelJS)await new Promise((ok,ko)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js';s.onload=ok;s.onerror=()=>ko(new Error('No se pudo cargar el generador de Excel. Revisa tu conexión e intenta de nuevo.'));document.head.appendChild(s)});
+ const wb=new ExcelJS.Workbook(),ws=wb.addWorksheet('FORMATO REPORTE');
+ ws.columns=RSXW.map(w=>({width:w}));for(let r=1;r<=30;r++)ws.getRow(r).height=rsRowH(r)*0.75;
+ const argb=h=>'FF'+h.replace('#','').toUpperCase();const bd={style:'thin',color:{argb:'FF000000'}};
+ rsCells().forEach(([rg,val,st])=>{const {c1,r1,c2,r2}=rsRng(rg),S0=RS_ST[st]||RS_ST.n;
+  if(rg.includes(':'))ws.mergeCells(rg);
+  for(let r=r1;r<=r2;r++)for(let c=c1;c<=c2;c++){const cl=ws.getCell(r,c+1);cl.border={top:bd,left:bd,bottom:bd,right:bd};if(S0.f)cl.fill={type:'pattern',pattern:'solid',fgColor:{argb:argb(S0.f)}}}
+  const cl=ws.getCell(r1,c1+1);cl.value=val;cl.font={name:'Calibri',bold:true,size:Math.round(S0.z*0.9+1),color:{argb:argb(S0.c||'#000000')}};
+  cl.alignment={horizontal:S0.al,vertical:'middle',wrapText:st==='nt'}});
+ try{const id=wb.addImage({base64:RS_LOGO,extension:'png'});ws.addImage(id,{tl:{col:0.4,row:0.05},ext:{width:68,height:68}})}catch(e){}
+ ws.pageSetup={orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:1};
+ return new Blob([await wb.xlsx.writeBuffer()],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+}
+$('rsw').addEventListener('change',rsLoad);$('rssede').addEventListener('change',rsLoad);$('rsre').addEventListener('click',rsLoad);
+['rscong','rspast','rsest'].forEach(i=>$(i).addEventListener('input',rsDraw));
+$('rspng').addEventListener('click',async()=>{try{rsSaveBlob(await rsPng(),rsFile()+'.png')}catch(x){$('rsmsg').textContent=er(x)}});
+$('rsxls').addEventListener('click',async()=>{const b=$('rsxls');b.disabled=true;try{rsSaveBlob(await rsXlsx(),rsFile()+'.xlsx')}catch(x){$('rsmsg').textContent=x.message||er(x)}b.disabled=false});
+$('rsshr').addEventListener('click',async()=>{try{const f=new File([await rsPng()],rsFile()+'.png',{type:'image/png'});
+ if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:'Reporte semanal'});else rsSaveBlob(f,f.name)}catch(x){if(x&&x.name!=='AbortError')$('rsmsg').textContent=er(x)}});
+$('rssave').addEventListener('click',async()=>{const sede=rsSede();try{
+ RSH={...RSH,cong:$('rscong').value.trim(),past:$('rspast').value.trim(),estado:$('rsest').value.trim(),activas:Number(RS.cdp_act)||0};
+ await S.setDoc(S.doc(db,'reporte_cfg',sede),{cong:RSH.cong,past:RSH.past,estado:RSH.estado,activas:RSH.activas});$('rsmsg').textContent='Datos de '+sede+' guardados. Se usarán en los próximos reportes.'}catch(x){$('rsmsg').textContent=er(x)}});
+
+/* Reporte de Protocolo (servicio dominical, casa de oración, vigilia) */
+function dprShow(id){const ok=!!(DPU&&DPU.estado==='aprobado'&&DPU.rol==='coordinador'&&id&&DPU.deptoId===id&&String(dpNom(id)||'').trim().toLowerCase()==='protocolo');
+ $('dprep').hidden=!ok;if(ok){if(!$('dprfe').value)$('dprfe').value=rsIso(new Date());dprCfg();dprMine()}}
+function dprCfg(){const a=ACT[$('dprt').value];$('dprflds').hidden=!a;$('dprflds').querySelectorAll('[data-f]').forEach(l=>{const on=!!a&&a.f.includes(l.dataset.f);l.hidden=!on;l.querySelectorAll('input,select').forEach(x=>x.disabled=!on)});dprTot()}
+function dprTot(){let t=0;['a_h','a_m','a_j','a_no','a_na','a_n'].forEach(n=>{const x=document.querySelector('#dprflds [name='+n+']');if(!x.disabled)t+=Number(x.value)||0});$('dprtot').textContent='Total de personas: '+t}
+$('dprt').addEventListener('change',dprCfg);$('dprflds').addEventListener('input',dprTot);
+async function dprMine(){const L=$('dprl');L.textContent='';try{const q=await S.getDocs(S.query(S.collection(db,'reportes'),S.where('uid','==',DPU.uid)));const r=[];q.forEach(d=>r.push(d.data()));
+ r.sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||''));if(!r.length){L.appendChild(el('li','Aún no has enviado reportes.'));return}
+ r.slice(0,20).forEach(x=>L.appendChild(el('li',rsDmy(x.fecha)+' · '+x.tipo+' · '+x.sede+' · '+(x.cantidad||0)+' personas')))}catch(x){L.appendChild(el('li',er(x)))}}
+$('dprf').addEventListener('submit',async e=>{e.preventDefault();$('dprok').textContent='';
+ try{const tipo=$('dprt').value;if(!ACT[tipo])throw new Error('Elige el tipo de reporte.');const d={};
+  $('dprflds').querySelectorAll('input,select').forEach(x=>{if(x.disabled||!x.name)return;d[x.name]=x.type==='number'?Number(x.value||0):x.value.trim()});
+  d.cantidad=['a_h','a_m','a_j','a_no','a_na','a_n'].reduce((t,k)=>t+(d[k]||0),0);d.lugar='';
+  await S.addDoc(S.collection(db,'reportes'),{...d,uid:DPU.uid,nombre:DPU.nombre||'',sede:$('dprs').value,cargo:'Coordinador de Protocolo',tipo,fecha:$('dprfe').value,creado:S.serverTimestamp()});
+  const keepS=$('dprs').value;$('dprf').reset();$('dprs').value=keepS;$('dprfe').value=rsIso(new Date());dprCfg();$('dprok').textContent='Reporte enviado. ¡Gracias!';dprMine()}
+ catch(x){$('dprok').textContent=x&&x.message&&!x.code?x.message:er(x)}});
+
+const desc=x=>x.tipo==='Casa de paz'&&x.realizada==='No'?'Casa de paz '+(x.casa||'')+' ('+(x.codigo||'')+') · no se realizó':x.tipo==='Casa de paz'?'Casa de paz '+(x.casa||'')+' ('+(x.codigo||'')+') · '+x.cantidad+' personas · '+(x.convertidos||0)+' convertidos · ofrenda '+(x.ofrenda||'—'):x.tipo==='Evangelismo'?'Evangelismo · '+(x.ev_sector||'')+' · '+x.cantidad+' alcanzadas · '+(x.ev_conversiones||0)+' conversiones · '+(x.ev_reconc||0)+' reconciliaciones · receptividad '+(x.ev_recep||'—'):x.tipo==='Nuevos creyentes'?'Nuevo creyente: '+(x.conv_nombre||'')+' · '+(x.conv_estado||'')+' · bautismo: '+(x.conv_bautismo||'—'):x.tipo+' · '+x.cantidad+' personas · '+(x.lugar||'');
 loaders.mine=async()=>{
  const ul=$('rl');ul.textContent='';
  try{
@@ -3211,6 +3449,7 @@ async function tDetail(){if(document.body.getAttribute('data-v')!=='testimonio')
  else $('ttx').remove()}
 tLoad();tDetail();
 loaders.adm=async()=>{
+ rsLoad();
  if(me&&me.rol==='admin'){await tLoad();tAdmin()}
  const P=$('apend');P.textContent='';
  try{
